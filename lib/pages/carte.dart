@@ -1,6 +1,6 @@
-import 'package:aero_glace_app/util/background.dart';
-import 'package:aero_glace_app/util/location_tile.dart';
-import 'package:aero_glace_app/util/my_map.dart';
+import 'package:aero_glace_app/widgets/background.dart';
+import 'package:aero_glace_app/features/map/location_tile.dart';
+import 'package:aero_glace_app/features/map/my_map.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
