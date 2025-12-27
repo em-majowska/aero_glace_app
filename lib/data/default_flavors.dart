@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
-import '../features/flavors/flavor_model.dart';
+import '../model/flavor_model.dart';
 
 final List<Flavor> defaultFlavors = [
   Flavor(
+    id: 0,
     title: 'Chocolat Supernova',
     description:
         'Explosion de chocolat noir belge avec des éclats de cacao torréfié.',
@@ -27,6 +28,7 @@ final List<Flavor> defaultFlavors = [
   ),
 
   Flavor(
+    id: 1,
     title: 'Fruit de la Passion Orion',
     description:
         'Fruit de la passion exotique avec une touche de vanille stellaire.',
@@ -54,6 +56,7 @@ final List<Flavor> defaultFlavors = [
   ),
 
   Flavor(
+    id: 2,
     title: 'Café Nébuleuse',
     description: 'Espresso italien intense avec des notes de caramel cosmique.',
     tags: ['organic'],
@@ -84,6 +87,7 @@ final List<Flavor> defaultFlavors = [
   ),
 
   Flavor(
+    id: 3,
     title: 'Pistache Andromède',
     description: 'Pistache de Sicile premium avec un voile de miel astral.',
     tags: ['containsPeanuts', 'organic'],
@@ -114,6 +118,7 @@ final List<Flavor> defaultFlavors = [
   ),
 
   Flavor(
+    id: 4,
     title: 'Citron Solaire',
     description: 'Citron de Menton acidulé avec du zeste cristallisé.',
     tags: ['vegan', 'lactoseFree', 'glutenFree'],
@@ -140,6 +145,7 @@ final List<Flavor> defaultFlavors = [
   ),
 
   Flavor(
+    id: 5,
     title: 'Tiramisu Saturne Fraise',
     description:
         'Tiramisu onctueux aux fraises tournoyant autour des anneaux de Saturne.',
@@ -171,6 +177,7 @@ final List<Flavor> defaultFlavors = [
   ),
 
   Flavor(
+    id: 6,
     title: 'Fruit du Dragon Cosmos',
     description: 'Pitaya rose vibrante cueilli aux confins du cosmos.',
     tags: ['vegan', 'glutenFree'],
@@ -201,6 +208,7 @@ final List<Flavor> defaultFlavors = [
   ),
 
   Flavor(
+    id: 7,
     title: 'Matcha Aurore Mangue',
     description:
         'Thé matcha de Kyoto fusionné avec la mangue dans un tourbillon nébuleux.',
@@ -232,6 +240,7 @@ final List<Flavor> defaultFlavors = [
   ),
 
   Flavor(
+    id: 8,
     title: 'Caramel Stellaire',
     description:
         'Caramel au beurre salé de Bretagne, glacé comme les plaines de Pluton.',
