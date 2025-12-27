@@ -95,7 +95,7 @@ class _FortuneWheelElementState extends State<FortuneWheelElement> {
             height: 45,
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
+              shape: BoxShape.circle,
               color: Theme.of(context).colorScheme.surface,
             ),
             child: Icon(

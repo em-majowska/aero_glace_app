@@ -17,7 +17,7 @@ class GlossyBox extends StatelessWidget {
         Container(
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(12),
             border: GradientBoxBorder(
               gradient: LinearGradient(
                 colors: [
@@ -30,8 +30,8 @@ class GlossyBox extends StatelessWidget {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                const Color(0xFFffffff).withValues(alpha: 0.75),
-                const Color(0xFFFFFFFF).withValues(alpha: 0.25),
+                const Color(0xFFffffff).withValues(alpha: 0.95),
+                const Color(0xFFFFFFFF).withValues(alpha: 0.65),
               ],
               stops: [
                 0.1,

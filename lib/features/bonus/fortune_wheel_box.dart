@@ -36,23 +36,25 @@ class FortuneWheelBox extends StatelessWidget {
                     width: 2,
                     color: Theme.of(context).colorScheme.primaryFixedDim,
                   ),
-                  borderRadius: BorderRadius.circular(150),
+                  shape: BoxShape.circle,
                 ),
                 child: const FortuneWheelElement(),
               ),
             ),
             Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  // backgroundColor: Colors.deepPurpleAccent.shade400,
-                  backgroundColor: Colors.deepPurple.shade400,
+              child: FilledButton(
+                style: FilledButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: () {},
                 child: Text(
                   'Tourner la roue !',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Theme.of(context).colorScheme.onError,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
               ),

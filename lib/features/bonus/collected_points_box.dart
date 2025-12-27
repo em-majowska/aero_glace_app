@@ -12,7 +12,6 @@ class CollectedPointsBox extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          // box column
           spacing: 24,
           children: [
             Row(
@@ -21,7 +20,7 @@ class CollectedPointsBox extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Row(
-                  // top row left side
+                  // points + lvl
                   spacing: 8,
                   children: [
                     Container(
@@ -32,7 +31,7 @@ class CollectedPointsBox extends StatelessWidget {
                         color: Theme.of(
                           context,
                         ).colorScheme.tertiaryContainer,
-                        borderRadius: BorderRadius.circular(30),
+                        shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.auto_awesome,
@@ -41,8 +40,9 @@ class CollectedPointsBox extends StatelessWidget {
                         ).colorScheme.onTertiaryFixed,
                       ),
                     ),
+
+                    // points
                     Column(
-                      // top row left side points
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -64,7 +64,7 @@ class CollectedPointsBox extends StatelessWidget {
                   ],
                 ),
                 Row(
-                  // top row right side
+                  // lvl + trophy
                   crossAxisAlignment: CrossAxisAlignment.end,
                   spacing: 5,
                   children: [
@@ -87,6 +87,8 @@ class CollectedPointsBox extends StatelessWidget {
                 ),
               ],
             ),
+
+            // points bar
             Column(
               spacing: 8,
               children: [
@@ -94,7 +96,6 @@ class CollectedPointsBox extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [Text('260 points'), Text('500 points')],
                 ),
-
                 StepProgressIndicator(
                   totalSteps: 500,
                   currentStep: 260,
@@ -125,6 +126,7 @@ class CollectedPointsBox extends StatelessWidget {
               ],
             ),
 
+            // prizes
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               spacing: 16,

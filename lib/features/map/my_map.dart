@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/pages/carte.dart';
+import 'package:aero_glace_app/pages/carte_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
@@ -20,8 +20,8 @@ class MyMap extends StatelessWidget {
     final List<Marker> markers = List.generate(shopLocations.length, (index) {
       return Marker(
         point: shopLocations[index].coordinates,
-        width: 49,
-        height: 49,
+        width: 45,
+        height: 45,
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(
@@ -110,7 +110,7 @@ class MyMap extends StatelessWidget {
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         shop.address,
