@@ -4,8 +4,8 @@ import 'package:aero_glace_app/widgets/background.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-class Bonus extends StatelessWidget {
-  const Bonus({super.key});
+class BonusPage extends StatelessWidget {
+  const BonusPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class Bonus extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 32),
-              FortuneWheelBox(),
+              const FortuneWheelBox(),
             ],
           ),
         ],

@@ -16,14 +16,14 @@ class ShopLocation {
   });
 }
 
-class Carte extends StatefulWidget {
-  const Carte({super.key});
+class CartePage extends StatefulWidget {
+  const CartePage({super.key});
 
   @override
-  State<Carte> createState() => _CarteState();
+  State<CartePage> createState() => _CartePageState();
 }
 
-class _CarteState extends State<Carte> {
+class _CartePageState extends State<CartePage> {
   // All shops locations and coordinates
   final List<ShopLocation> shopLocations = [
     ShopLocation(
