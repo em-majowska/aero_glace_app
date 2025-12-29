@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/features/panier/cart_model.dart';
+import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/features/panier/item_tile.dart';
 import 'package:aero_glace_app/features/panier/empty_cart_tile.dart';
 import 'package:aero_glace_app/features/panier/total_tile.dart';

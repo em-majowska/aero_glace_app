@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/features/panier/cart_model.dart';
+import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/pages/accueil_page.dart';
 import 'package:aero_glace_app/pages/bonus_page.dart';
 import 'package:aero_glace_app/pages/carte_page.dart';

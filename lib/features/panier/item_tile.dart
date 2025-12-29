@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/features/panier/cart_model.dart';
+import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
 import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
