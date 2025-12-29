@@ -4,16 +4,64 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class TotalTile extends StatelessWidget {
   final double totalPrice;
-  final VoidCallback emptyCart;
+  final VoidCallback empty;
 
   const TotalTile({
     super.key,
     required this.totalPrice,
-    required this.emptyCart,
+    required this.empty,
   });
 
   @override
   Widget build(BuildContext context) {
+    // show dialog to confirm the action
+    void emptyCart() {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            actionsPadding: const EdgeInsets.all(16),
+            title: Text(
+              'Vider le panier',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            content: const Text(
+              'Êtes-vous sûr de vouloir vider votre panier ?',
+            ),
+            actions: [
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Annuler'),
+              ),
+              FilledButton(
+                style: FilledButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                ),
+                onPressed: () {
+                  empty();
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Vider le panier',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onError,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     // TODO maybe without glossy box?
     return GlossyBox(
       child: Padding(

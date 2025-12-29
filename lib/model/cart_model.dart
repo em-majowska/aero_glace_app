@@ -52,6 +52,14 @@ class Cart extends ChangeNotifier {
     }
   }
 
+  void discardItem(Flavor flavor) {
+    final existingItem = _findCartItem(flavor.id);
+    if (existingItem != null) {
+      _cartBox.delete(existingItem.key);
+    }
+    notifyListeners();
+  }
+
   // empty the cart
   void empty() {
     _cartBox.clear();

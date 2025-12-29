@@ -54,6 +54,7 @@ class PanierPage extends StatelessWidget {
                             quantity: item.qty,
                             onAdd: () => cart.addItem(flavor),
                             onRemove: () => cart.removeItem(flavor),
+                            onDiscard: () => cart.discardItem(flavor),
                           );
                         },
                       ),
@@ -61,7 +62,7 @@ class PanierPage extends StatelessWidget {
                     const SizedBox(height: 24),
                     TotalTile(
                       totalPrice: cart.totalPrice,
-                      emptyCart: cart.empty,
+                      empty: cart.empty,
                     ),
                   ],
                 );

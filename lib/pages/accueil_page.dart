@@ -12,8 +12,6 @@ class AccueilPage extends StatefulWidget {
 }
 
 class _AccueilPageState extends State<AccueilPage> {
-  // final _controller = TextEditingController();
-
   // language selection menu
   void openLanguageMenu() {
     showDialog(
