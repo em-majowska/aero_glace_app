@@ -31,15 +31,12 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.3.3
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   lucide_icons_flutter: ^3.1.8
   flutter_slidable: ^4.0.3
   provider: ^6.1.5+1
   # database packages
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  equatable: ^2.0.7
   # map packages
   flutter_map: ^8.2.2
   latlong2: ^0.9.1

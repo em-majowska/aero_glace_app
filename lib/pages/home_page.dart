@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/features/panier/cart_provider.dart';
+import 'package:aero_glace_app/features/panier/cart_model.dart';
 import 'package:aero_glace_app/pages/accueil_page.dart';
 import 'package:aero_glace_app/pages/bonus_page.dart';
 import 'package:aero_glace_app/pages/carte_page.dart';
@@ -36,13 +36,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CartProvider>(
-      builder: (context, value, child) => Scaffold(
+    return ChangeNotifierProvider(
+      create: (context) => Cart(),
+      child: Scaffold(
         body: _pages[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
           unselectedItemColor: Theme.of(context).colorScheme.onSurfaceVariant,
-          // selectedItemColor: Colors.red.shade300,
           selectedItemColor: Colors.deepPurple.shade400,
           elevation: 3,
           currentIndex: _selectedIndex,
@@ -58,12 +58,24 @@ class _HomePageState extends State<HomePage> {
             ),
             BottomNavigationBarItem(
               label: 'Panier',
-              icon: value.getUserCart().isEmpty
-                  ? const Icon(LucideIcons.shoppingBag)
-                  : Badge(
-                      label: Text(value.getQuantity().toString()),
+
+              // check if cart is empty and add badge if needed
+              icon: Builder(
+                builder: (context) {
+                  final qty = Provider.of<Cart>(
+                    context,
+                    listen: true,
+                  ).totalQuantity;
+                  if (qty < 1) {
+                    return const Icon(LucideIcons.shoppingBag);
+                  } else {
+                    return Badge(
+                      label: Text(qty.toString()),
                       child: const Icon(LucideIcons.shoppingBag),
-                    ),
+                    );
+                  }
+                },
+              ),
             ),
             const BottomNavigationBarItem(
               label: 'Bonus',

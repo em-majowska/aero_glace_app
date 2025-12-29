@@ -5,25 +5,20 @@ import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-class FlavorTile extends StatefulWidget {
+class FlavorTile extends StatelessWidget {
   final Flavor flavor;
-  void Function()? onPressed;
+  final void Function()? onPressed;
 
-  FlavorTile({super.key, required this.flavor, required this.onPressed});
+  const FlavorTile({super.key, required this.flavor, required this.onPressed});
 
-  @override
-  State<FlavorTile> createState() => _FlavorTileState();
-}
-
-class _FlavorTileState extends State<FlavorTile> {
   @override
   Widget build(BuildContext context) {
     return GlossyBox(
       child: ClipRRect(
         borderRadius: BorderRadiusGeometry.circular(12),
         child: MyMesh(
-          meshPoints: widget.flavor.meshPoints,
-          child: Container(
+          meshPoints: flavor.meshPoints,
+          child: SizedBox(
             height: 170,
             child: Stack(
               children: [
@@ -34,7 +29,7 @@ class _FlavorTileState extends State<FlavorTile> {
                     Expanded(
                       flex: 2,
                       child: Image.asset(
-                        'assets/images/flavors/${widget.flavor.imagePath}',
+                        'assets/images/flavors/${flavor.imagePath}',
                         fit: BoxFit.cover,
                         alignment: Alignment.center,
                       ),
@@ -53,19 +48,19 @@ class _FlavorTileState extends State<FlavorTile> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.flavor.title,
+                                  flavor.title,
                                   style: Theme.of(
                                     context,
                                   ).textTheme.titleMedium,
                                 ),
                                 Text(
-                                  widget.flavor.description,
+                                  flavor.description,
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
                             ),
                             Text(
-                              '${widget.flavor.price.toStringAsFixed(2)} €',
+                              '${flavor.price.toStringAsFixed(2)} €',
                               style: Theme.of(
                                 context,
                               ).textTheme.titleLarge,
@@ -76,7 +71,7 @@ class _FlavorTileState extends State<FlavorTile> {
                                 runAlignment: WrapAlignment.end,
                                 spacing: 5,
                                 runSpacing: 5,
-                                children: widget.flavor.tags
+                                children: flavor.tags
                                     .map((tag) => Tag(tag: tag))
                                     .toList(),
                               ),
@@ -93,13 +88,14 @@ class _FlavorTileState extends State<FlavorTile> {
                   bottom: 8,
                   right: 8,
                   child: IconButton.filled(
-                    style: FilledButton.styleFrom(
+                    style: IconButton.styleFrom(
                       backgroundColor: Theme.of(
                         context,
                       ).colorScheme.surfaceContainerLowest,
+                      overlayColor: Theme.of(context).colorScheme.primary,
                       shape: const CircleBorder(),
                     ),
-                    onPressed: widget.onPressed,
+                    onPressed: onPressed,
                     icon: Icon(
                       LucideIcons.plus,
                       color: Theme.of(context).colorScheme.onSurface,
