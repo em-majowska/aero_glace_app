@@ -61,7 +61,7 @@ class Cart extends ChangeNotifier {
   }
 
   // empty the cart
-  void empty() {
+  void discardAllItems() {
     _cartBox.clear();
     notifyListeners();
   }

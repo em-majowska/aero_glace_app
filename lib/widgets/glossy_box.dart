@@ -11,8 +11,7 @@ class GlossyBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return Stack(
       children: [
         Container(
           clipBehavior: Clip.hardEdge,
@@ -31,7 +30,7 @@ class GlossyBox extends StatelessWidget {
               end: Alignment.bottomRight,
               colors: [
                 const Color(0xFFffffff).withValues(alpha: 0.95),
-                const Color(0xFFFFFFFF).withValues(alpha: 0.65),
+                const Color(0xFFFFFFFF).withValues(alpha: 0.55),
               ],
               stops: [
                 0.1,

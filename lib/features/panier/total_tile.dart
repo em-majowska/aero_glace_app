@@ -26,7 +26,7 @@ class TotalTile extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             content: const Text(
-              'Êtes-vous sûr de vouloir vider votre panier ?',
+              'Êtes-vous sûr de vouloir vider votre panier ? Cette action est irréversible et tous les articles seront supprimés.',
             ),
             actions: [
               OutlinedButton(
@@ -62,7 +62,6 @@ class TotalTile extends StatelessWidget {
       );
     }
 
-    // TODO maybe without glossy box?
     return GlossyBox(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -92,7 +91,6 @@ class TotalTile extends StatelessWidget {
               children: [
                 OutlinedButton(
                   onPressed: emptyCart,
-
                   style: OutlinedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
