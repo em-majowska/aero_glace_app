@@ -1,10 +1,16 @@
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class TotalTile extends StatelessWidget {
   final double totalPrice;
+  final VoidCallback emptyCart;
 
-  const TotalTile({super.key, required this.totalPrice});
+  const TotalTile({
+    super.key,
+    required this.totalPrice,
+    required this.emptyCart,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,29 +31,63 @@ class TotalTile extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  totalPrice.toStringAsFixed(2),
+                  '${totalPrice.toStringAsFixed(2)} €',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-            FilledButton(
-              onPressed: () {},
-              style: FilledButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                OutlinedButton(
+                  onPressed: emptyCart,
+
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    side: BorderSide(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                    foregroundColor: Theme.of(context).colorScheme.error,
+                  ),
+                  child: Row(
+                    spacing: 8,
+                    children: [
+                      Icon(
+                        LucideIcons.trash2,
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                      Text(
+                        'Vider',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                backgroundColor: Theme.of(
-                  context,
-                ).colorScheme.primary,
-              ),
-              child: Text(
-                'Commander',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onPrimary,
+                FilledButton(
+                  onPressed: () {},
+                  style: FilledButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.primary,
+                  ),
+                  child: Text(
+                    'Commander',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ],
         ),

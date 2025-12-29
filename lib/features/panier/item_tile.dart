@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
+final blob = BlobClipper(
+  edgesCount: 8,
+  minGrowth: 7,
+);
+
 class ItemTile extends StatelessWidget {
   final Flavor flavor;
   final int quantity;
@@ -33,10 +38,7 @@ class ItemTile extends StatelessWidget {
               width: 100,
               height: 100,
               child: ClipPath(
-                clipper: BlobClipper(
-                  edgesCount: 10,
-                  minGrowth: 7,
-                ),
+                clipper: blob,
                 child: Image.asset(
                   'assets/images/flavors/${flavor.imagePath}',
                   fit: BoxFit.cover,

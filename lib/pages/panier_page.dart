@@ -59,7 +59,10 @@ class PanierPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    TotalTile(totalPrice: cart.totalPrice),
+                    TotalTile(
+                      totalPrice: cart.totalPrice,
+                      emptyCart: cart.empty,
+                    ),
                   ],
                 );
               }
