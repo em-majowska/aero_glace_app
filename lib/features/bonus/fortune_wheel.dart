@@ -1,28 +1,23 @@
 import 'dart:async';
 
+import 'package:aero_glace_app/model/cart_model.dart';
+import 'package:aero_glace_app/model/fortune_wheel_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:provider/provider.dart';
 
-class FortuneWheelElement extends StatefulWidget {
-  const FortuneWheelElement({super.key});
+class FortuneWheelElement extends StatelessWidget {
+  final String result;
+  final StreamController<int> controller;
+  final VoidCallback onSpin;
 
-  @override
-  State<FortuneWheelElement> createState() => _FortuneWheelElementState();
-}
-
-class _FortuneWheelElementState extends State<FortuneWheelElement> {
-  final StreamController<int> controller = StreamController<int>();
-  final discounts = [
-    '5%',
-    '10%',
-    '15%',
-    '20%',
-    '5%',
-    '10%',
-    '15%',
-    '20%',
-  ];
+  FortuneWheelElement({
+    super.key,
+    required this.result,
+    required this.controller,
+    required this.onSpin,
+  });
 
   final segmentColors = [
     Colors.blue.shade100,
@@ -30,63 +25,79 @@ class _FortuneWheelElementState extends State<FortuneWheelElement> {
   ];
 
   @override
-  void dispose() {
-    controller.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context, listen: true);
+
     return Stack(
       children: [
         SizedBox(
           width: 250,
           height: 250,
-          child: FortuneWheel(
-            selected: controller.stream,
-            animateFirst: false,
-            indicators: <FortuneIndicator>[
-              FortuneIndicator(
-                alignment: Alignment.topCenter,
-                child: TriangleIndicator(
-                  color: Theme.of(context).colorScheme.primary,
-                  width: 25,
-                  height: 25,
-                  elevation: 3,
+          child: Consumer<FortuneWheelModel>(
+            builder: (context, fortuneWheel, child) {
+              return FortuneWheel(
+                physics: CircularPanPhysics(
+                  duration: const Duration(seconds: 1),
+                  curve: Curves.decelerate,
                 ),
-              ),
-            ],
-            items: List.generate(discounts.length, (i) {
-              return FortuneItem(
-                style: FortuneItemStyle(
-                  borderWidth: 2,
-                  borderColor: Colors.white,
-                  color: (i % 2 == 0) ? segmentColors[0] : segmentColors[1],
-                ),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Positioned(
-                      right: 30,
-                      child: RotatedBox(
-                        quarterTurns: 5,
-                        child: Text(
-                          discounts[i],
-                          style: Theme.of(context).textTheme.labelLarge
-                              ?.copyWith(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onPrimaryContainer,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                      ),
+                hapticImpact: HapticImpact.light,
+                selected: controller.stream,
+                onFling: onSpin,
+                onAnimationEnd: () {
+                  fortuneWheel.disableWheel();
+                  if (fortuneWheel.isOutcomeDiscount(result)) {
+                    cart.setDiscount(
+                      result,
+                    );
+                  }
+                },
+                animateFirst: false,
+                indicators: <FortuneIndicator>[
+                  FortuneIndicator(
+                    alignment: Alignment.topCenter,
+                    child: TriangleIndicator(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 25,
+                      height: 25,
+                      elevation: 3,
                     ),
-                  ],
-                ),
+                  ),
+                ],
+
+                // items
+                items: List.generate(fortuneWheel.discounts.length, (i) {
+                  return FortuneItem(
+                    style: FortuneItemStyle(
+                      borderWidth: 2,
+                      borderColor: Colors.white,
+                      color: (i % 2 == 0) ? segmentColors[0] : segmentColors[1],
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Positioned(
+                          right: 30,
+                          child: RotatedBox(
+                            quarterTurns: 5,
+                            child: Text(
+                              fortuneWheel.discounts[i],
+                              style: Theme.of(context).textTheme.labelLarge
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimaryContainer,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
               );
-            }),
+            },
           ),
         ),
         Center(

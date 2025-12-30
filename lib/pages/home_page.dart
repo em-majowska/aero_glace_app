@@ -1,4 +1,5 @@
 import 'package:aero_glace_app/model/cart_model.dart';
+import 'package:aero_glace_app/model/fortune_wheel_model.dart';
 import 'package:aero_glace_app/pages/accueil_page.dart';
 import 'package:aero_glace_app/pages/bonus_page.dart';
 import 'package:aero_glace_app/pages/carte_page.dart';
@@ -36,8 +37,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => Cart(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => Cart()),
+        ChangeNotifierProvider(create: (context) => FortuneWheelModel()),
+      ],
       child: Scaffold(
         body: _pages[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(

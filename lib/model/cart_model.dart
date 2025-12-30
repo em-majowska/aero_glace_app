@@ -9,6 +9,7 @@ class Cart extends ChangeNotifier {
   // get hive box
   Box<HiveItem> get _cartBox => Hive.box<HiveItem>('cartBox');
   final List<Flavor> _flavors = defaultFlavors;
+  double _discount = 0;
 
   Cart() {
     _loadCart();
@@ -85,12 +86,6 @@ class Cart extends ChangeNotifier {
   int get totalQuantity =>
       _cartBox.values.fold(0, (sum, item) => sum + item.qty);
 
-  // get total  price
-  double get totalPrice => _cartBox.values.fold(0.00, (sum, item) {
-    final flavor = _flavors.firstWhere((f) => f.id == item.flavorId);
-    return sum + (flavor.price * item.qty);
-  });
-
   // TODO add item price to item_tile
   // get price per item
   double getItemPrice(Flavor flavor) {
@@ -99,4 +94,24 @@ class Cart extends ChangeNotifier {
     );
     return item.qty * flavor.price;
   }
+
+  // get total  price
+  double get totalPrice {
+    double total = _cartBox.values.fold(0.00, (sum, item) {
+      final flavor = _flavors.firstWhere((f) => f.id == item.flavorId);
+      return sum + (flavor.price * item.qty);
+    });
+
+    if (_discount != 0) {
+      total = total * (1 - discount);
+    }
+    return total;
+  }
+
+  void setDiscount(String result) {
+    _discount = int.parse(result.substring(0, 2)) / 100;
+    notifyListeners();
+  }
+
+  double get discount => _discount;
 }
