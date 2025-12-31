@@ -1,3 +1,4 @@
+import 'package:aero_glace_app/util/next_day.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:aero_glace_app/data/default_flavors.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
@@ -17,6 +18,10 @@ class Cart extends ChangeNotifier {
 
   // load cart from Hive
   void _loadCart() {
+    if (isNextDay()) {
+      setDiscount('0.0');
+    }
+
     notifyListeners();
   }
 

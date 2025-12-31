@@ -38,7 +38,6 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
               if (!isActive) return;
               final random = Random().nextInt(fortuneWheel.discounts.length);
               fortuneWheel.outcome = random;
-              // _wheelController.add(_outcome);
               controller.add(fortuneWheel.outcome);
               fortuneWheel.updateState();
             }

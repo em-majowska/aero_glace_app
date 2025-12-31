@@ -19,6 +19,7 @@ void main() async {
   Hive.registerAdapter(HiveItemAdapter());
   // open the box
   await Hive.openBox<HiveItem>('cartBox');
+  await Hive.openBox('fortuneBox');
 
   runApp(
     const MyApp(),
