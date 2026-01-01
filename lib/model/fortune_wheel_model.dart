@@ -1,69 +1,106 @@
 // import 'dart:async';
+import 'dart:math';
+import 'package:aero_glace_app/model/hive_outcome_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:aero_glace_app/util/next_day.dart';
 
 class FortuneWheelModel extends ChangeNotifier {
-  late final Box _wheelBox;
-  int _outcome = 0;
+  late final Box _fortuneBox;
+  late int _random = 0; // fallback
+  late HiveOutcome _outcome = HiveOutcome(
+    value: 0,
+    type: 'discount',
+  ); // fallback
   bool _isWheelActive = true;
   DateTime _date = DateTime.now();
+  HiveOutcome get outcome => _outcome;
 
-  final List<String> _discounts = [
-    '20 pts',
-    '10%',
-    '15%',
-    '20%',
-    '50 pts',
-    '10%',
-    '15%',
-    '20%',
+  final List<HiveOutcome> _fortuneItems = [
+    HiveOutcome(value: 10, type: 'discount'),
+    HiveOutcome(value: 15, type: 'discount'),
+    HiveOutcome(value: 20, type: 'discount'),
+    HiveOutcome(value: 10, type: 'points'),
+    HiveOutcome(value: 20, type: 'points'),
+    HiveOutcome(value: 30, type: 'points'),
+    HiveOutcome(value: 40, type: 'points'),
+    HiveOutcome(value: 50, type: 'points'),
   ];
 
   FortuneWheelModel() {
-    _wheelBox = Hive.box('fortuneBox');
+    _fortuneBox = Hive.box('fortuneBox');
+
     _loadState();
   }
 
   void _loadState() {
-    final state = _wheelBox.get('state');
-
+    final state = _fortuneBox.get('status');
+    final fortuneOutcome = _fortuneBox.get('outcome');
+    if (fortuneOutcome != null) _outcome = fortuneOutcome;
     if (state != null) {
-      _outcome = state['outcome'] ?? _outcome;
       _isWheelActive = state['isWheelActive'] ?? _isWheelActive;
-      _date = state['date'] ?? _date;
+      _date = DateTime.tryParse(state['date']?.toString() ?? '') ?? _date;
+      if (isNextDay(_date)) {
+        _isWheelActive = true;
+        // updateWheel();
+      }
     }
 
-    if (isNextDay()) {
-      _isWheelActive = true;
-    }
+    randomizeItems();
 
-    notifyListeners();
+    updateWheel();
   }
 
-  void updateState() {
-    _wheelBox.put('state', {
-      'outcome': _outcome,
+  void updateWheel() {
+    _fortuneBox.put('status', {
       'isWheelActive': _isWheelActive,
-      'date': _date,
+      'date': _date.toIso8601String(),
     });
 
     notifyListeners();
   }
 
-  List<String> get discounts => _discounts;
-  int get outcome => _outcome;
-  set outcome(int randomValue) => _outcome;
   bool get isWheelActive => _isWheelActive;
+  List<HiveOutcome> get fortuneItems => _fortuneItems;
+  int get random => _random;
 
-  bool isOutcomeDiscount(String result) {
-    final n = result.substring(result.length - 1);
-    return (n == '%') ? true : false;
+  void randomizeItems() {
+    _fortuneItems.shuffle();
   }
 
-  void disableWheel() {
+  // string values to display on fortune wheel
+  String displayValue(HiveOutcome item) {
+    return (item.type == 'discount') ? '${item.value}%' : '${item.value} pts';
+  }
+
+  // save spinning date and disable till next day
+  void disableWheel(DateTime date) {
+    _date = date;
     _isWheelActive = false;
-    _date = DateTime.now();
-    updateState();
+    updateWheel();
   }
+
+  void getRandomFortuneItem() {
+    _random = Random().nextInt(fortuneItems.length);
+    _outcome = fortuneItems[_random];
+    _fortuneBox.put('outcome', _outcome);
+
+    notifyListeners();
+  }
+
+  // worked if controller.add didn't need an int
+  // HiveOutcome getRandomFortuneItem() {
+  //   final totalWeight = fortuneItems.fold(0, (sum, item) => sum + item.weight);
+  //   final random = Random().nextInt(totalWeight);
+  //   int cumulativeWeight = 0;
+
+  //   for (final item in fortuneItems) {
+  //     cumulativeWeight += item.weight;
+  //     if (random < cumulativeWeight) {
+  //       return item;
+  //     }
+  //   }
+
+  //   return fortuneItems.first;
+  // }
 }

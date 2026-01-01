@@ -1,15 +1,15 @@
+import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:provider/provider.dart';
 
 class TotalTile extends StatelessWidget {
-  final double totalPrice;
-  final VoidCallback empty;
+  final VoidCallback onDiscardAll;
 
   const TotalTile({
     super.key,
-    required this.totalPrice,
-    required this.empty,
+    required this.onDiscardAll,
   });
 
   @override
@@ -46,7 +46,7 @@ class TotalTile extends StatelessWidget {
                   backgroundColor: Theme.of(context).colorScheme.error,
                 ),
                 onPressed: () {
-                  empty();
+                  onDiscardAll();
                   Navigator.of(context).pop();
                 },
                 child: Text(
@@ -65,77 +65,110 @@ class TotalTile extends StatelessWidget {
     return GlossyBox(
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Consumer<Cart>(
+          builder: (context, cart, child) {
+            return Column(
               children: [
-                Text(
-                  'Total',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '${totalPrice.toStringAsFixed(2)} €',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                OutlinedButton(
-                  onPressed: emptyCart,
-                  style: OutlinedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    side: BorderSide(
-                      color: Theme.of(context).colorScheme.error,
-                    ),
-                    foregroundColor: Theme.of(context).colorScheme.error,
-                  ),
-                  child: Row(
-                    spacing: 8,
+                if (cart.discount > 0)
+                  Column(
                     children: [
-                      Icon(
-                        LucideIcons.trash2,
-                        color: Theme.of(context).colorScheme.error,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Total produits'),
+                          Text(
+                            '${cart.totalPrice.toStringAsFixed(2)} €',
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Vider',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.error,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Économie réalisée'),
+                          Text(
+                            '- ${cart.savings.toStringAsFixed(2)} €',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
+                const Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Total',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      (cart.discount > 0)
+                          ? '${cart.totalPriceDiscounted.toStringAsFixed(2)} €'
+                          : '${cart.totalPrice.toStringAsFixed(2)} €',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
-                FilledButton(
-                  onPressed: () {},
-                  style: FilledButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    OutlinedButton(
+                      onPressed: emptyCart,
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        side: BorderSide(
+                          color: Theme.of(context).colorScheme.error,
+                        ),
+                        foregroundColor: Theme.of(context).colorScheme.error,
+                      ),
+                      child: Row(
+                        spacing: 8,
+                        children: [
+                          Icon(
+                            LucideIcons.trash2,
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                          Text(
+                            'Vider',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    backgroundColor: Theme.of(
-                      context,
-                    ).colorScheme.primary,
-                  ),
-                  child: Text(
-                    'Commander',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onPrimary,
+                    FilledButton(
+                      onPressed: () {},
+                      style: FilledButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        backgroundColor: Theme.of(
+                          context,
+                        ).colorScheme.primary,
+                      ),
+                      child: Text(
+                        'Commander',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

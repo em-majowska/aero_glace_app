@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:math';
-
 import 'package:aero_glace_app/features/bonus/fortune_wheel.dart';
 import 'package:aero_glace_app/features/bonus/prize.dart';
 import 'package:aero_glace_app/model/fortune_wheel_model.dart';
@@ -16,7 +14,7 @@ class FortuneWheelBox extends StatefulWidget {
 }
 
 class _FortuneWheelBoxState extends State<FortuneWheelBox> {
-  final StreamController<int> controller = StreamController<int>();
+  late final StreamController<int> controller = StreamController<int>();
 
   @override
   void dispose() {
@@ -32,14 +30,11 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
         child: Consumer<FortuneWheelModel>(
           builder: (context, fortuneWheel, child) {
             final isActive = fortuneWheel.isWheelActive;
-            final result = fortuneWheel.discounts[fortuneWheel.outcome];
 
             void spinTheWheel() {
               if (!isActive) return;
-              final random = Random().nextInt(fortuneWheel.discounts.length);
-              fortuneWheel.outcome = random;
-              controller.add(fortuneWheel.outcome);
-              fortuneWheel.updateState();
+              fortuneWheel.getRandomFortuneItem();
+              controller.add(fortuneWheel.random);
             }
 
             return Column(
@@ -75,14 +70,13 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
                     child: FortuneWheelElement(
                       controller: controller,
                       onSpin: spinTheWheel,
-                      result: result,
                     ),
                   ),
                 ),
                 if (!isActive)
                   Prize(
-                    result: result,
-                    isDiscount: fortuneWheel.isOutcomeDiscount,
+                    result: fortuneWheel.displayValue(fortuneWheel.outcome),
+                    isDiscount: fortuneWheel.outcome.type == 'discount',
                   ),
                 Center(
                   child: FilledButton(
@@ -90,28 +84,24 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      disabledBackgroundColor: (isActive)
-                          ? Theme.of(context).colorScheme.primary
-                          : Colors.transparent,
+                      disabledBackgroundColor: Colors.transparent,
                     ),
                     onPressed: (isActive) ? spinTheWheel : null,
-                    child: () {
-                      return (isActive)
-                          ? Text(
-                              'Tourner la roue !',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
-                            )
-                          : Text(
-                              'Tentez votre chance demain !',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Theme.of(context).colorScheme.secondary,
-                              ),
-                            );
-                    }(),
+                    child: (isActive)
+                        ? Text(
+                            'Tourner la roue !',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
+                          )
+                        : Text(
+                            'Tentez votre chance demain !',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Theme.of(context).colorScheme.secondary,
+                            ),
+                          ),
                   ),
                 ),
               ],

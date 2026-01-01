@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/model/fortune_wheel_model.dart';
 import 'package:flutter/material.dart';
@@ -8,26 +7,22 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
 class FortuneWheelElement extends StatelessWidget {
-  final String result;
   final StreamController<int> controller;
   final VoidCallback onSpin;
 
-  FortuneWheelElement({
+  const FortuneWheelElement({
     super.key,
-    required this.result,
     required this.controller,
     required this.onSpin,
   });
 
-  final segmentColors = [
+  static final segmentColors = [
     Colors.blue.shade100,
     Colors.red.shade100,
   ];
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<Cart>(context, listen: true);
-
     return Stack(
       children: [
         SizedBox(
@@ -44,11 +39,14 @@ class FortuneWheelElement extends StatelessWidget {
                 selected: controller.stream,
                 onFling: onSpin,
                 onAnimationEnd: () {
-                  fortuneWheel.disableWheel();
-                  if (fortuneWheel.isOutcomeDiscount(result)) {
-                    cart.setDiscount(
-                      result,
-                    );
+                  if (!fortuneWheel.isWheelActive) return;
+                  final cart = Provider.of<Cart>(context, listen: false);
+                  final now = DateTime.now();
+                  fortuneWheel.disableWheel(now);
+                  if (fortuneWheel.outcome.type == 'discount') {
+                    cart.setDiscount(fortuneWheel.outcome.value, now);
+                  } else {
+                    cart.setDiscount(0, now);
                   }
                 },
                 animateFirst: false,
@@ -65,7 +63,7 @@ class FortuneWheelElement extends StatelessWidget {
                 ],
 
                 // items
-                items: List.generate(fortuneWheel.discounts.length, (i) {
+                items: List.generate(fortuneWheel.fortuneItems.length, (i) {
                   return FortuneItem(
                     style: FortuneItemStyle(
                       borderWidth: 2,
@@ -76,17 +74,20 @@ class FortuneWheelElement extends StatelessWidget {
                       alignment: Alignment.center,
                       children: [
                         Positioned(
-                          right: 30,
+                          // position the outcome on the wheel
+                          right: 20,
                           child: RotatedBox(
                             quarterTurns: 5,
                             child: Text(
-                              fortuneWheel.discounts[i],
+                              fortuneWheel.displayValue(
+                                fortuneWheel.fortuneItems[i],
+                              ),
                               style: Theme.of(context).textTheme.labelLarge
                                   ?.copyWith(
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.onPrimaryContainer,
-                                    fontSize: 22,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),

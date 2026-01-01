@@ -8,28 +8,54 @@ import 'package:flutter/material.dart';
 
 class Cart extends ChangeNotifier {
   // get hive box
-  Box<HiveItem> get _cartBox => Hive.box<HiveItem>('cartBox');
+  late final Box _cartBox;
   final List<Flavor> _flavors = defaultFlavors;
-  double _discount = 0;
+  double total = 0;
+  late int _discount = 0;
+  DateTime _date = DateTime.now();
+
+  // getters
+  int get discount => _discount;
+  DateTime get date => _date;
+  List<Item> get items {
+    final items = _filterItems();
+    return items.map((item) {
+      final flavor = _flavors.firstWhere((f) => f.id == item.flavorId);
+      return Item(flavor: flavor, qty: item.qty);
+    }).toList();
+  }
 
   Cart() {
+    _cartBox = Hive.box('cartBox');
     _loadCart();
   }
 
   // load cart from Hive
   void _loadCart() {
-    if (isNextDay()) {
-      setDiscount('0.0');
+    final state = _cartBox.get('cart');
+    var isDiscountInvalid = false;
+    if (state != null) {
+      final storedDiscount = state['discount'];
+      if (storedDiscount != null) {
+        _discount = storedDiscount;
+      }
+      _date = DateTime.tryParse(state['date']) ?? _date;
+      if (isNextDay(_date)) {
+        setDiscount(0, _date);
+        isDiscountInvalid = true;
+      }
     }
 
-    notifyListeners();
+    if (!isDiscountInvalid) notifyListeners();
   }
 
-  List<Item> get items {
-    return _cartBox.values.map((item) {
-      final flavor = _flavors.firstWhere((f) => f.id == item.flavorId);
-      return Item(flavor: flavor, qty: item.qty);
-    }).toList();
+  void _updateCart() {
+    _cartBox.put('cart', {
+      'discount': _discount,
+      'date': _date.toIso8601String(),
+    });
+
+    notifyListeners();
   }
 
   // add item
@@ -58,6 +84,7 @@ class Cart extends ChangeNotifier {
     }
   }
 
+  // discard all items of the same flavor
   void discardItem(Flavor flavor) {
     final existingItem = _findCartItem(flavor.id);
     if (existingItem != null) {
@@ -84,39 +111,59 @@ class Cart extends ChangeNotifier {
   }
 
   // get quantity per item
-  int getItemQuantity(int flavorId) =>
-      _cartBox.values.firstWhere((item) => item.flavorId == flavorId).qty;
+  int getItemQuantity(int flavorId) {
+    try {
+      return _cartBox.values
+          .firstWhere((item) => item.flavorId == flavorId)
+          .qty;
+    } catch (e) {
+      return 0;
+    }
+  }
 
   // get total quantity
   int get totalQuantity =>
-      _cartBox.values.fold(0, (sum, item) => sum + item.qty);
+      _filterItems().fold(0, (sum, item) => sum + item.qty);
 
   // TODO add item price to item_tile
   // get price per item
   double getItemPrice(Flavor flavor) {
-    final item = _cartBox.values.firstWhere(
-      (item) => item.flavorId == flavor.id,
-    );
-    return item.qty * flavor.price;
+    try {
+      final item = _cartBox.values.firstWhere(
+        (item) => item.flavorId == flavor.id,
+      );
+      return item.qty * flavor.price;
+    } catch (e) {
+      return 0;
+    }
   }
 
   // get total  price
   double get totalPrice {
-    double total = _cartBox.values.fold(0.00, (sum, item) {
+    total = _filterItems().fold(0.00, (sum, item) {
       final flavor = _flavors.firstWhere((f) => f.id == item.flavorId);
       return sum + (flavor.price * item.qty);
     });
 
-    if (_discount != 0) {
-      total = total * (1 - discount);
-    }
     return total;
   }
 
-  void setDiscount(String result) {
-    _discount = int.parse(result.substring(0, 2)) / 100;
-    notifyListeners();
+  double get totalPriceDiscounted {
+    return (_discount != 0) ? total - (total * (discount / 100)) : 0.0;
   }
 
-  double get discount => _discount;
+  double get savings {
+    return totalPrice * (discount / 100);
+  }
+
+  void setDiscount(int result, DateTime? now) {
+    _discount = result;
+    _date = (now == null) ? DateTime.now() : now;
+    _updateCart();
+  }
+
+  // filter items from hivebox, exclude discount
+  Iterable<HiveItem> _filterItems() {
+    return _cartBox.values.whereType<HiveItem>();
+  }
 }

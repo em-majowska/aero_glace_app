@@ -74,11 +74,7 @@ class ItemTile extends StatelessWidget {
                     ),
                     Text(
                       '${flavor.price.toStringAsFixed(2)} €',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.error,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ],
                 ),

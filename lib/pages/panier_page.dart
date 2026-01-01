@@ -61,8 +61,7 @@ class PanierPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     TotalTile(
-                      totalPrice: cart.totalPrice,
-                      empty: cart.discardAllItems,
+                      onDiscardAll: cart.discardAllItems,
                     ),
                   ],
                 );

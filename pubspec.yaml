@@ -37,6 +37,7 @@ dependencies:
   # database packages
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  equatable: ^2.0.7
   # map packages
   flutter_map: ^8.2.2
   latlong2: ^0.9.1
