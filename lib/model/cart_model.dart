@@ -32,21 +32,21 @@ class Cart extends ChangeNotifier {
 
   // load cart from Hive
   void _loadCart() {
-    final state = _cartBox.get('cart');
-    var isDiscountInvalid = false;
-    if (state != null) {
-      final storedDiscount = state['discount'];
-      if (storedDiscount != null) {
-        _discount = storedDiscount;
-      }
-      _date = DateTime.tryParse(state['date']) ?? _date;
+    final cart = _cartBox.get('cart');
+    var isDiscountValid =
+        true; // fetch data from hive if discount is still valid
+
+    if (cart != null) {
+      _discount = cart['discount'] ?? _discount;
+      _date = DateTime.tryParse(cart['date']) ?? _date;
+
       if (isNextDay(_date)) {
         setDiscount(0, _date);
-        isDiscountInvalid = true;
+        isDiscountValid = false;
       }
     }
 
-    if (!isDiscountInvalid) notifyListeners();
+    if (isDiscountValid) notifyListeners();
   }
 
   void _updateCart() {
@@ -61,18 +61,21 @@ class Cart extends ChangeNotifier {
   // add item
   void addItem(Flavor flavor) {
     final existingItem = _findCartItem(flavor.id);
+
     if (existingItem != null) {
       existingItem.qty++;
       _cartBox.put(existingItem.key, existingItem);
     } else {
       _cartBox.add(HiveItem(flavorId: flavor.id));
     }
+
     notifyListeners();
   }
 
   // remove item
   void removeItem(Flavor flavor) {
     final existingItem = _findCartItem(flavor.id);
+
     if (existingItem != null) {
       if (existingItem.qty > 1) {
         existingItem.qty--;
@@ -80,16 +83,19 @@ class Cart extends ChangeNotifier {
       } else {
         _cartBox.delete(existingItem.key);
       }
-      notifyListeners();
     }
+
+    notifyListeners();
   }
 
   // discard all items of the same flavor
   void discardItem(Flavor flavor) {
     final existingItem = _findCartItem(flavor.id);
+
     if (existingItem != null) {
       _cartBox.delete(existingItem.key);
     }
+
     notifyListeners();
   }
 

@@ -14,7 +14,6 @@ class FortuneWheelModel extends ChangeNotifier {
   ); // fallback
   bool _isWheelActive = true;
   DateTime _date = DateTime.now();
-  HiveOutcome get outcome => _outcome;
 
   final List<HiveOutcome> _fortuneItems = [
     HiveOutcome(value: 10, type: 'discount'),
@@ -27,6 +26,12 @@ class FortuneWheelModel extends ChangeNotifier {
     HiveOutcome(value: 50, type: 'points'),
   ];
 
+  int get random =>
+      _random; // to add as index to the controller of fortune wheel
+  bool get isWheelActive => _isWheelActive;
+  HiveOutcome get outcome => _outcome; // to keep in hive
+  List<HiveOutcome> get fortuneItems => _fortuneItems;
+
   FortuneWheelModel() {
     _fortuneBox = Hive.box('fortuneBox');
 
@@ -36,17 +41,27 @@ class FortuneWheelModel extends ChangeNotifier {
   void _loadState() {
     final state = _fortuneBox.get('status');
     final fortuneOutcome = _fortuneBox.get('outcome');
+
     if (fortuneOutcome != null) _outcome = fortuneOutcome;
     if (state != null) {
       _isWheelActive = state['isWheelActive'] ?? _isWheelActive;
       _date = DateTime.tryParse(state['date']?.toString() ?? '') ?? _date;
-      if (isNextDay(_date)) {
-        _isWheelActive = true;
-        // updateWheel();
-      }
+
+      if (isNextDay(_date)) _isWheelActive = true;
     }
 
-    randomizeItems();
+    shuffleItemsList();
+    updateWheel();
+  }
+
+  void shuffleItemsList() {
+    _fortuneItems.shuffle();
+  }
+
+  void getRandomFortuneItem() {
+    _random = Random().nextInt(fortuneItems.length);
+    _outcome = fortuneItems[_random];
+    _fortuneBox.put('outcome', _outcome);
 
     updateWheel();
   }
@@ -59,10 +74,6 @@ class FortuneWheelModel extends ChangeNotifier {
 
     notifyListeners();
   }
-
-  bool get isWheelActive => _isWheelActive;
-  List<HiveOutcome> get fortuneItems => _fortuneItems;
-  int get random => _random;
 
   void randomizeItems() {
     _fortuneItems.shuffle();
@@ -78,14 +89,6 @@ class FortuneWheelModel extends ChangeNotifier {
     _date = date;
     _isWheelActive = false;
     updateWheel();
-  }
-
-  void getRandomFortuneItem() {
-    _random = Random().nextInt(fortuneItems.length);
-    _outcome = fortuneItems[_random];
-    _fortuneBox.put('outcome', _outcome);
-
-    notifyListeners();
   }
 
   // worked if controller.add didn't need an int
