@@ -72,9 +72,11 @@ class ItemTile extends StatelessWidget {
                         context,
                       ).textTheme.titleMedium?.copyWith(height: 1.2),
                     ),
-                    Text(
-                      '${flavor.price.toStringAsFixed(2)} €',
-                      style: Theme.of(context).textTheme.titleMedium,
+                    Consumer<Cart>(
+                      builder: (context, cart, child) => Text(
+                        '${cart.getItemPrice(flavor).toStringAsFixed(2)} €',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ),
                   ],
                 ),

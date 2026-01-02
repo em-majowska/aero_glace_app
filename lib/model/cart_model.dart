@@ -131,7 +131,6 @@ class Cart extends ChangeNotifier {
   int get totalQuantity =>
       _filterItems().fold(0, (sum, item) => sum + item.qty);
 
-  // TODO add item price to item_tile
   // get price per item
   double getItemPrice(Flavor flavor) {
     try {

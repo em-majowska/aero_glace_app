@@ -40,13 +40,16 @@ class FortuneWheelElement extends StatelessWidget {
                 onFling: onSpin,
                 onAnimationEnd: () {
                   if (!fortuneWheel.isWheelActive) return;
+
                   final cart = Provider.of<Cart>(context, listen: false);
                   final now = DateTime.now();
+
                   fortuneWheel.disableWheel(now);
                   if (fortuneWheel.outcome.type == 'discount') {
                     cart.setDiscount(fortuneWheel.outcome.value, now);
                   } else {
                     cart.setDiscount(0, now);
+                    fortuneWheel.addPoints(fortuneWheel.outcome.value);
                   }
                 },
                 animateFirst: false,

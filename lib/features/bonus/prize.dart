@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Prize extends StatelessWidget {
-  final String result;
+  final int result;
   final bool isDiscount;
   const Prize({
     super.key,
@@ -13,7 +13,7 @@ class Prize extends StatelessWidget {
   Widget build(BuildContext context) {
     final String phrase = (isDiscount)
         ? '$result de réduction'
-        : '${result.substring(0, 2)} points';
+        : '$result points';
 
     return Center(
       child: Column(

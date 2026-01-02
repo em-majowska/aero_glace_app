@@ -1,5 +1,6 @@
 // import 'dart:async';
 import 'dart:math';
+import 'package:aero_glace_app/model/hive_level_model.dart';
 import 'package:aero_glace_app/model/hive_outcome_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -7,13 +8,19 @@ import 'package:aero_glace_app/util/next_day.dart';
 
 class FortuneWheelModel extends ChangeNotifier {
   late final Box _fortuneBox;
-  late int _random = 0; // fallback
-  late HiveOutcome _outcome = HiveOutcome(
-    value: 0,
-    type: 'discount',
-  ); // fallback
+  late int _random = 0;
+  late HiveOutcome _outcome = HiveOutcome(value: 0, type: 'discount');
   bool _isWheelActive = true;
   DateTime _date = DateTime.now();
+  int _points = 0;
+  HiveLevel _level = HiveLevel(value: 1, minPoints: 0, maxPoints: 250);
+
+  final List<HiveLevel> _levels = [
+    HiveLevel(value: 1, minPoints: 0, maxPoints: 250),
+    HiveLevel(value: 2, minPoints: 251, maxPoints: 500),
+    HiveLevel(value: 3, minPoints: 501, maxPoints: 1000),
+    HiveLevel(value: 4, minPoints: 1001, maxPoints: 1500),
+  ];
 
   final List<HiveOutcome> _fortuneItems = [
     HiveOutcome(value: 10, type: 'discount'),
@@ -31,6 +38,8 @@ class FortuneWheelModel extends ChangeNotifier {
   bool get isWheelActive => _isWheelActive;
   HiveOutcome get outcome => _outcome; // to keep in hive
   List<HiveOutcome> get fortuneItems => _fortuneItems;
+  int get points => _points;
+  HiveLevel get level => _level;
 
   FortuneWheelModel() {
     _fortuneBox = Hive.box('fortuneBox');
@@ -41,12 +50,18 @@ class FortuneWheelModel extends ChangeNotifier {
   void _loadState() {
     final state = _fortuneBox.get('status');
     final fortuneOutcome = _fortuneBox.get('outcome');
+    final collectedPoints = _fortuneBox.get('points');
+    final gainedLevel = _fortuneBox.get('level');
 
     if (fortuneOutcome != null) _outcome = fortuneOutcome;
-    if (state != null) {
-      _isWheelActive = state['isWheelActive'] ?? _isWheelActive;
-      _date = DateTime.tryParse(state['date']?.toString() ?? '') ?? _date;
+    if (collectedPoints != null) _points = collectedPoints;
+    if (gainedLevel != null) _level = gainedLevel;
 
+    if (state != null) {
+      final dateString = state['date'];
+
+      _isWheelActive = state['isWheelActive'] ?? _isWheelActive;
+      if (dateString != null) _date = DateTime.tryParse(dateString) ?? _date;
       if (isNextDay(_date)) _isWheelActive = true;
     }
 
@@ -75,6 +90,13 @@ class FortuneWheelModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updatePoints() {
+    _fortuneBox.put('points', _points);
+    _fortuneBox.put('level', _level);
+
+    notifyListeners();
+  }
+
   void randomizeItems() {
     _fortuneItems.shuffle();
   }
@@ -89,6 +111,25 @@ class FortuneWheelModel extends ChangeNotifier {
     _date = date;
     _isWheelActive = false;
     updateWheel();
+  }
+
+  // Collecting points
+
+  void addPoints(int result) {
+    _points += result;
+    _setLevel();
+
+    updatePoints();
+  }
+
+  void _setLevel() {
+    (_points < 250)
+        ? _level = _levels[0]
+        : (_points < 500)
+        ? _level = _levels[1]
+        : (_points < 1000)
+        ? _level = _levels[2]
+        : _level = _levels[3];
   }
 
   // worked if controller.add didn't need an int

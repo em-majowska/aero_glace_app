@@ -1,4 +1,5 @@
 import 'package:aero_glace_app/model/hive_item_model.dart';
+import 'package:aero_glace_app/model/hive_level_model.dart';
 import 'package:aero_glace_app/model/hive_outcome_model.dart';
 import 'package:flutter/material.dart';
 import 'package:aero_glace_app/pages/home_page.dart';
@@ -19,6 +20,7 @@ void main() async {
   // register adapter
   Hive.registerAdapter(HiveItemAdapter());
   Hive.registerAdapter(HiveOutcomeAdapter());
+  Hive.registerAdapter(HiveLevelAdapter());
   // open the box
   await Hive.openBox('cartBox');
   await Hive.openBox('fortuneBox');

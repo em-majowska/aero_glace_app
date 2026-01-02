@@ -75,7 +75,7 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
                 ),
                 if (!isActive)
                   Prize(
-                    result: fortuneWheel.displayValue(fortuneWheel.outcome),
+                    result: fortuneWheel.outcome.value,
                     isDiscount: fortuneWheel.outcome.type == 'discount',
                   ),
                 Center(
@@ -89,7 +89,7 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
                     onPressed: (isActive) ? spinTheWheel : null,
                     child: (isActive)
                         ? Text(
-                            'Tourner la roue !',
+                            'Tourner la roue',
                             style: TextStyle(
                               fontSize: 16,
                               color: Theme.of(context).colorScheme.onPrimary,
