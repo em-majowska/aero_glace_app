@@ -1,15 +1,20 @@
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:latlong2/latlong.dart';
 
 class LocationTile extends StatefulWidget {
   final String city;
   final String address;
+  final LatLng coordinates;
+  final void Function(LatLng)? onPressed;
 
   const LocationTile({
     super.key,
     required this.city,
     required this.address,
+    required this.coordinates,
+    required this.onPressed,
   });
 
   @override
@@ -58,7 +63,7 @@ class _LocationTileState extends State<LocationTile> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () => widget.onPressed!(widget.coordinates),
                   child: Icon(
                     LucideIcons.navigation,
                     size: 25,
@@ -73,3 +78,5 @@ class _LocationTileState extends State<LocationTile> {
     );
   }
 }
+
+// TODO fix splash button

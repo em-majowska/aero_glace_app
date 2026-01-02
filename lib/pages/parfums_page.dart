@@ -2,6 +2,7 @@ import 'package:aero_glace_app/data/default_flavors.dart';
 import 'package:aero_glace_app/features/flavors/flavor_tile.dart';
 import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
+import 'package:aero_glace_app/model/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
@@ -13,30 +14,13 @@ final flavors = defaultFlavors;
 void _showMessage(BuildContext context, Flavor flavor) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
   ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      duration: const Duration(seconds: 3),
-      padding: const EdgeInsets.all(12),
-      backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+    MySnackBar(
+      context: context,
+      icon: Icon(
+        LucideIcons.circleCheck300,
+        color: Theme.of(context).colorScheme.tertiary,
       ),
-      dismissDirection: DismissDirection.horizontal,
-      behavior: SnackBarBehavior.floating,
-      content: Row(
-        spacing: 8,
-        children: [
-          Icon(
-            LucideIcons.circleCheck300,
-            color: Theme.of(context).colorScheme.tertiary,
-          ),
-          Text(
-            '${flavor.title} ajouté au panier',
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-          ),
-        ],
-      ),
+      message: '${flavor.title} ajouté au panier',
     ),
   );
 }

@@ -24,6 +24,8 @@ class CartePage extends StatefulWidget {
 }
 
 class _CartePageState extends State<CartePage> {
+  final GlobalKey<MyMapState> myMapKey = GlobalKey<MyMapState>();
+
   // All shops locations and coordinates
   final List<ShopLocation> shopLocations = [
     ShopLocation(
@@ -63,7 +65,7 @@ class _CartePageState extends State<CartePage> {
             Column(
               children: [
                 Expanded(
-                  child: MyMap(shopLocations: shopLocations),
+                  child: MyMap(key: myMapKey, shopLocations: shopLocations),
                 ),
                 Expanded(
                   child: ListView.separated(
@@ -78,6 +80,8 @@ class _CartePageState extends State<CartePage> {
                       return LocationTile(
                         city: shopLocations[index].city,
                         address: shopLocations[index].address,
+                        coordinates: shopLocations[index].coordinates,
+                        onPressed: myMapKey.currentState?.showLocation,
                       );
                     },
                   ),
