@@ -2,13 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 import '../model/flavor_model.dart';
 
+final Map tags = {
+  "vegan": FlutterI18n.translate(context, "vegan"),
+  "sansLactose": FlutterI18n.translate(context, "sansLactose"),
+  "sansGluten": FlutterI18n.translate(context, "sansGluten"),
+  "bio": FlutterI18n.translate(context, "bio"),
+  "cafe": FlutterI18n.translate(context, "cafe"),
+  "alcoholise": FlutterI18n.translate(context, "alcoholise"),
+  "cacahuetes": FlutterI18n.translate(context, "cacahuetes"),
+};
+
 final List<Flavor> defaultFlavors = [
   Flavor(
     id: 1,
     title: 'Chocolat Supernova',
     description:
         'Explosion de chocolat noir belge avec des éclats de cacao torréfié.',
-    tags: ['organic'],
+    tags: [tags["bio"]],
     imagePath: 'chocolate.jpg',
     price: 4.50,
     meshPoints: [
@@ -32,7 +42,7 @@ final List<Flavor> defaultFlavors = [
     title: 'Fruit de la Passion Orion',
     description:
         'Fruit de la passion exotique avec une touche de vanille stellaire.',
-    tags: ['vegan', 'glutenFree'],
+    tags: [tags["vegan"], tags["sansGluten"]],
     imagePath: 'passion-fruit.jpg',
     price: 5.00,
     meshPoints: [
@@ -59,7 +69,7 @@ final List<Flavor> defaultFlavors = [
     id: 3,
     title: 'Café Nébuleuse',
     description: 'Espresso italien intense avec des notes de caramel cosmique.',
-    tags: ['organic'],
+    tags: [tags["cafe"], tags["bio"]],
     imagePath: 'coffee.jpg',
     price: 4.50,
     meshPoints: [
@@ -90,7 +100,7 @@ final List<Flavor> defaultFlavors = [
     id: 4,
     title: 'Pistache Andromède',
     description: 'Pistache de Sicile premium avec un voile de miel astral.',
-    tags: ['containsPeanuts', 'organic'],
+    tags: [tags["cacahuetes"], tags["bio"]],
     imagePath: 'pistache.jpg',
     price: 5.50,
     meshPoints: [
@@ -121,7 +131,7 @@ final List<Flavor> defaultFlavors = [
     id: 5,
     title: 'Citron Solaire',
     description: 'Citron de Menton acidulé avec du zeste cristallisé.',
-    tags: ['vegan', 'lactoseFree', 'glutenFree'],
+    tags: [tags["vegan"], tags["sansLactose"], tags["sansGluten"]],
     imagePath: 'lemon.jpg',
     price: 4.00,
     meshPoints: [
@@ -150,6 +160,7 @@ final List<Flavor> defaultFlavors = [
     description:
         'Tiramisu onctueux aux fraises tournoyant autour des anneaux de Saturne.',
     tags: ['containsAlcohol'],
+    tags: [tags["alcoholise"]],
     imagePath: 'strawberry.jpg',
     price: 4.50,
     meshPoints: [
@@ -180,7 +191,7 @@ final List<Flavor> defaultFlavors = [
     id: 7,
     title: 'Fruit du Dragon Cosmos',
     description: 'Pitaya rose vibrante cueilli aux confins du cosmos.',
-    tags: ['vegan', 'glutenFree'],
+    tags: [tags["vegan"], tags["sansGluten"]],
     imagePath: 'dragon-fruit.jpg',
     price: 5.50,
     meshPoints: [
@@ -213,6 +224,7 @@ final List<Flavor> defaultFlavors = [
     description:
         'Thé matcha de Kyoto fusionné avec la mangue dans un tourbillon nébuleux.',
     tags: ['vegan', 'organic'],
+    tags: [tags["vegan"], tags["bio"]],
     imagePath: 'matcha-mango.jpg',
     price: 5.00,
     meshPoints: [
@@ -245,6 +257,7 @@ final List<Flavor> defaultFlavors = [
     description:
         'Caramel au beurre salé de Bretagne, glacé comme les plaines de Pluton.',
     tags: ['glutenFree'],
+    tags: [tags["sansGluten"]],
     imagePath: 'caramel.jpg',
     price: 5.50,
     meshPoints: [
