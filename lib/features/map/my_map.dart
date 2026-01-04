@@ -1,6 +1,7 @@
 import 'dart:convert';
+import 'package:aero_glace_app/model/shop_location_model.dart';
 import 'package:aero_glace_app/model/snack_bar.dart';
-import 'package:aero_glace_app/pages/carte_page.dart';
+
 import 'package:aero_glace_app/util/unpack_polyline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -13,8 +14,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
 class MyMap extends StatefulWidget {
-  final List<ShopLocation> shopLocations;
-  const MyMap({super.key, required this.shopLocations});
+  final List<ShopLocation> shops;
+  const MyMap({super.key, required this.shops});
 
   @override
   State<MyMap> createState() => MyMapState();
@@ -150,11 +151,11 @@ class MyMapState extends State<MyMap> {
   @override
   Widget build(BuildContext context) {
     // Marker template
-    final List<Marker> markers = List.generate(widget.shopLocations.length, (
+    final List<Marker> markers = List.generate(widget.shops.length, (
       index,
     ) {
       return Marker(
-        point: widget.shopLocations[index].coordinates,
+        point: widget.shops[index].coordinates,
         width: 45,
         height: 45,
         child: Container(
@@ -218,7 +219,7 @@ class MyMapState extends State<MyMap> {
                   markers: markers,
                   popupDisplayOptions: PopupDisplayOptions(
                     builder: (BuildContext context, Marker marker) {
-                      final shop = widget.shopLocations.firstWhere(
+                      final shop = widget.shops.firstWhere(
                         (shop) => shop.coordinates == marker.point,
                       );
                       return Container(

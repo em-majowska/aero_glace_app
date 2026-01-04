@@ -1,20 +1,10 @@
+import 'package:aero_glace_app/data/shop_locations.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:aero_glace_app/features/map/location_tile.dart';
 import 'package:aero_glace_app/features/map/my_map.dart';
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
 
-class ShopLocation {
-  final String city;
-  final String address;
-  final LatLng coordinates;
-
-  ShopLocation({
-    required this.city,
-    required this.address,
-    required this.coordinates,
-  });
-}
+final shops = shopLocations;
 
 class CartePage extends StatefulWidget {
   const CartePage({super.key});
@@ -25,30 +15,6 @@ class CartePage extends StatefulWidget {
 
 class _CartePageState extends State<CartePage> {
   final GlobalKey<MyMapState> myMapKey = GlobalKey<MyMapState>();
-
-  // All shops locations and coordinates
-  final List<ShopLocation> shopLocations = [
-    ShopLocation(
-      city: 'Saint-Denis',
-      address: '10 Pl. Sarda Garriga, Saint-Denis 97400',
-      coordinates: const LatLng(-20.8734730, 55.4483322),
-    ),
-    ShopLocation(
-      city: 'Saint-Paul',
-      address: '14 Rue des Filaos, Saint-Paul 97460',
-      coordinates: const LatLng(-21.0139205, 55.2611586),
-    ),
-    ShopLocation(
-      city: 'Saint-Leu',
-      address: '69 Rue du Lagon, Saint-Leu 97436',
-      coordinates: const LatLng(-21.1759453, 55.2873976),
-    ),
-    ShopLocation(
-      city: 'Saint-Pierre',
-      address: '9 Rue Suffren, Saint-Pierre 97410',
-      coordinates: const LatLng(-21.3412572, 55.4713007),
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +31,7 @@ class _CartePageState extends State<CartePage> {
             Column(
               children: [
                 Expanded(
-                  child: MyMap(key: myMapKey, shopLocations: shopLocations),
+                  child: MyMap(key: myMapKey, shops: shops),
                 ),
                 Expanded(
                   child: ListView.separated(
@@ -75,12 +41,12 @@ class _CartePageState extends State<CartePage> {
                       horizontal: 16,
                       vertical: 24,
                     ),
-                    itemCount: shopLocations.length,
+                    itemCount: shops.length,
                     itemBuilder: (context, index) {
                       return LocationTile(
-                        city: shopLocations[index].city,
-                        address: shopLocations[index].address,
-                        coordinates: shopLocations[index].coordinates,
+                        city: shops[index].city,
+                        address: shops[index].address,
+                        coordinates: shops[index].coordinates,
                         onPressed: myMapKey.currentState?.showLocation,
                       );
                     },
