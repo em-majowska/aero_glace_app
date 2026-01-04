@@ -1,8 +1,8 @@
 import 'package:aero_glace_app/features/bonus/collected_points_box.dart';
 import 'package:aero_glace_app/features/bonus/fortune_wheel_box.dart';
 import 'package:aero_glace_app/widgets/background.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class BonusPage extends StatelessWidget {
@@ -12,7 +12,7 @@ class BonusPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(FlutterI18n.translate(context, "bonus")),
+        title: Text(context.tr('bonus')),
       ),
       body: Stack(
         children: [

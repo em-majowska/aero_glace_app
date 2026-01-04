@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'package:aero_glace_app/model/shop_location_model.dart';
 import 'package:aero_glace_app/model/snack_bar.dart';
-
 import 'package:aero_glace_app/util/unpack_polyline.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -79,9 +78,7 @@ class MyMapState extends State<MyMap> {
 
       _decodePolyline(geometry);
     } else {
-      errorMessage(
-        FlutterI18n.translate(context, "fetch-route-error"),
-      );
+      errorMessage(context.tr('fetch_route_error'));
     }
   }
 
@@ -126,10 +123,7 @@ class MyMapState extends State<MyMap> {
         MySnackBar(
           context: context,
           icon: const Icon(LucideIcons.badgeAlert),
-          message: FlutterI18n.translate(
-            context,
-            "localization-permissions-error",
-          ),
+          message: context.tr('localization_permissions_error'),
         ),
       );
     }

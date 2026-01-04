@@ -5,8 +5,8 @@ import 'package:aero_glace_app/pages/bonus_page.dart';
 import 'package:aero_glace_app/pages/carte_page.dart';
 import 'package:aero_glace_app/pages/panier_page.dart';
 import 'package:aero_glace_app/pages/parfums_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   // currently selected page
   int _selectedIndex = 0;
 
-  late Locale currentLang;
+  // late Locale currentLang;
 
   void _navigateBottomBar(int index) {
     setState(() {
@@ -38,23 +38,23 @@ class _HomePageState extends State<HomePage> {
     const CartePage(),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () {
-      setState(() {
-        currentLang = FlutterI18n.currentLocale(context) ?? const Locale('fr');
-      });
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Future.delayed(Duration.zero, () {
+  //     setState(() {
+  //       currentLang = FlutterI18n.currentLocale(context) ?? const Locale('fr');
+  //     });
+  //   });
+  // }
 
-  void changeLanguage() {
-    setState(() {
-      currentLang = currentLang.languageCode == 'fr'
-          ? const Locale('ja')
-          : const Locale('fr');
-    });
-  }
+  // void changeLanguage() {
+  //   setState(() {
+  //     currentLang = currentLang.languageCode == 'fr'
+  //         ? const Locale('ja')
+  //         : const Locale('fr');
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -74,16 +74,15 @@ class _HomePageState extends State<HomePage> {
           onTap: _navigateBottomBar,
           items: [
             BottomNavigationBarItem(
-              label: FlutterI18n.translate(context, "accueil"),
+              label: context.tr('accueil'),
               icon: const Icon(LucideIcons.house),
             ),
             BottomNavigationBarItem(
-              label: FlutterI18n.translate(context, "parfums"),
+              label: context.tr('parfums'),
               icon: const Icon(LucideIcons.iceCreamCone),
             ),
             BottomNavigationBarItem(
-              label: FlutterI18n.translate(context, "panier"),
-
+              label: context.tr('panier'),
               // check if cart is empty and add badge if needed
               icon: Builder(
                 builder: (context) {
@@ -103,11 +102,11 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             BottomNavigationBarItem(
-              label: FlutterI18n.translate(context, "bonus"),
+              label: context.tr('bonus'),
               icon: const Icon(LucideIcons.gift),
             ),
             BottomNavigationBarItem(
-              label: FlutterI18n.translate(context, "carte"),
+              label: context.tr('carte'),
               icon: const Icon(LucideIcons.mapPin),
             ),
           ],

@@ -1,5 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 
 class Prize extends StatelessWidget {
   final int result;
@@ -13,14 +13,14 @@ class Prize extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String phrase = (isDiscount)
-        ? FlutterI18n.translate(context, "reduction")
-        : FlutterI18n.translate(context, "result-points");
+        ? context.tr('reduction')
+        : context.tr('result_points');
 
     return Center(
       child: Column(
         spacing: 8,
         children: [
-          Text(FlutterI18n.translate(context, "vous-avez-gagne")),
+          Text(context.tr('vous_avez_gagne')),
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 16,

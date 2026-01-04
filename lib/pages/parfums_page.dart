@@ -3,8 +3,8 @@ import 'package:aero_glace_app/features/flavors/flavor_tile.dart';
 import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
 import 'package:aero_glace_app/model/snack_bar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +21,7 @@ void _showMessage(BuildContext context, Flavor flavor) {
         LucideIcons.circleCheck300,
         color: Theme.of(context).colorScheme.tertiary,
       ),
-      message: FlutterI18n.translate(context, "added-to-cart"),
+      message: context.tr('added_to_cart'),
     ),
   );
 }
@@ -44,7 +44,7 @@ class _ParfumsPageState extends State<ParfumsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(FlutterI18n.translate(context, "nos-parfums")),
+        title: Text(context.tr('nos_parfums')),
       ),
       backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       body: ListView.separated(

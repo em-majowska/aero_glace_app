@@ -1,3 +1,4 @@
+import 'package:aero_glace_app/i18n/codegen_loader.g.dart';
 import 'package:aero_glace_app/model/hive_item_model.dart';
 import 'package:aero_glace_app/model/hive_level_model.dart';
 import 'package:aero_glace_app/model/hive_outcome_model.dart';
@@ -8,15 +9,14 @@ import 'package:aero_glace_app/pages/parfums_page.dart';
 import 'package:aero_glace_app/pages/panier_page.dart';
 import 'package:aero_glace_app/pages/bonus_page.dart';
 import 'package:aero_glace_app/pages/carte_page.dart';
-// import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 // import 'util.dart';
 // import 'theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   // init the hive
   await Hive.initFlutter();
 
@@ -28,26 +28,18 @@ Future<void> main() async {
   await Hive.openBox('cartBox');
   await Hive.openBox('fortuneBox');
 
-  // i18n
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await EasyLocalization.ensureInitialized();
-
-  // runApp(
-  //   EasyLocalization(
-  //     supportedLocales: const [Locale('fr'), Locale('ja')],
-  //     path: 'assets/i18n',
-  //     fallbackLocale: const Locale('fr'),
-  //     child: const MyApp(),
-  //   ),
-  // );
-
-  runApp(const MyApp());
+  runApp(
+    EasyLocalization(
+      path: 'assets/i18n',
+      supportedLocales: const [Locale('fr'), Locale('ja')],
+      fallbackLocale: const Locale('fr'),
+      assetLoader: const CodegenLoader(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  // final FlutterI18nDelegate flutterI18nDelegate;
-
-  // const MyApp({super.key, required this.flutterI18nDelegate});
   const MyApp({super.key});
 
   @override
@@ -65,6 +57,9 @@ class MyApp extends StatelessWidget {
       //   ),
       // ),
       // ),
+      supportedLocales: context.supportedLocales,
+      localizationsDelegates: context.localizationDelegates,
+      locale: context.locale,
       routes: {
         '/accueil': (context) => const AccueilPage(),
         '/parfums': (context) => const ParfumsPage(),
@@ -72,27 +67,12 @@ class MyApp extends StatelessWidget {
         '/bonus': (context) => const BonusPage(),
         '/carte': (context) => const CartePage(),
       },
-      // localizationsDelegates: context.localizationDelegates,
-      // supportedLocales: context.supportedLocales,
-      locale: const Locale('fr'),
-      supportedLocales: const [
-        Locale('fr'),
-        Locale('ja'),
-      ],
-      // WidgetsFlutterBinding.ensureInitialized();
-      localizationsDelegates: [
-        FlutterI18nDelegate(
-          translationLoader: FileTranslationLoader(
-            useCountryCode: false,
-            fallbackFile: 'fr',
-            basePath: 'assets/i18n',
-          ),
-        ),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      home: const HomePage(),
+
+      home: Builder(
+        builder: (context) {
+          return const HomePage();
+        },
+      ),
     );
   }
 }

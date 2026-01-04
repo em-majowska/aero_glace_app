@@ -1,6 +1,6 @@
 import 'package:aero_glace_app/widgets/glossy_box.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class EmptyCartTile extends StatelessWidget {
@@ -24,7 +24,7 @@ class EmptyCartTile extends StatelessWidget {
                 ),
                 Center(
                   child: Text(
-                    FlutterI18n.translate(context, "panier-vide"),
+                    context.tr('panier_vide'),
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),

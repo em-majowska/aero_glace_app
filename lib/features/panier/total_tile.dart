@@ -1,7 +1,7 @@
 import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -23,11 +23,11 @@ class TotalTile extends StatelessWidget {
           return AlertDialog(
             actionsPadding: const EdgeInsets.all(16),
             title: Text(
-              FlutterI18n.translate(context, "vider-panier"),
+              context.tr('btn_vider_panier'),
               style: Theme.of(context).textTheme.titleLarge,
             ),
             content: Text(
-              FlutterI18n.translate(context, "vider-confirmation"),
+              context.tr('vider_confirmation_message'),
             ),
             actions: [
               OutlinedButton(
@@ -37,7 +37,7 @@ class TotalTile extends StatelessWidget {
                   ),
                 ),
                 onPressed: () => Navigator.of(context).pop(),
-                child: Text(FlutterI18n.translate(context, "annuler")),
+                child: Text(context.tr('btn_cancel')),
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
@@ -51,7 +51,7 @@ class TotalTile extends StatelessWidget {
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  FlutterI18n.translate(context, "vider-panier"),
+                  context.tr('btn_vider_panier'),
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onError,
                   ),
@@ -77,7 +77,7 @@ class TotalTile extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            FlutterI18n.translate(context, "total-produits"),
+                            context.tr('total_produits'),
                           ),
                           Text(
                             '${cart.totalPrice.toStringAsFixed(2)} €',
@@ -88,7 +88,7 @@ class TotalTile extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            FlutterI18n.translate(context, "economie-realisee"),
+                            context.tr('economie_realisee'),
                           ),
                           Text(
                             '- ${cart.savings.toStringAsFixed(2)} €',
@@ -106,7 +106,7 @@ class TotalTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      FlutterI18n.translate(context, "total"),
+                      context.tr('total'),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -144,7 +144,7 @@ class TotalTile extends StatelessWidget {
                             color: Theme.of(context).colorScheme.error,
                           ),
                           Text(
-                            FlutterI18n.translate(context, "vider-panier"),
+                            context.tr('btn_vider_panier'),
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.error,
                             ),
@@ -163,7 +163,7 @@ class TotalTile extends StatelessWidget {
                         ).colorScheme.primary,
                       ),
                       child: Text(
-                        FlutterI18n.translate(context, "commander"),
+                        context.tr('btn_commander'),
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),

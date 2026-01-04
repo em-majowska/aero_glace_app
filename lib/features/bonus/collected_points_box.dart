@@ -1,15 +1,20 @@
 import 'package:aero_glace_app/features/bonus/gift.dart';
 import 'package:aero_glace_app/model/fortune_wheel_model.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-class CollectedPointsBox extends StatelessWidget {
+class CollectedPointsBox extends StatefulWidget {
   const CollectedPointsBox({super.key});
 
+  @override
+  State<CollectedPointsBox> createState() => _CollectedPointsBoxState();
+}
+
+class _CollectedPointsBoxState extends State<CollectedPointsBox> {
   @override
   Widget build(BuildContext context) {
     return GlossyBox(
@@ -52,7 +57,7 @@ class CollectedPointsBox extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              FlutterI18n.translate(context, "points-fidelite"),
+                              context.tr('points_fidelite'),
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(
@@ -102,15 +107,8 @@ class CollectedPointsBox extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          FlutterI18n.translate(
-                            context,
-                            "bar-points-collected",
-                          ),
-                        ),
-                        Text(
-                          FlutterI18n.translate(context, "bar-points-max"),
-                        ),
+                        Text(context.tr('bar_points_collected')),
+                        Text(context.tr('bar_points_max')),
                       ],
                     ),
 
@@ -147,7 +145,7 @@ class CollectedPointsBox extends StatelessWidget {
                   spacing: 8,
                   children: [
                     Text(
-                      FlutterI18n.translate(context, "gagnez"),
+                      context.tr('gagnez'),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const Row(

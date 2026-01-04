@@ -1,23 +1,24 @@
+import 'package:aero_glace_app/i18n/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 import '../model/flavor_model.dart';
 
 final Map tags = {
-  "vegan": FlutterI18n.translate(context, "vegan"),
-  "sansLactose": FlutterI18n.translate(context, "sansLactose"),
-  "sansGluten": FlutterI18n.translate(context, "sansGluten"),
-  "bio": FlutterI18n.translate(context, "bio"),
-  "cafe": FlutterI18n.translate(context, "cafe"),
-  "alcoholise": FlutterI18n.translate(context, "alcoholise"),
-  "cacahuetes": FlutterI18n.translate(context, "cacahuetes"),
+  "vegan": LocaleKeys.tag_vegan.tr(),
+  "sansLactose": LocaleKeys.tag_sansLactose.tr(),
+  "sansGluten": LocaleKeys.tag_sansGluten.tr(),
+  "bio": LocaleKeys.tag_bio.tr(),
+  "cafe": LocaleKeys.tag_cafe.tr(),
+  "alcoholise": LocaleKeys.tag_alcoholise.tr(),
+  "cacahuetes": LocaleKeys.tag_cacahuetes.tr(),
 };
 
 final List<Flavor> defaultFlavors = [
   Flavor(
     id: 1,
-    title: FlutterI18n.translate(context, "chocolat-title"),
-    description: FlutterI18n.translate(context, "chocolat-description"),
+    title: LocaleKeys.chocolat_title.tr(),
+    description: LocaleKeys.chocolat_description.tr(),
     tags: [tags["bio"]],
     imagePath: 'chocolate.jpg',
     price: 4.50,
@@ -39,8 +40,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 2,
-    title: FlutterI18n.translate(context, "fruit-passion-title"),
-    description: FlutterI18n.translate(context, "fruit-passion-description"),
+    title: LocaleKeys.fruit_passion_title.tr(),
+    description: LocaleKeys.fruit_passion_description.tr(),
     tags: [tags["vegan"], tags["sansGluten"]],
     imagePath: 'passion-fruit.jpg',
     price: 5.00,
@@ -66,8 +67,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 3,
-    title: FlutterI18n.translate(context, "cafe-title"),
-    description: FlutterI18n.translate(context, "cafe-description"),
+    title: LocaleKeys.cafe_title.tr(),
+    description: LocaleKeys.cafe_description.tr(),
     tags: [tags["cafe"], tags["bio"]],
     imagePath: 'coffee.jpg',
     price: 4.50,
@@ -97,8 +98,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 4,
-    title: FlutterI18n.translate(context, "pistache-title"),
-    description: FlutterI18n.translate(context, "pistache-description"),
+    title: LocaleKeys.pistache_title.tr(),
+    description: LocaleKeys.pistache_description.tr(),
     tags: [tags["cacahuetes"], tags["bio"]],
     imagePath: 'pistache.jpg',
     price: 5.50,
@@ -128,8 +129,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 5,
-    title: FlutterI18n.translate(context, "citron-title"),
-    description: FlutterI18n.translate(context, "citron-description"),
+    title: LocaleKeys.citron_title.tr(),
+    description: LocaleKeys.citron_description.tr(),
     tags: [tags["vegan"], tags["sansLactose"], tags["sansGluten"]],
     imagePath: 'lemon.jpg',
     price: 4.00,
@@ -155,8 +156,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 6,
-    title: FlutterI18n.translate(context, "tiramisu-title"),
-    description: FlutterI18n.translate(context, "tiramisu-description"),
+    title: LocaleKeys.tiramisu_title.tr(),
+    description: LocaleKeys.tiramisu_description.tr(),
     tags: [tags["alcoholise"]],
     imagePath: 'strawberry.jpg',
     price: 4.50,
@@ -186,8 +187,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 7,
-    title: FlutterI18n.translate(context, "fruit-dragon-title"),
-    description: FlutterI18n.translate(context, "fruit-dragon-description"),
+    title: LocaleKeys.fruit_dragon_title.tr(),
+    description: LocaleKeys.fruit_dragon_description.tr(),
     tags: [tags["vegan"], tags["sansGluten"]],
     imagePath: 'dragon-fruit.jpg',
     price: 5.50,
@@ -217,8 +218,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 8,
-    title: FlutterI18n.translate(context, "matcha-title"),
-    description: FlutterI18n.translate(context, "matcha-description"),
+    title: LocaleKeys.matcha_title.tr(),
+    description: LocaleKeys.matcha_description.tr(),
     tags: [tags["vegan"], tags["bio"]],
     imagePath: 'matcha-mango.jpg',
     price: 5.00,
@@ -248,8 +249,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 9,
-    title: FlutterI18n.translate(context, "caramel-title"),
-    description: FlutterI18n.translate(context, "caramel-description"),
+    title: LocaleKeys.caramel_title.tr(),
+    description: LocaleKeys.caramel_description.tr(),
     tags: [tags["sansGluten"]],
     imagePath: 'caramel.jpg',
     price: 5.50,
