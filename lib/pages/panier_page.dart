@@ -5,6 +5,7 @@ import 'package:aero_glace_app/features/panier/total_tile.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 
 class PanierPage extends StatelessWidget {
@@ -14,7 +15,7 @@ class PanierPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Votre Commande'),
+        title: Text(FlutterI18n.translate(context, "votre-commande")),
       ),
       body: Stack(
         children: [

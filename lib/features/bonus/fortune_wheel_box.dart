@@ -4,6 +4,7 @@ import 'package:aero_glace_app/features/bonus/prize.dart';
 import 'package:aero_glace_app/model/fortune_wheel_model.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:provider/provider.dart';
 
 class FortuneWheelBox extends StatefulWidget {
@@ -43,7 +44,7 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
               children: [
                 Center(
                   child: Text(
-                    'Roue de la Fortune',
+                    FlutterI18n.translate(context, "fortune-wheel"),
                     style:
                         Theme.of(
                           context,
@@ -89,14 +90,14 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
                     onPressed: (isActive) ? spinTheWheel : null,
                     child: (isActive)
                         ? Text(
-                            'Tourner la roue',
+                            FlutterI18n.translate(context, "spin-wheel"),
                             style: TextStyle(
                               fontSize: 16,
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),
                           )
                         : Text(
-                            'Tentez votre chance demain !',
+                            FlutterI18n.translate(context, "try-tomorrow"),
                             style: TextStyle(
                               fontSize: 16,
                               color: Theme.of(context).colorScheme.secondary,

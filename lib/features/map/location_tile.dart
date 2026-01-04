@@ -1,5 +1,6 @@
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -45,7 +46,7 @@ class _LocationTileState extends State<LocationTile> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Aero Glace - ${widget.city}',
+                      '${FlutterI18n.translate(context, "aero-glace")} - ${widget.city}',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(

@@ -1,6 +1,7 @@
 import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -22,11 +23,11 @@ class TotalTile extends StatelessWidget {
           return AlertDialog(
             actionsPadding: const EdgeInsets.all(16),
             title: Text(
-              'Vider le panier',
+              FlutterI18n.translate(context, "vider-panier"),
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            content: const Text(
-              'Êtes-vous sûr de vouloir vider votre panier ? Cette action est irréversible et tous les articles seront supprimés.',
+            content: Text(
+              FlutterI18n.translate(context, "vider-confirmation"),
             ),
             actions: [
               OutlinedButton(
@@ -36,7 +37,7 @@ class TotalTile extends StatelessWidget {
                   ),
                 ),
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Annuler'),
+                child: Text(FlutterI18n.translate(context, "annuler")),
               ),
               FilledButton(
                 style: FilledButton.styleFrom(
@@ -50,7 +51,7 @@ class TotalTile extends StatelessWidget {
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Vider le panier',
+                  FlutterI18n.translate(context, "vider-panier"),
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onError,
                   ),
@@ -75,7 +76,9 @@ class TotalTile extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Total produits'),
+                          Text(
+                            FlutterI18n.translate(context, "total-produits"),
+                          ),
                           Text(
                             '${cart.totalPrice.toStringAsFixed(2)} €',
                           ),
@@ -84,7 +87,9 @@ class TotalTile extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Économie réalisée'),
+                          Text(
+                            FlutterI18n.translate(context, "economie-realisee"),
+                          ),
                           Text(
                             '- ${cart.savings.toStringAsFixed(2)} €',
                             style: TextStyle(
@@ -101,7 +106,7 @@ class TotalTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Total',
+                      FlutterI18n.translate(context, "total"),
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -139,7 +144,7 @@ class TotalTile extends StatelessWidget {
                             color: Theme.of(context).colorScheme.error,
                           ),
                           Text(
-                            'Vider',
+                            FlutterI18n.translate(context, "vider-panier"),
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.error,
                             ),
@@ -158,7 +163,7 @@ class TotalTile extends StatelessWidget {
                         ).colorScheme.primary,
                       ),
                       child: Text(
-                        'Commander',
+                        FlutterI18n.translate(context, "commander"),
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),

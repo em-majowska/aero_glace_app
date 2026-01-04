@@ -6,6 +6,7 @@ import 'package:aero_glace_app/pages/carte_page.dart';
 import 'package:aero_glace_app/pages/panier_page.dart';
 import 'package:aero_glace_app/pages/parfums_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // currently selected page
   int _selectedIndex = 0;
+
+  late Locale currentLang;
 
   void _navigateBottomBar(int index) {
     setState(() {
@@ -34,6 +37,24 @@ class _HomePageState extends State<HomePage> {
     const BonusPage(),
     const CartePage(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        currentLang = FlutterI18n.currentLocale(context) ?? const Locale('fr');
+      });
+    });
+  }
+
+  void changeLanguage() {
+    setState(() {
+      currentLang = currentLang.languageCode == 'fr'
+          ? const Locale('ja')
+          : const Locale('fr');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,16 +73,16 @@ class _HomePageState extends State<HomePage> {
           currentIndex: _selectedIndex,
           onTap: _navigateBottomBar,
           items: [
-            const BottomNavigationBarItem(
-              label: 'Accueil',
-              icon: Icon(LucideIcons.house),
-            ),
-            const BottomNavigationBarItem(
-              label: 'Parfums',
-              icon: Icon(LucideIcons.iceCreamCone),
+            BottomNavigationBarItem(
+              label: FlutterI18n.translate(context, "accueil"),
+              icon: const Icon(LucideIcons.house),
             ),
             BottomNavigationBarItem(
-              label: 'Panier',
+              label: FlutterI18n.translate(context, "parfums"),
+              icon: const Icon(LucideIcons.iceCreamCone),
+            ),
+            BottomNavigationBarItem(
+              label: FlutterI18n.translate(context, "panier"),
 
               // check if cart is empty and add badge if needed
               icon: Builder(
@@ -81,13 +102,13 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
             ),
-            const BottomNavigationBarItem(
-              label: 'Bonus',
-              icon: Icon(LucideIcons.gift),
+            BottomNavigationBarItem(
+              label: FlutterI18n.translate(context, "bonus"),
+              icon: const Icon(LucideIcons.gift),
             ),
-            const BottomNavigationBarItem(
-              label: 'Carte',
-              icon: Icon(LucideIcons.mapPin),
+            BottomNavigationBarItem(
+              label: FlutterI18n.translate(context, "carte"),
+              icon: const Icon(LucideIcons.mapPin),
             ),
           ],
         ),

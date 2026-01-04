@@ -4,6 +4,7 @@ import 'package:aero_glace_app/model/snack_bar.dart';
 
 import 'package:aero_glace_app/util/unpack_polyline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -79,7 +80,7 @@ class MyMapState extends State<MyMap> {
       _decodePolyline(geometry);
     } else {
       errorMessage(
-        'Échec de la récupération de l\'itinéraire. Veuillez réessayer plus tard.',
+        FlutterI18n.translate(context, "fetch-route-error"),
       );
     }
   }
@@ -125,12 +126,14 @@ class MyMapState extends State<MyMap> {
         MySnackBar(
           context: context,
           icon: const Icon(LucideIcons.badgeAlert),
-          message:
-              'La localisation n\'est pas accessible. Veuillez vérifier les permissions.',
+          message: FlutterI18n.translate(
+            context,
+            "localization-permissions-error",
+          ),
         ),
       );
     }
-  }
+  } // TODO change into errorMessage
 
   void errorMessage(String message) {
     ScaffoldMessenger.of(
@@ -142,7 +145,7 @@ class MyMapState extends State<MyMap> {
         message: message,
       ),
     );
-  }
+  } // TODO delete
 
   void showLocation(LatLng coords) {
     _fetchCoordinatesPoint(coords);

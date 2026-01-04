@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 import '../model/flavor_model.dart';
 
@@ -15,9 +16,8 @@ final Map tags = {
 final List<Flavor> defaultFlavors = [
   Flavor(
     id: 1,
-    title: 'Chocolat Supernova',
-    description:
-        'Explosion de chocolat noir belge avec des éclats de cacao torréfié.',
+    title: FlutterI18n.translate(context, "chocolat-title"),
+    description: FlutterI18n.translate(context, "chocolat-description"),
     tags: [tags["bio"]],
     imagePath: 'chocolate.jpg',
     price: 4.50,
@@ -39,9 +39,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 2,
-    title: 'Fruit de la Passion Orion',
-    description:
-        'Fruit de la passion exotique avec une touche de vanille stellaire.',
+    title: FlutterI18n.translate(context, "fruit-passion-title"),
+    description: FlutterI18n.translate(context, "fruit-passion-description"),
     tags: [tags["vegan"], tags["sansGluten"]],
     imagePath: 'passion-fruit.jpg',
     price: 5.00,
@@ -67,8 +66,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 3,
-    title: 'Café Nébuleuse',
-    description: 'Espresso italien intense avec des notes de caramel cosmique.',
+    title: FlutterI18n.translate(context, "cafe-title"),
+    description: FlutterI18n.translate(context, "cafe-description"),
     tags: [tags["cafe"], tags["bio"]],
     imagePath: 'coffee.jpg',
     price: 4.50,
@@ -98,8 +97,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 4,
-    title: 'Pistache Andromède',
-    description: 'Pistache de Sicile premium avec un voile de miel astral.',
+    title: FlutterI18n.translate(context, "pistache-title"),
+    description: FlutterI18n.translate(context, "pistache-description"),
     tags: [tags["cacahuetes"], tags["bio"]],
     imagePath: 'pistache.jpg',
     price: 5.50,
@@ -129,8 +128,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 5,
-    title: 'Citron Solaire',
-    description: 'Citron de Menton acidulé avec du zeste cristallisé.',
+    title: FlutterI18n.translate(context, "citron-title"),
+    description: FlutterI18n.translate(context, "citron-description"),
     tags: [tags["vegan"], tags["sansLactose"], tags["sansGluten"]],
     imagePath: 'lemon.jpg',
     price: 4.00,
@@ -156,10 +155,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 6,
-    title: 'Tiramisu Saturne Fraise',
-    description:
-        'Tiramisu onctueux aux fraises tournoyant autour des anneaux de Saturne.',
-    tags: ['containsAlcohol'],
+    title: FlutterI18n.translate(context, "tiramisu-title"),
+    description: FlutterI18n.translate(context, "tiramisu-description"),
     tags: [tags["alcoholise"]],
     imagePath: 'strawberry.jpg',
     price: 4.50,
@@ -189,8 +186,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 7,
-    title: 'Fruit du Dragon Cosmos',
-    description: 'Pitaya rose vibrante cueilli aux confins du cosmos.',
+    title: FlutterI18n.translate(context, "fruit-dragon-title"),
+    description: FlutterI18n.translate(context, "fruit-dragon-description"),
     tags: [tags["vegan"], tags["sansGluten"]],
     imagePath: 'dragon-fruit.jpg',
     price: 5.50,
@@ -220,10 +217,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 8,
-    title: 'Matcha Aurore Mangue',
-    description:
-        'Thé matcha de Kyoto fusionné avec la mangue dans un tourbillon nébuleux.',
-    tags: ['vegan', 'organic'],
+    title: FlutterI18n.translate(context, "matcha-title"),
+    description: FlutterI18n.translate(context, "matcha-description"),
     tags: [tags["vegan"], tags["bio"]],
     imagePath: 'matcha-mango.jpg',
     price: 5.00,
@@ -253,10 +248,8 @@ final List<Flavor> defaultFlavors = [
 
   Flavor(
     id: 9,
-    title: 'Caramel Stellaire',
-    description:
-        'Caramel au beurre salé de Bretagne, glacé comme les plaines de Pluton.',
-    tags: ['glutenFree'],
+    title: FlutterI18n.translate(context, "caramel-title"),
+    description: FlutterI18n.translate(context, "caramel-description"),
     tags: [tags["sansGluten"]],
     imagePath: 'caramel.jpg',
     price: 5.50,

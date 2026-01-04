@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:blobs/blobs.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
@@ -37,11 +38,11 @@ class _AccueilPageState extends State<AccueilPage> {
             const Divider(),
             SimpleDialogOption(
               onPressed: () {},
-              child: const Row(
+              child: Row(
                 children: [
-                  Text('JP'),
-                  SizedBox(width: 16),
-                  Text('Japonais'),
+                  const Text('JP'),
+                  const SizedBox(width: 16),
+                  Text(FlutterI18n.translate(context, "japonais")),
                 ],
               ),
             ),
@@ -55,7 +56,7 @@ class _AccueilPageState extends State<AccueilPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Aero Glace'),
+        title: Text(FlutterI18n.translate(context, "aero-glace")),
         actions: [
           IconButton(
             onPressed: openLanguageMenu,

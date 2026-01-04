@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class Prize extends StatelessWidget {
   final int result;
@@ -12,14 +13,14 @@ class Prize extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String phrase = (isDiscount)
-        ? '$result de réduction'
-        : '$result points';
+        ? FlutterI18n.translate(context, "reduction")
+        : FlutterI18n.translate(context, "result-points");
 
     return Center(
       child: Column(
         spacing: 8,
         children: [
-          const Text('Vous avez gagné'),
+          Text(FlutterI18n.translate(context, "vous-avez-gagne")),
           Container(
             padding: const EdgeInsets.symmetric(
               horizontal: 16,

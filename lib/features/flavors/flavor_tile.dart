@@ -9,7 +9,11 @@ class FlavorTile extends StatelessWidget {
   final Flavor flavor;
   final void Function()? onPressed;
 
-  const FlavorTile({super.key, required this.flavor, required this.onPressed});
+  const FlavorTile({
+    super.key,
+    required this.flavor,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -8,11 +8,14 @@ import 'package:aero_glace_app/pages/parfums_page.dart';
 import 'package:aero_glace_app/pages/panier_page.dart';
 import 'package:aero_glace_app/pages/bonus_page.dart';
 import 'package:aero_glace_app/pages/carte_page.dart';
+// import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 // import 'util.dart';
 // import 'theme.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // init the hive
   await Hive.initFlutter();
@@ -25,12 +28,26 @@ void main() async {
   await Hive.openBox('cartBox');
   await Hive.openBox('fortuneBox');
 
-  runApp(
-    const MyApp(),
-  );
+  // i18n
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await EasyLocalization.ensureInitialized();
+
+  // runApp(
+  //   EasyLocalization(
+  //     supportedLocales: const [Locale('fr'), Locale('ja')],
+  //     path: 'assets/i18n',
+  //     fallbackLocale: const Locale('fr'),
+  //     child: const MyApp(),
+  //   ),
+  // );
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  // final FlutterI18nDelegate flutterI18nDelegate;
+
+  // const MyApp({super.key, required this.flutterI18nDelegate});
   const MyApp({super.key});
 
   @override
@@ -55,8 +72,26 @@ class MyApp extends StatelessWidget {
         '/bonus': (context) => const BonusPage(),
         '/carte': (context) => const CartePage(),
       },
-
-      // provide cart model to descending widgets
+      // localizationsDelegates: context.localizationDelegates,
+      // supportedLocales: context.supportedLocales,
+      locale: const Locale('fr'),
+      supportedLocales: const [
+        Locale('fr'),
+        Locale('ja'),
+      ],
+      // WidgetsFlutterBinding.ensureInitialized();
+      localizationsDelegates: [
+        FlutterI18nDelegate(
+          translationLoader: FileTranslationLoader(
+            useCountryCode: false,
+            fallbackFile: 'fr',
+            basePath: 'assets/i18n',
+          ),
+        ),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       home: const HomePage(),
     );
   }

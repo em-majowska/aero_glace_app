@@ -2,6 +2,7 @@ import 'package:aero_glace_app/features/bonus/gift.dart';
 import 'package:aero_glace_app/model/fortune_wheel_model.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
@@ -51,11 +52,11 @@ class CollectedPointsBox extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Points de fidelité',
+                              FlutterI18n.translate(context, "points-fidelite"),
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(
-                              '260',
+                              '260', // TODO fix into a variable
                               style: Theme.of(context).textTheme.titleLarge
                                   ?.copyWith(
                                     color: Theme.of(
@@ -101,9 +102,14 @@ class CollectedPointsBox extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('${fortuneWheel.points} points'),
                         Text(
-                          '${fortuneWheel.level.maxPoints} points',
+                          FlutterI18n.translate(
+                            context,
+                            "bar-points-collected",
+                          ),
+                        ),
+                        Text(
+                          FlutterI18n.translate(context, "bar-points-max"),
                         ),
                       ],
                     ),
@@ -141,7 +147,7 @@ class CollectedPointsBox extends StatelessWidget {
                   spacing: 8,
                   children: [
                     Text(
-                      'Gagnez des récompenses !',
+                      FlutterI18n.translate(context, "gagnez"),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const Row(

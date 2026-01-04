@@ -3,6 +3,11 @@ import 'package:aero_glace_app/widgets/background.dart';
 import 'package:aero_glace_app/features/map/location_tile.dart';
 import 'package:aero_glace_app/features/map/my_map.dart';
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
+=======
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:latlong2/latlong.dart';
+>>>>>>> Stashed changes
 
 final shops = shopLocations;
 
@@ -20,7 +25,7 @@ class _CartePageState extends State<CartePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Nos Glaciers'),
+        title: Text(FlutterI18n.translate(context, "nos-glaciers")),
       ),
       body: SizedBox(
         height: double.infinity,
