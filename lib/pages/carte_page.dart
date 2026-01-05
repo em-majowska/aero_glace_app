@@ -1,4 +1,5 @@
 import 'package:aero_glace_app/data/shop_locations.dart';
+import 'package:aero_glace_app/util/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:aero_glace_app/features/map/location_tile.dart';
 import 'package:aero_glace_app/features/map/my_map.dart';
@@ -21,6 +22,7 @@ class _CartePageState extends State<CartePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.tr('nos_glaciers')),
+        actions: [const LanguageMenuButton()],
       ),
       body: SizedBox(
         height: double.infinity,

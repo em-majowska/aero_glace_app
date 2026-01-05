@@ -3,6 +3,7 @@ import 'package:aero_glace_app/features/flavors/flavor_tile.dart';
 import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
 import 'package:aero_glace_app/model/snack_bar.dart';
+import 'package:aero_glace_app/util/language_menu_btn.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -50,6 +51,7 @@ class _ParfumsPageState extends State<ParfumsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.tr('nos_parfums')),
+        actions: [const LanguageMenuButton()],
       ),
       backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       body: ListView.separated(

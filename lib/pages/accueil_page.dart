@@ -1,3 +1,4 @@
+import 'package:aero_glace_app/util/language_menu_btn.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:aero_glace_app/widgets/background.dart';
@@ -14,55 +15,13 @@ class AccueilPage extends StatefulWidget {
 
 class _AccueilPageState extends State<AccueilPage> {
   // language selection menu
-  void openLanguageMenu() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return SimpleDialog(
-          title: Text(context.tr('langue')),
-          titleTextStyle: Theme.of(context).textTheme.titleLarge,
-          alignment: Alignment.topRight,
-          constraints: const BoxConstraints(maxWidth: 180),
-          contentPadding: const EdgeInsetsGeometry.all(16),
-          children: [
-            SimpleDialogOption(
-              onPressed: () => context.setLocale(const Locale('fr')),
-              child: const Row(
-                children: [
-                  Text('FR'),
-                  SizedBox(width: 16),
-                  Text('Français'),
-                ],
-              ),
-            ),
-            const Divider(),
-            SimpleDialogOption(
-              onPressed: () => context.setLocale(const Locale('ja')),
-              child: Row(
-                children: [
-                  const Text('JP'),
-                  const SizedBox(width: 16),
-                  Text(context.tr('japonais')),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.tr('aero_glace')),
-        actions: [
-          IconButton(
-            onPressed: openLanguageMenu,
-            icon: const Icon(LucideIcons.settings200, size: 35),
-          ),
-        ],
+        actions: [const LanguageMenuButton()],
       ),
       body: Stack(
         children: [
