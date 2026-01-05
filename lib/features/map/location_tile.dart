@@ -56,20 +56,21 @@ class _LocationTileState extends State<LocationTile> {
                   ],
                 ),
               ),
-              Container(
-                width: 49,
-                height: 49,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: TextButton(
-                  onPressed: () => widget.onPressed!(widget.coordinates),
-                  child: Icon(
-                    LucideIcons.navigation,
-                    size: 25,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+              IconButton(
+                onPressed: () => widget.onPressed!(widget.coordinates),
+                style: IconButton.styleFrom(
+                  padding: const EdgeInsets.all(12),
+                  backgroundColor: Theme.of(
+                    context,
+                  ).colorScheme.primaryContainer,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
+                ),
+                icon: Icon(
+                  LucideIcons.navigation,
+                  size: 25,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
                 ),
               ),
             ],
