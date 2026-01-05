@@ -20,10 +20,13 @@ class PanierPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.tr('votre_commande')),
         actions: [const LanguageMenuButton()],
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        scrolledUnderElevation: 0.0,
+        shadowColor: Colors.transparent,
       ),
       body: Stack(
         children: [
-          const MyBackground(assetPath: 'background.jpg'),
+          const MyBackground(assetPath: 'background4.jpg'),
           Positioned(
             bottom: -200,
             right: -80,

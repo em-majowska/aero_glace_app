@@ -52,6 +52,9 @@ class _ParfumsPageState extends State<ParfumsPage> {
       appBar: AppBar(
         title: Text(context.tr('nos_parfums')),
         actions: [const LanguageMenuButton()],
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        scrolledUnderElevation: 0.0,
+        shadowColor: Colors.transparent,
       ),
       backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
       body: ListView.separated(

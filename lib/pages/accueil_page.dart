@@ -25,7 +25,7 @@ class _AccueilPageState extends State<AccueilPage> {
       ),
       body: Stack(
         children: [
-          const MyBackground(assetPath: 'background2.jpg'),
+          const MyBackground(assetPath: 'background.jpg'),
 
           // Blob top left
           Positioned(
@@ -175,7 +175,7 @@ class _AccueilPageState extends State<AccueilPage> {
             ),
           ),
           Center(
-            child: Image.asset('assets/images/ice-cream2.png', width: 150),
+            child: Image.asset('assets/images/ice-cream.png', width: 150),
           ),
         ],
       ),

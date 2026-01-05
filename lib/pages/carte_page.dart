@@ -23,13 +23,16 @@ class _CartePageState extends State<CartePage> {
       appBar: AppBar(
         title: Text(context.tr('nos_glaciers')),
         actions: [const LanguageMenuButton()],
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        scrolledUnderElevation: 0.0,
+        shadowColor: Colors.transparent,
       ),
       body: SizedBox(
         height: double.infinity,
         width: double.infinity,
         child: Stack(
           children: [
-            const MyBackground(assetPath: 'background4.jpg'),
+            const MyBackground(assetPath: 'background3.jpg'),
             Column(
               children: [
                 Expanded(

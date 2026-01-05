@@ -15,10 +15,13 @@ class BonusPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.tr('bonus')),
         actions: [const LanguageMenuButton()],
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        scrolledUnderElevation: 0.0,
+        shadowColor: Colors.transparent,
       ),
       body: Stack(
         children: [
-          const MyBackground(assetPath: 'background4.jpg'),
+          const MyBackground(assetPath: 'background3.jpg'),
           ListView(
             padding: const EdgeInsets.all(16),
             children: [
