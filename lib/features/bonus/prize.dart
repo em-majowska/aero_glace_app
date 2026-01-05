@@ -13,8 +13,8 @@ class Prize extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String phrase = (isDiscount)
-        ? context.tr('reduction')
-        : context.tr('result_points');
+        ? context.tr('reduction', namedArgs: {'result': result.toString()})
+        : context.tr('result_points', namedArgs: {'result': result.toString()});
 
     return Center(
       child: Column(

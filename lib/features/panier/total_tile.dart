@@ -1,3 +1,4 @@
+import 'package:aero_glace_app/data/default_flavors.dart';
 import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -68,6 +69,10 @@ class TotalTile extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Consumer<Cart>(
           builder: (context, cart, child) {
+            final flavors = getDefaultFlavors(context);
+            final total = cart.getTotalPrice(flavors);
+            final savings = cart.getSavings(total);
+            final totalDiscounted = cart.getTotalPriceDiscounted(total);
             return Column(
               children: [
                 if (cart.discount > 0)
@@ -80,7 +85,7 @@ class TotalTile extends StatelessWidget {
                             context.tr('total_produits'),
                           ),
                           Text(
-                            '${cart.totalPrice.toStringAsFixed(2)} €',
+                            '${total.toStringAsFixed(2)} €',
                           ),
                         ],
                       ),
@@ -91,7 +96,7 @@ class TotalTile extends StatelessWidget {
                             context.tr('economie_realisee'),
                           ),
                           Text(
-                            '- ${cart.savings.toStringAsFixed(2)} €',
+                            '- ${savings.toStringAsFixed(2)} €',
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.error,
                               fontWeight: FontWeight.bold,
@@ -113,8 +118,8 @@ class TotalTile extends StatelessWidget {
                     ),
                     Text(
                       (cart.discount > 0)
-                          ? '${cart.totalPriceDiscounted.toStringAsFixed(2)} €'
-                          : '${cart.totalPrice.toStringAsFixed(2)} €',
+                          ? '${totalDiscounted.toStringAsFixed(2)} €'
+                          : '${total.toStringAsFixed(2)} €',
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),

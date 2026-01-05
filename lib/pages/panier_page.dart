@@ -1,3 +1,4 @@
+import 'package:aero_glace_app/data/default_flavors.dart';
 import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/features/panier/item_tile.dart';
 import 'package:aero_glace_app/features/panier/empty_cart_tile.dart';
@@ -13,6 +14,7 @@ class PanierPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final flavors = getDefaultFlavors(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(context.tr('votre_commande')),
@@ -29,6 +31,7 @@ class PanierPage extends StatelessWidget {
           ),
           Consumer<Cart>(
             builder: (context, cart, child) {
+              cart.getItems(flavors);
               if (cart.items.isEmpty) {
                 return const Padding(
                   padding: EdgeInsets.all(16.0),

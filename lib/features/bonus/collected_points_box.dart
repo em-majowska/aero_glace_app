@@ -61,7 +61,7 @@ class _CollectedPointsBoxState extends State<CollectedPointsBox> {
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(
-                              '260', // TODO fix into a variable
+                              fortuneWheel.points.toString(),
                               style: Theme.of(context).textTheme.titleLarge
                                   ?.copyWith(
                                     color: Theme.of(
@@ -107,8 +107,23 @@ class _CollectedPointsBoxState extends State<CollectedPointsBox> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(context.tr('bar_points_collected')),
-                        Text(context.tr('bar_points_max')),
+                        Text(
+                          context.tr(
+                            'bar_points_collected',
+                            namedArgs: {
+                              'points': fortuneWheel.points.toString(),
+                            },
+                          ),
+                        ),
+                        Text(
+                          context.tr(
+                            'bar_points_max',
+                            namedArgs: {
+                              'maxPoints': fortuneWheel.level.maxPoints
+                                  .toString(),
+                            },
+                          ),
+                        ),
                       ],
                     ),
 

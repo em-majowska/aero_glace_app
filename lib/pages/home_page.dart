@@ -21,8 +21,6 @@ class _HomePageState extends State<HomePage> {
   // currently selected page
   int _selectedIndex = 0;
 
-  // late Locale currentLang;
-
   void _navigateBottomBar(int index) {
     setState(() {
       _selectedIndex = index;
@@ -37,24 +35,6 @@ class _HomePageState extends State<HomePage> {
     const BonusPage(),
     const CartePage(),
   ];
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Future.delayed(Duration.zero, () {
-  //     setState(() {
-  //       currentLang = FlutterI18n.currentLocale(context) ?? const Locale('fr');
-  //     });
-  //   });
-  // }
-
-  // void changeLanguage() {
-  //   setState(() {
-  //     currentLang = currentLang.languageCode == 'fr'
-  //         ? const Locale('ja')
-  //         : const Locale('fr');
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

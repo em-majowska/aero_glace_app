@@ -4,22 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 import '../model/flavor_model.dart';
 
-final Map tags = {
-  "vegan": LocaleKeys.tag_vegan.tr(),
-  "sansLactose": LocaleKeys.tag_sansLactose.tr(),
-  "sansGluten": LocaleKeys.tag_sansGluten.tr(),
-  "bio": LocaleKeys.tag_bio.tr(),
-  "cafe": LocaleKeys.tag_cafe.tr(),
-  "alcoholise": LocaleKeys.tag_alcoholise.tr(),
-  "cacahuetes": LocaleKeys.tag_cacahuetes.tr(),
+Map<String, String> getTags(BuildContext context) => {
+  "vegan": context.tr('tag.vegan'),
+  "sansLactose": context.tr('tag.sansLactose'),
+  "sansGluten": context.tr('tag.sansGluten'),
+  "bio": context.tr('tag.bio'),
+  "cafe": context.tr('tag.cafe'),
+  "alcoholise": context.tr('tag.alcoholise'),
+  "cacahuetes": context.tr('tag.cacahuetes'),
 };
 
-final List<Flavor> defaultFlavors = [
+List<Flavor> getDefaultFlavors(BuildContext context) => [
   Flavor(
     id: 1,
     title: LocaleKeys.chocolat_title.tr(),
     description: LocaleKeys.chocolat_description.tr(),
-    tags: [tags["bio"]],
+    tags: [getTags(context)["bio"]!],
     imagePath: 'chocolate.jpg',
     price: 4.50,
     meshPoints: [
@@ -42,7 +42,7 @@ final List<Flavor> defaultFlavors = [
     id: 2,
     title: LocaleKeys.fruit_passion_title.tr(),
     description: LocaleKeys.fruit_passion_description.tr(),
-    tags: [tags["vegan"], tags["sansGluten"]],
+    tags: [getTags(context)["vegan"]!, getTags(context)["sansGluten"]!],
     imagePath: 'passion-fruit.jpg',
     price: 5.00,
     meshPoints: [
@@ -69,7 +69,7 @@ final List<Flavor> defaultFlavors = [
     id: 3,
     title: LocaleKeys.cafe_title.tr(),
     description: LocaleKeys.cafe_description.tr(),
-    tags: [tags["cafe"], tags["bio"]],
+    tags: [getTags(context)["cafe"]!, getTags(context)["bio"]!],
     imagePath: 'coffee.jpg',
     price: 4.50,
     meshPoints: [
@@ -100,7 +100,7 @@ final List<Flavor> defaultFlavors = [
     id: 4,
     title: LocaleKeys.pistache_title.tr(),
     description: LocaleKeys.pistache_description.tr(),
-    tags: [tags["cacahuetes"], tags["bio"]],
+    tags: [getTags(context)["cacahuetes"]!, getTags(context)["bio"]!],
     imagePath: 'pistache.jpg',
     price: 5.50,
     meshPoints: [
@@ -131,7 +131,11 @@ final List<Flavor> defaultFlavors = [
     id: 5,
     title: LocaleKeys.citron_title.tr(),
     description: LocaleKeys.citron_description.tr(),
-    tags: [tags["vegan"], tags["sansLactose"], tags["sansGluten"]],
+    tags: [
+      getTags(context)["vegan"]!,
+      getTags(context)["sansLactose"]!,
+      getTags(context)["sansGluten"]!,
+    ],
     imagePath: 'lemon.jpg',
     price: 4.00,
     meshPoints: [
@@ -158,7 +162,7 @@ final List<Flavor> defaultFlavors = [
     id: 6,
     title: LocaleKeys.tiramisu_title.tr(),
     description: LocaleKeys.tiramisu_description.tr(),
-    tags: [tags["alcoholise"]],
+    tags: [getTags(context)["alcoholise"]!],
     imagePath: 'strawberry.jpg',
     price: 4.50,
     meshPoints: [
@@ -189,7 +193,7 @@ final List<Flavor> defaultFlavors = [
     id: 7,
     title: LocaleKeys.fruit_dragon_title.tr(),
     description: LocaleKeys.fruit_dragon_description.tr(),
-    tags: [tags["vegan"], tags["sansGluten"]],
+    tags: [getTags(context)["vegan"]!, getTags(context)["sansGluten"]!],
     imagePath: 'dragon-fruit.jpg',
     price: 5.50,
     meshPoints: [
@@ -220,7 +224,7 @@ final List<Flavor> defaultFlavors = [
     id: 8,
     title: LocaleKeys.matcha_title.tr(),
     description: LocaleKeys.matcha_description.tr(),
-    tags: [tags["vegan"], tags["bio"]],
+    tags: [getTags(context)["vegan"]!, getTags(context)["bio"]!],
     imagePath: 'matcha-mango.jpg',
     price: 5.00,
     meshPoints: [
@@ -251,7 +255,7 @@ final List<Flavor> defaultFlavors = [
     id: 9,
     title: LocaleKeys.caramel_title.tr(),
     description: LocaleKeys.caramel_description.tr(),
-    tags: [tags["sansGluten"]],
+    tags: [getTags(context)["sansGluten"]!],
     imagePath: 'caramel.jpg',
     price: 5.50,
     meshPoints: [

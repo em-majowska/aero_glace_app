@@ -1,6 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:aero_glace_app/model/shop_location_model.dart';
-import 'package:aero_glace_app/model/snack_bar.dart';
+import 'package:aero_glace_app/util/error_message.dart';
 import 'package:aero_glace_app/util/unpack_polyline.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -30,55 +31,81 @@ class MyMapState extends State<MyMap> {
   LatLng? _destination;
   List<LatLng> _route = [];
 
+  StreamSubscription<LocationData>? _locationSubscription;
+
   @override
   void initState() {
     _initializeLocation();
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _locationSubscription?.cancel();
+    super.dispose();
+  }
+
   Future<void> _initializeLocation() async {
     if (!await _checktheRequestPermissions()) return;
 
     // update current location
-    _location.onLocationChanged.listen((LocationData locationData) {
+    _locationSubscription = _location.onLocationChanged.listen((
+      LocationData locationData,
+    ) {
       if (locationData.latitude != null && locationData.longitude != null) {
-        setState(() {
-          _currentLocation = LatLng(
-            locationData.latitude!,
-            locationData.longitude!,
-          );
-          isLoading = false; // stop loading when location is known
-        });
+        if (mounted) {
+          setState(() {
+            _currentLocation = LatLng(
+              locationData.latitude!,
+              locationData.longitude!,
+            );
+            isLoading = false; // stop loading when location is known
+          });
+        }
       }
     });
   }
 
   // fetch coords for a given location
   Future<void> _fetchCoordinatesPoint(LatLng coords) async {
-    setState(() {
-      _destination = coords;
-    });
+    if (mounted) {
+      setState(() {
+        _destination = coords;
+      });
+    }
     await fetchRoute();
   }
 
   // fetch the route between current location and the destination (OSRM API)
   Future<void> fetchRoute() async {
     if (_currentLocation == null || _destination == null) return;
+
     final url = Uri.parse(
       'https://router.project-osrm.org/route/v1/driving/'
       '${_currentLocation!.longitude},${_currentLocation!.latitude};'
       '${_destination!.longitude},${_destination!.latitude}?overview=full&geometries=polyline',
     );
+    try {
+      final response = await http.get(url);
 
-    final response = await http.get(url);
+      if (!mounted) return;
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      final geometry = data['routes'][0]['geometry'];
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final geometry = data['routes'][0]['geometry'];
 
-      _decodePolyline(geometry);
-    } else {
-      errorMessage(context.tr('fetch_route_error'));
+        _decodePolyline(geometry);
+      } else {
+        if (mounted) {
+          errorMessage(context, context.tr('fetch_route_error'));
+          await _location.requestService();
+        }
+        return;
+      }
+    } catch (e) {
+      errorMessage(context, context.tr('fetch_route_error'));
+
+      return;
     }
   }
 
@@ -88,11 +115,11 @@ class MyMapState extends State<MyMap> {
       encodedPolyline,
     ).unpackPolyline();
 
-    setState(() {
-      _route = decodedPoints
-          .map((point) => LatLng(point.latitude, point.longitude))
-          .toList();
-    });
+    if (mounted) {
+      setState(() {
+        _route = decodedPoints;
+      });
+    }
   }
 
   // check if location service is enabled and granted
@@ -119,27 +146,10 @@ class MyMapState extends State<MyMap> {
     if (_currentLocation != null) {
       _mapController.move(_currentLocation!, 15);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        MySnackBar(
-          context: context,
-          icon: const Icon(LucideIcons.badgeAlert),
-          message: context.tr('localization_permissions_error'),
-        ),
-      );
+      errorMessage(context, context.tr('localization_permissions_error'));
+      _initializeLocation();
     }
-  } // TODO change into errorMessage
-
-  void errorMessage(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(
-      MySnackBar(
-        context: context,
-        icon: const Icon(LucideIcons.triangleAlert),
-        message: message,
-      ),
-    );
-  } // TODO delete
+  }
 
   void showLocation(LatLng coords) {
     _fetchCoordinatesPoint(coords);
@@ -244,7 +254,7 @@ class MyMapState extends State<MyMap> {
                   ),
                 ],
               ),
-              const CurrentLocationLayer(),
+              if (_currentLocation != null) const CurrentLocationLayer(),
             ],
           ),
         ],

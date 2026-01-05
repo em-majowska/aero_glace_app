@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
-final flavors = defaultFlavors;
-
 // show message
 
 void _showMessage(BuildContext context, Flavor flavor) {
@@ -21,7 +19,12 @@ void _showMessage(BuildContext context, Flavor flavor) {
         LucideIcons.circleCheck300,
         color: Theme.of(context).colorScheme.tertiary,
       ),
-      message: context.tr('added_to_cart'),
+      message: context.tr(
+        'added_to_cart',
+        namedArgs: {
+          'flavorTitle': flavor.title,
+        },
+      ),
     ),
   );
 }
@@ -42,6 +45,8 @@ class _ParfumsPageState extends State<ParfumsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final flavors = getDefaultFlavors(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(context.tr('nos_parfums')),

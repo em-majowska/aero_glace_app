@@ -26,7 +26,7 @@ class _AccueilPageState extends State<AccueilPage> {
           contentPadding: const EdgeInsetsGeometry.all(16),
           children: [
             SimpleDialogOption(
-              onPressed: () {},
+              onPressed: () => context.setLocale(const Locale('fr')),
               child: const Row(
                 children: [
                   Text('FR'),
@@ -37,7 +37,7 @@ class _AccueilPageState extends State<AccueilPage> {
             ),
             const Divider(),
             SimpleDialogOption(
-              onPressed: () {},
+              onPressed: () => context.setLocale(const Locale('ja')),
               child: Row(
                 children: [
                   const Text('JP'),
@@ -56,7 +56,7 @@ class _AccueilPageState extends State<AccueilPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.tr('accueil')),
+        title: Text(context.tr('aero_glace')),
         actions: [
           IconButton(
             onPressed: openLanguageMenu,

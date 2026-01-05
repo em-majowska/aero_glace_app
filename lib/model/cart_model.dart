@@ -1,6 +1,5 @@
 import 'package:aero_glace_app/util/next_day.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:aero_glace_app/data/default_flavors.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
 import 'package:aero_glace_app/model/hive_item_model.dart';
 import 'package:aero_glace_app/model/item_model.dart';
@@ -9,18 +8,18 @@ import 'package:flutter/material.dart';
 class Cart extends ChangeNotifier {
   // get hive box
   late final Box _cartBox;
-  final List<Flavor> _flavors = defaultFlavors;
-  double total = 0;
   late int _discount = 0;
+  List<Item> items = [];
   DateTime _date = DateTime.now();
 
   // getters
   int get discount => _discount;
   DateTime get date => _date;
-  List<Item> get items {
-    final items = _filterItems();
-    return items.map((item) {
-      final flavor = _flavors.firstWhere((f) => f.id == item.flavorId);
+
+  void getItems(List<Flavor> flavors) {
+    final filteredItems = _filterItems();
+    items = filteredItems.map((item) {
+      final flavor = flavors.firstWhere((f) => f.id == item.flavorId);
       return Item(flavor: flavor, qty: item.qty);
     }).toList();
   }
@@ -144,21 +143,19 @@ class Cart extends ChangeNotifier {
   }
 
   // get total  price
-  double get totalPrice {
-    total = _filterItems().fold(0.00, (sum, item) {
-      final flavor = _flavors.firstWhere((f) => f.id == item.flavorId);
+  double getTotalPrice(List<Flavor> flavors) {
+    return _filterItems().fold(0.00, (sum, item) {
+      final flavor = flavors.firstWhere((f) => f.id == item.flavorId);
       return sum + (flavor.price * item.qty);
     });
-
-    return total;
   }
 
-  double get totalPriceDiscounted {
-    return (_discount != 0) ? total - (total * (discount / 100)) : 0.0;
+  double getTotalPriceDiscounted(double total) {
+    return (_discount != 0) ? total - (total * (discount / 100)) : total;
   }
 
-  double get savings {
-    return totalPrice * (discount / 100);
+  double getSavings(double total) {
+    return total * (discount / 100);
   }
 
   void setDiscount(int result, DateTime? now) {
