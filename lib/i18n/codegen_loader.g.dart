@@ -135,7 +135,7 @@ static const Map<String,dynamic> _fr = {
   "fortune_wheel": "Roue de la Fortune",
   "spin_wheel": "Tourner la roue",
   "try_tomorrow": "Tentez votre chance demain !",
-  "reduction": "{result} de réduction",
+  "reduction": "{result}% de réduction",
   "result_points": "{result} points",
   "vous_avez_gagne": "Vous avez gagné",
   "nos_glaciers": "Nos Glaciers",

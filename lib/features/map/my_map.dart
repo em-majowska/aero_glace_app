@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:aero_glace_app/model/shop_location_model.dart';
-import 'package:aero_glace_app/util/error_message.dart';
+import 'package:aero_glace_app/widgets/error_message.dart';
 import 'package:aero_glace_app/util/unpack_polyline.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

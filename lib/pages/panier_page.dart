@@ -3,7 +3,7 @@ import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/features/panier/item_tile.dart';
 import 'package:aero_glace_app/features/panier/empty_cart_tile.dart';
 import 'package:aero_glace_app/features/panier/total_tile.dart';
-import 'package:aero_glace_app/util/language_menu_btn.dart';
+import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';

@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/model/snack_bar.dart';
+import 'package:aero_glace_app/widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 

@@ -1,5 +1,5 @@
 import 'package:aero_glace_app/data/shop_locations.dart';
-import 'package:aero_glace_app/util/language_menu_btn.dart';
+import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:aero_glace_app/features/map/location_tile.dart';
 import 'package:aero_glace_app/features/map/my_map.dart';

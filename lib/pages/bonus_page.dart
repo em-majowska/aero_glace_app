@@ -1,6 +1,6 @@
 import 'package:aero_glace_app/features/bonus/collected_points_box.dart';
 import 'package:aero_glace_app/features/bonus/fortune_wheel_box.dart';
-import 'package:aero_glace_app/util/language_menu_btn.dart';
+import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
