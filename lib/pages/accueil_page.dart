@@ -18,6 +18,9 @@ class _AccueilPageState extends State<AccueilPage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaWidth = MediaQuery.of(context).size.width;
+    final mediaHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(context.tr('aero_glace')),
@@ -29,10 +32,11 @@ class _AccueilPageState extends State<AccueilPage> {
 
           // Blob top left
           Positioned(
-            top: -100,
-            right: -150,
+            top: mediaHeight * -0.13,
+            right: mediaWidth * -0.2,
             child: Blob.random(
-              size: 400,
+              // size: 400,
+              size: mediaWidth * 0.8,
               edgesCount: 15,
               styles: BlobStyles(
                 fillType: BlobFillType.stroke,
@@ -48,7 +52,7 @@ class _AccueilPageState extends State<AccueilPage> {
           ),
 
           Positioned(
-            top: 50,
+            top: mediaHeight * 0.05,
             left: 0,
             child: Blur(
               blur: 2,
@@ -56,8 +60,7 @@ class _AccueilPageState extends State<AccueilPage> {
                 quarterTurns: -1,
                 child: Image.asset(
                   'assets/images/star.png',
-                  width: 150,
-                  height: 150,
+                  width: mediaWidth * 0.4,
                 ),
               ),
             ),
@@ -65,8 +68,8 @@ class _AccueilPageState extends State<AccueilPage> {
 
           // Blob top left
           Positioned(
-            top: -200,
-            left: -150,
+            top: mediaHeight * -0.2,
+            left: mediaWidth * -0.4,
             child: Blob.random(
               size: 500,
               edgesCount: 10,
@@ -83,10 +86,10 @@ class _AccueilPageState extends State<AccueilPage> {
 
           // Blob bottom right
           Positioned(
-            bottom: -150,
-            right: -150,
+            bottom: mediaHeight * -0.15,
+            right: mediaWidth * -0.4,
             child: Blob.random(
-              size: 400,
+              size: mediaHeight * 0.45,
               edgesCount: 20,
               // minGrowth: 8,
               // duration: Duration(milliseconds: 2000),
@@ -104,10 +107,10 @@ class _AccueilPageState extends State<AccueilPage> {
 
           // Blob bottom-left
           Positioned(
-            bottom: -150,
-            left: -200,
+            bottom: mediaHeight * -0.17,
+            left: mediaWidth * -0.45,
             child: Blob.random(
-              size: 400,
+              size: mediaHeight * 0.45,
               edgesCount: 15,
               styles: BlobStyles(
                 fillType: BlobFillType.stroke,
@@ -121,37 +124,33 @@ class _AccueilPageState extends State<AccueilPage> {
               ),
             ),
           ),
-          const Positioned(
-            left: 50,
-            bottom: 120,
-            child: Icon(
-              LucideIcons.sparkles100,
-              size: 80,
-            ),
-          ),
-          const Positioned(
-            right: 50,
-            top: 150,
-            child: Icon(
-              LucideIcons.sparkle100,
-              size: 70,
-            ),
-          ),
+          //Outlined sparkle bottom left
           Positioned(
-            bottom: 120,
-            right: 80,
+            left: mediaWidth * 0.1,
+            bottom: mediaHeight * 0.07,
+            child: Icon(LucideIcons.sparkles100, size: mediaWidth * 0.2),
+          ),
+          // Outlined sparkle top right
+          Positioned(
+            right: mediaWidth * 0.1,
+            top: mediaHeight * 0.17,
+            child: Icon(LucideIcons.sparkle100, size: mediaWidth * 0.12),
+          ),
+          // Star image bottom right
+          Positioned(
+            bottom: mediaHeight * 0.1,
+            right: mediaWidth * 0.2,
             child: Image.asset(
               'assets/images/star.png',
-              width: 60,
-              height: 60,
+              width: mediaWidth * 0.15,
             ),
           ),
 
           // Center elements
           Center(
             child: Container(
-              width: 250,
-              height: 250,
+              width: mediaWidth * 0.6,
+              height: mediaWidth * 0.6,
               decoration: BoxDecoration(
                 color: const Color(0x00000000).withValues(alpha: 0.10),
                 border: Border.all(
@@ -170,12 +169,15 @@ class _AccueilPageState extends State<AccueilPage> {
                 ),
                 borderRadius: BorderRadius.circular(250),
               ),
-              width: 200,
-              height: 200,
+              width: mediaWidth * 0.5,
+              height: mediaWidth * 0.5,
             ),
           ),
           Center(
-            child: Image.asset('assets/images/ice-cream.png', width: 150),
+            child: Image.asset(
+              'assets/images/ice-cream.png',
+              width: mediaWidth * 0.35,
+            ),
           ),
         ],
       ),
