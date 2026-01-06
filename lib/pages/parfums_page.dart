@@ -62,6 +62,7 @@ class _ParfumsPageState extends State<ParfumsPage> {
         separatorBuilder: (context, index) => const SizedBox(
           height: 16,
         ),
+        // shrinkWrap: true,
         itemCount: flavors.length,
         itemBuilder: (context, index) {
           final flavor = flavors[index];

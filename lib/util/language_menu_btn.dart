@@ -7,11 +7,14 @@ Widget openLanguageMenu(BuildContext context) {
     title: Text(context.tr('langue')),
     titleTextStyle: Theme.of(context).textTheme.titleLarge,
     alignment: Alignment.topRight,
-    constraints: const BoxConstraints(maxWidth: 180),
+    constraints: const BoxConstraints(maxWidth: 200),
     contentPadding: const EdgeInsetsGeometry.all(16),
     children: [
       SimpleDialogOption(
-        onPressed: () => context.setLocale(const Locale('fr')),
+        onPressed: () {
+          context.setLocale(const Locale('fr'));
+          Navigator.of(context).pop();
+        },
         child: const Row(
           children: [
             Text('FR'),
@@ -22,7 +25,10 @@ Widget openLanguageMenu(BuildContext context) {
       ),
       const Divider(),
       SimpleDialogOption(
-        onPressed: () => context.setLocale(const Locale('ja')),
+        onPressed: () {
+          context.setLocale(const Locale('ja'));
+          Navigator.of(context).pop();
+        },
         child: Row(
           children: [
             const Text('JP'),

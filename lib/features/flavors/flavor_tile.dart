@@ -17,13 +17,84 @@ class FlavorTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GlossyBox(
-      child: ClipRRect(
-        borderRadius: BorderRadiusGeometry.circular(12),
-        child: MyMesh(
-          meshPoints: flavor.meshPoints,
-          child: SizedBox(
-            height: 170,
+    final theme = Theme.of(context);
+
+    Widget flavorDetails() {
+      return Expanded(
+        flex: 4,
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 8,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 5,
+                children: [
+                  Text(
+                    flavor.title,
+                    style: theme.textTheme.titleMedium,
+                  ),
+                  Text(
+                    flavor.description,
+                    style: theme.textTheme.bodySmall,
+                  ),
+                ],
+              ),
+              Text(
+                '${flavor.price.toStringAsFixed(2)} €',
+                style: theme.textTheme.titleLarge,
+              ),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Expanded(
+                      child: Wrap(
+                        runAlignment: WrapAlignment.end,
+                        spacing: 5,
+                        runSpacing: 5,
+                        children: flavor.tags
+                            .map((tag) => Tag(tag: tag))
+                            .toList(),
+                      ),
+                    ),
+                    IconButton.filled(
+                      style: IconButton.styleFrom(
+                        backgroundColor: Theme.of(
+                          context,
+                        ).colorScheme.surfaceContainerLowest,
+                        overlayColor: theme.colorScheme.primary,
+                        shape: CircleBorder(
+                          side: BorderSide(
+                            color: theme.colorScheme.outlineVariant,
+                          ),
+                        ),
+                      ),
+                      onPressed: onPressed,
+                      icon: Icon(
+                        LucideIcons.plus,
+                        color: theme.colorScheme.onSurface,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return IntrinsicHeight(
+      child: GlossyBox(
+        child: ClipRRect(
+          borderRadius: BorderRadiusGeometry.circular(12),
+          child: MyMesh(
+            meshPoints: flavor.meshPoints,
             child: Stack(
               children: [
                 Row(
@@ -39,72 +110,9 @@ class FlavorTile extends StatelessWidget {
                       ),
                     ),
 
-                    // Right column
-                    Expanded(
-                      flex: 4,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  flavor.title,
-                                  style: Theme.of(
-                                    context,
-                                  ).textTheme.titleMedium,
-                                ),
-                                Text(
-                                  flavor.description,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
-                            ),
-                            Text(
-                              '${flavor.price.toStringAsFixed(2)} €',
-                              style: Theme.of(
-                                context,
-                              ).textTheme.titleLarge,
-                            ),
-                            Container(
-                              constraints: const BoxConstraints(maxWidth: 200),
-                              child: Wrap(
-                                runAlignment: WrapAlignment.end,
-                                spacing: 5,
-                                runSpacing: 5,
-                                children: flavor.tags
-                                    .map((tag) => Tag(tag: tag))
-                                    .toList(),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // Details
+                    flavorDetails(),
                   ],
-                ),
-
-                // Button
-                Positioned(
-                  bottom: 8,
-                  right: 8,
-                  child: IconButton.filled(
-                    style: IconButton.styleFrom(
-                      backgroundColor: Theme.of(
-                        context,
-                      ).colorScheme.surfaceContainerLowest,
-                      overlayColor: Theme.of(context).colorScheme.primary,
-                      shape: const CircleBorder(),
-                    ),
-                    onPressed: onPressed,
-                    icon: Icon(
-                      LucideIcons.plus,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
                 ),
               ],
             ),

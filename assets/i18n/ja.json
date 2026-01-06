@@ -46,6 +46,8 @@
   "total": "合計",
   "btn_vider": "空にする",
   "btn_commander": "確認",
+  "login_required_title": "ログインが必要です",
+  "login_required_message": "注文を確定するにはログインする必要があります。",
   "points_fidelite": "ロイヤルティポイント",
   "bar_points_collected": "{points}ポイント",
   "bar_points_max": "{maxPoints}ポイント",

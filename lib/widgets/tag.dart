@@ -19,7 +19,7 @@ class Tag extends StatelessWidget {
         tag,
         style: TextStyle(
           color: Theme.of(context).colorScheme.onSurface,
-          fontSize: 12,
+          fontSize: 10,
         ),
       ),
     );

@@ -64,6 +64,36 @@ class TotalTile extends StatelessWidget {
       );
     }
 
+    // show dialog to log in
+    void showLoginRequiredDialog() {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            actionsPadding: const EdgeInsets.all(16),
+            title: Text(
+              context.tr('login_required_title'),
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            content: Text(
+              context.tr('login_required_message'),
+            ),
+            actions: [
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(context.tr('btn_cancel')),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return GlossyBox(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -81,20 +111,14 @@ class TotalTile extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            context.tr('total_produits'),
-                          ),
-                          Text(
-                            '${total.toStringAsFixed(2)} €',
-                          ),
+                          Text(context.tr('total_produits')),
+                          Text('${total.toStringAsFixed(2)} €'),
                         ],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            context.tr('economie_realisee'),
-                          ),
+                          Text(context.tr('economie_realisee')),
                           Text(
                             '- ${savings.toStringAsFixed(2)} €',
                             style: TextStyle(
@@ -129,10 +153,15 @@ class TotalTile extends StatelessWidget {
                 const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 8,
                   children: [
                     OutlinedButton(
                       onPressed: emptyCart,
                       style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -158,8 +187,15 @@ class TotalTile extends StatelessWidget {
                       ),
                     ),
                     FilledButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        bool isLoggedIn = false;
+                        if (!isLoggedIn) showLoginRequiredDialog();
+                      },
                       style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),

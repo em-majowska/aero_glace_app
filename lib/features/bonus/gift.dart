@@ -37,7 +37,9 @@ class Gift extends StatelessWidget {
                     color: (fortuneWheel.points > minPoints)
                         ? Theme.of(context).colorScheme.onTertiaryContainer
                         : Theme.of(context).colorScheme.onTertiaryContainer,
+                    height: 1.2,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),

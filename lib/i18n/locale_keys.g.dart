@@ -49,6 +49,8 @@ abstract class  LocaleKeys {
   static const total = 'total';
   static const btn_vider = 'btn_vider';
   static const btn_commander = 'btn_commander';
+  static const login_required_title = 'login_required_title';
+  static const login_required_message = 'login_required_message';
   static const points_fidelite = 'points_fidelite';
   static const bar_points_collected = 'bar_points_collected';
   static const bar_points_max = 'bar_points_max';

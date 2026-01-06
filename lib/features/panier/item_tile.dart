@@ -29,6 +29,55 @@ class ItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget quantitySelector() {
+      return Row(
+        spacing: 8,
+        children: [
+          IconButton(
+            onPressed: onRemove,
+            icon: Icon(
+              LucideIcons.minus,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            style: IconButton.styleFrom(
+              backgroundColor: Theme.of(
+                context,
+              ).colorScheme.surfaceDim,
+              shape: const CircleBorder(),
+            ),
+          ),
+          Consumer<Cart>(
+            builder: (context, cart, child) {
+              final quantity = cart.getItemQuantity(
+                flavor.id,
+              );
+              return Text(
+                quantity.toString(),
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              );
+            },
+          ),
+          IconButton(
+            onPressed: onAdd,
+            icon: Icon(
+              LucideIcons.plus,
+              color: Theme.of(
+                context,
+              ).colorScheme.onPrimaryContainer,
+            ),
+            style: IconButton.styleFrom(
+              backgroundColor: Theme.of(
+                context,
+              ).colorScheme.inversePrimary,
+              shape: const CircleBorder(),
+            ),
+          ),
+        ],
+      );
+    }
+
     return Slidable(
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
@@ -72,60 +121,23 @@ class ItemTile extends StatelessWidget {
                         context,
                       ).textTheme.titleMedium?.copyWith(height: 1.2),
                     ),
-                    Consumer<Cart>(
-                      builder: (context, cart, child) => Text(
-                        '${cart.getItemPrice(flavor).toStringAsFixed(2)} €',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Consumer<Cart>(
+                          builder: (context, cart, child) => Text(
+                            '${cart.getItemPrice(flavor).toStringAsFixed(2)} €',
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+
+                        // Add or remove item buttons
+                        quantitySelector(),
+                      ],
                     ),
                   ],
                 ),
-              ),
-
-              // Add or remove item buttons
-              Row(
-                spacing: 12,
-                children: [
-                  IconButton(
-                    onPressed: onRemove,
-                    icon: Icon(
-                      LucideIcons.minus,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                    style: IconButton.styleFrom(
-                      backgroundColor: Theme.of(
-                        context,
-                      ).colorScheme.surfaceDim,
-                      shape: const CircleBorder(),
-                    ),
-                  ),
-                  Consumer<Cart>(
-                    builder: (context, cart, child) {
-                      final quantity = cart.getItemQuantity(
-                        flavor.id,
-                      );
-                      return Text(
-                        quantity.toString(),
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    onPressed: onAdd,
-                    icon: Icon(
-                      LucideIcons.plus,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
-                    style: IconButton.styleFrom(
-                      backgroundColor: Theme.of(
-                        context,
-                      ).colorScheme.inversePrimary,
-                      shape: const CircleBorder(),
-                    ),
-                  ),
-                ],
               ),
             ],
           ),

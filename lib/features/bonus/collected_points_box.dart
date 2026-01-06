@@ -29,50 +29,60 @@ class _CollectedPointsBoxState extends State<CollectedPointsBox> {
                   // top row
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
+                  spacing: 16,
                   children: [
-                    Row(
-                      // points + lvl
-                      spacing: 8,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 50,
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.tertiaryContainer,
-                            shape: BoxShape.circle,
+                    // points + lvl
+                    Expanded(
+                      child: Row(
+                        spacing: 8,
+                        children: [
+                          Container(
+                            height: 50,
+                            width: 50,
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.tertiaryContainer,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.auto_awesome,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onTertiaryFixed,
+                            ),
                           ),
-                          child: Icon(
-                            Icons.auto_awesome,
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onTertiaryFixed,
-                          ),
-                        ),
 
-                        // points bar
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              context.tr('points_fidelite'),
-                              style: Theme.of(context).textTheme.titleMedium,
+                          // points
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  context.tr('points_fidelite'),
+                                  style:
+                                      Theme.of(
+                                        context,
+                                      ).textTheme.titleMedium?.copyWith(
+                                        height: 1.2,
+                                      ),
+                                ),
+                                Text(
+                                  fortuneWheel.points.toString(),
+                                  style: Theme.of(context).textTheme.titleLarge
+                                      ?.copyWith(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.error,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              fortuneWheel.points.toString(),
-                              style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.error,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                     Row(
                       // lvl + trophy
@@ -163,14 +173,16 @@ class _CollectedPointsBoxState extends State<CollectedPointsBox> {
                       context.tr('gagnez'),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      spacing: 16,
-                      children: [
-                        Gift(emoji: '🍨', minPoints: 250),
-                        Gift(emoji: '🏖️', minPoints: 500),
-                        Gift(emoji: '🎁', minPoints: 1500),
-                      ],
+                    const IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        spacing: 16,
+                        children: [
+                          Gift(emoji: '🍨', minPoints: 250),
+                          Gift(emoji: '🏖️', minPoints: 500),
+                          Gift(emoji: '🎁', minPoints: 1500),
+                        ],
+                      ),
                     ),
                   ],
                 ),

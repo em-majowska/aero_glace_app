@@ -46,6 +46,8 @@
   "total": "Total",
   "btn_vider": "Vider",
   "btn_commander": "Commander",
+  "login_required_title": "Connexion requise",
+  "login_required_message": "Vous devez être connecté pour passer une commande.",
   "points_fidelite": "Points de fidelité",
   "bar_points_collected": "{points} points",
   "bar_points_max": "{maxPoints} points",
