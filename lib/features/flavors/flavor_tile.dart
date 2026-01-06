@@ -1,19 +1,73 @@
+import 'package:aero_glace_app/model/cart_model.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
+import 'package:aero_glace_app/widgets/snack_bar.dart';
 import 'package:aero_glace_app/widgets/my_mesh.dart';
 import 'package:aero_glace_app/widgets/tag.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:mesh_gradient/mesh_gradient.dart';
+import 'package:provider/provider.dart';
 
-class FlavorTile extends StatelessWidget {
+class FlavorTile extends StatefulWidget {
   final Flavor flavor;
-  final void Function()? onPressed;
 
   const FlavorTile({
     super.key,
     required this.flavor,
-    required this.onPressed,
   });
+
+  @override
+  State<FlavorTile> createState() => _FlavorTileState();
+}
+
+class _FlavorTileState extends State<FlavorTile> {
+  late final AnimatedMeshGradientController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimatedMeshGradientController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void addFlavorToCart(Flavor flavor) {
+    Provider.of<Cart>(context, listen: false).addItem(flavor);
+    _showMessage(context, flavor);
+    _controller.start();
+    Future.delayed(const Duration(seconds: 2), () {
+      _controller.stop();
+    });
+  }
+
+  // show message
+  void _showMessage(BuildContext context, Flavor flavor) {
+    ScaffoldMessenger.of(
+      context,
+    ).hideCurrentSnackBar(); // TODO add smooth animation
+    ScaffoldMessenger.of(context).showSnackBar(
+      // snackBarAnimationStyle: AnimationStyle TODO add smooth animation
+      MySnackBar(
+        context: context,
+        icon: Icon(
+          LucideIcons.circleCheck300,
+          color: Theme.of(context).colorScheme.tertiary,
+        ),
+        message: context.tr(
+          'added_to_cart',
+          namedArgs: {
+            'flavorTitle': flavor.title,
+          },
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +88,17 @@ class FlavorTile extends StatelessWidget {
                 spacing: 5,
                 children: [
                   Text(
-                    flavor.title,
+                    widget.flavor.title,
                     style: theme.textTheme.titleMedium,
                   ),
                   Text(
-                    flavor.description,
+                    widget.flavor.description,
                     style: theme.textTheme.bodySmall,
                   ),
                 ],
               ),
               Text(
-                '${flavor.price.toStringAsFixed(2)} €',
+                '${widget.flavor.price.toStringAsFixed(2)} €',
                 style: theme.textTheme.titleLarge,
               ),
               Expanded(
@@ -57,7 +111,7 @@ class FlavorTile extends StatelessWidget {
                         runAlignment: WrapAlignment.end,
                         spacing: 5,
                         runSpacing: 5,
-                        children: flavor.tags
+                        children: widget.flavor.tags
                             .map((tag) => Tag(tag: tag))
                             .toList(),
                       ),
@@ -74,7 +128,7 @@ class FlavorTile extends StatelessWidget {
                           ),
                         ),
                       ),
-                      onPressed: onPressed,
+                      onPressed: () => addFlavorToCart(widget.flavor),
                       icon: Icon(
                         LucideIcons.plus,
                         color: theme.colorScheme.onSurface,
@@ -93,29 +147,30 @@ class FlavorTile extends StatelessWidget {
       child: GlossyBox(
         child: ClipRRect(
           borderRadius: BorderRadiusGeometry.circular(12),
-          child: MyMesh(
-            meshPoints: flavor.meshPoints,
-            child: Stack(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Image
-                    Expanded(
-                      flex: 2,
-                      child: Image.asset(
-                        'assets/images/flavors/${flavor.imagePath}',
-                        fit: BoxFit.cover,
-                        alignment: Alignment.center,
-                      ),
+          child: Stack(
+            children: [
+              MyMesh(
+                meshColors: widget.flavor.meshColors,
+                controller: _controller,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Image
+                  Expanded(
+                    flex: 2,
+                    child: Image.asset(
+                      'assets/images/flavors/${widget.flavor.imagePath}',
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
                     ),
+                  ),
 
-                    // Details
-                    flavorDetails(),
-                  ],
-                ),
-              ],
-            ),
+                  // Details
+                  flavorDetails(),
+                ],
+              ),
+            ],
           ),
         ),
       ),

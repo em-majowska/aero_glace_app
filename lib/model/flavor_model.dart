@@ -1,4 +1,4 @@
-import 'package:mesh_gradient/mesh_gradient.dart';
+import 'package:flutter/material.dart';
 
 class Flavor {
   final int id;
@@ -7,7 +7,7 @@ class Flavor {
   final List<String> tags;
   final String imagePath;
   final double price;
-  final List<MeshGradientPoint> meshPoints;
+  final List<Color> meshColors;
 
   Flavor({
     required this.id,
@@ -16,6 +16,6 @@ class Flavor {
     required this.tags,
     required this.imagePath,
     required this.price,
-    required this.meshPoints,
+    required this.meshColors,
   });
 }

@@ -2,17 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:mesh_gradient/mesh_gradient.dart';
 
 class MyMesh extends StatelessWidget {
-  final dynamic child;
-  final List<MeshGradientPoint> meshPoints;
+  final List<Color> meshColors;
+  final AnimatedMeshGradientController? controller;
 
-  const MyMesh({super.key, this.child, required this.meshPoints});
+  const MyMesh({
+    super.key,
+    required this.meshColors,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return MeshGradient(
-      options: MeshGradientOptions(blend: 3, noiseIntensity: 0.3),
-      points: meshPoints,
-      child: child,
+    return AnimatedMeshGradient(
+      options: AnimatedMeshGradientOptions(
+        speed: 5,
+        amplitude: 10,
+        frequency: 5,
+      ),
+      colors: meshColors,
+      controller: controller,
+      child: Container(),
     );
   }
 }
