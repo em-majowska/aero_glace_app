@@ -204,7 +204,7 @@ class MyMapState extends State<MyMap> {
             children: [
               TileLayer(
                 urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.em-majowska.aero_glace_app',
+                userAgentPackageName: 'com.aero_glace_app',
               ),
               MarkerLayer(
                 markers: markers,
