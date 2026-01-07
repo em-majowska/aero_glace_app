@@ -3,6 +3,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../model/flavor_model.dart';
 
+/// Retourne la liste des tags traduits
+///
+/// Le [context] est requis afin d'accéder aux traductions
+/// via le système de localisation.
 Map<String, String> getTags(BuildContext context) => {
   "vegan": context.tr('tag.vegan'),
   "sansLactose": context.tr('tag.sansLactose'),
@@ -13,6 +17,10 @@ Map<String, String> getTags(BuildContext context) => {
   "cacahuetes": context.tr('tag.cacahuetes'),
 };
 
+/// Retourne la liste des parfums avec les données traduites.
+///
+/// Le [context] est requis pour résoudre les chaînes localisées
+/// ([title], [description] et les tags via [getTags]).
 List<Flavor> getFlavors(BuildContext context) => [
   Flavor(
     id: 1,

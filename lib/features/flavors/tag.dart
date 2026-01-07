@@ -1,6 +1,7 @@
 import 'package:aero_glace_app/util/theme.dart';
 import 'package:flutter/material.dart';
 
+/// Widget affichant un tag avec un style spécifique.
 class Tag extends StatelessWidget {
   final String tag;
   const Tag({super.key, required this.tag});

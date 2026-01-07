@@ -11,7 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
+///
+/// Page principale de l'application.
+///
+/// Affiche la navigation par barre inférieure
+/// et affiche la page correspondante à l’onglet sélectionné.
 class HomePage extends StatefulWidget {
+  /// Crée la page principale.
   const HomePage({super.key});
 
   @override
@@ -19,16 +25,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // currently selected page
+  // Index de l’onglet actuellement sélectionné
   int _selectedIndex = 0;
 
+  // Change la page affichée lors de la sélection
+  // d’un élément de la barre de navigation
   void _navigateBottomBar(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
-  // pages in the app
+  // Liste des pages associées aux onglets
   final List _pages = [
     const AboutPage(),
     const FlavorsPage(),
@@ -39,6 +47,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Fournit les contrôleurs nécessaires à l’ensemble
+    // des pages accessibles depuis la navigation principale
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => CartController()),
@@ -64,21 +74,22 @@ class _HomePageState extends State<HomePage> {
             ),
             BottomNavigationBarItem(
               label: context.tr('panier'),
-              // check if cart is empty and add badge if needed
               icon: Builder(
                 builder: (context) {
+                  // Quantité totale d’articles présents dans le panier
                   final qty = Provider.of<CartController>(
                     context,
                     listen: true,
                   ).totalQuantity;
-                  if (qty < 1) {
-                    return const Icon(LucideIcons.shoppingBag);
-                  } else {
-                    return Badge(
-                      label: Text(qty.toString()),
-                      child: const Icon(LucideIcons.shoppingBag),
-                    );
-                  }
+
+                  // Affiche un badge sur l’icône du panier
+                  // uniquement si la quantité est supérieure à 0
+                  return (qty < 1)
+                      ? const Icon(LucideIcons.shoppingBag)
+                      : Badge(
+                          label: Text(qty.toString()),
+                          child: const Icon(LucideIcons.shoppingBag),
+                        );
                 },
               ),
             ),

@@ -49,7 +49,7 @@ class TotalTile extends StatelessWidget {
                   backgroundColor: context.colorSchema.error,
                 ),
                 onPressed: () {
-                  onDiscardAll();
+                  onDiscardAll(); // TODO controller add here
                   Navigator.of(context).pop();
                 },
                 child: Text(

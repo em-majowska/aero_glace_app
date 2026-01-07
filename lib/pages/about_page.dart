@@ -6,15 +6,10 @@ import 'package:blobs/blobs.dart';
 import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-class AboutPage extends StatefulWidget {
+/// Page “À propos” de l’application.
+class AboutPage extends StatelessWidget {
+  /// Crée la page "À propos"
   const AboutPage({super.key});
-
-  @override
-  State<AboutPage> createState() => _AboutPageState();
-}
-
-class _AboutPageState extends State<AboutPage> {
-  // language selection menu
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +23,11 @@ class _AboutPageState extends State<AboutPage> {
       ),
       body: Stack(
         children: [
+          // Arrière-plan principal
           const MyBackground(assetPath: 'background.jpg'),
 
-          // Blob top left
+          // Blobs décoratifs
+          // Blob haut-droite (contour)
           Positioned(
             top: mediaHeight * -0.13,
             right: mediaWidth * -0.2,
@@ -51,22 +48,7 @@ class _AboutPageState extends State<AboutPage> {
             ),
           ),
 
-          Positioned(
-            top: mediaHeight * 0.05,
-            left: 0,
-            child: Blur(
-              blur: 2,
-              child: RotatedBox(
-                quarterTurns: -1,
-                child: Image.asset(
-                  'assets/images/star.png',
-                  width: mediaWidth * 0.4,
-                ),
-              ),
-            ),
-          ),
-
-          // Blob top left
+          // Blob haut-gauche (plein)
           Positioned(
             top: mediaHeight * -0.2,
             left: mediaWidth * -0.4,
@@ -84,16 +66,13 @@ class _AboutPageState extends State<AboutPage> {
             ),
           ),
 
-          // Blob bottom right
+          // Blob bas-droite (plein)
           Positioned(
             bottom: mediaHeight * -0.15,
             right: mediaWidth * -0.4,
             child: Blob.random(
               size: mediaHeight * 0.45,
               edgesCount: 20,
-              // minGrowth: 8,
-              // duration: Duration(milliseconds: 2000),
-              // loop: true,
               styles: BlobStyles(
                 gradient: LinearGradient(
                   colors: [
@@ -104,8 +83,9 @@ class _AboutPageState extends State<AboutPage> {
               ),
             ),
           ),
+          // TODO animations
 
-          // Blob bottom-left
+          // Blob bas-gauche (contour)
           Positioned(
             bottom: mediaHeight * -0.17,
             left: mediaWidth * -0.45,
@@ -124,59 +104,95 @@ class _AboutPageState extends State<AboutPage> {
               ),
             ),
           ),
-          //Outlined sparkle bottom left
+
+          // Icônes décoratives
+          // Bas-gauche
           Positioned(
             left: mediaWidth * 0.1,
             bottom: mediaHeight * 0.07,
-            child: Icon(LucideIcons.sparkles100, size: mediaWidth * 0.2),
+            child: Icon(LucideIcons.sparkles100, size: mediaHeight * 0.1),
           ),
-          // Outlined sparkle top right
+
+          // Haut-droite
           Positioned(
             right: mediaWidth * 0.1,
             top: mediaHeight * 0.17,
-            child: Icon(LucideIcons.sparkle100, size: mediaWidth * 0.12),
+            child: Icon(LucideIcons.sparkle100, size: mediaHeight * 0.08),
           ),
-          // Star image bottom right
+
+          // Étoiles décoratives
+          // Étoile haute-gauche
           Positioned(
-            bottom: mediaHeight * 0.1,
-            right: mediaWidth * 0.2,
-            child: Image.asset(
-              'assets/images/star.png',
-              width: mediaWidth * 0.15,
+            top: mediaHeight * 0.05,
+            left: 0,
+            child: Blur(
+              blur: 2,
+              child: RotatedBox(
+                quarterTurns: -1,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints.loose(const Size(400, 400)),
+                  child: Image.asset(
+                    'assets/images/star.png',
+                    width: mediaWidth * 0.4,
+                  ),
+                ),
+              ),
             ),
           ),
 
-          // Center elements
+          // Étoile bas-droite
+          Positioned(
+            bottom: mediaHeight * 0.1,
+            right: mediaWidth * 0.2,
+            child: ConstrainedBox(
+              constraints: BoxConstraints.loose(const Size(150, 150)),
+              child: Image.asset(
+                'assets/images/star.png',
+                width: mediaWidth * 0.15,
+              ),
+            ),
+          ),
+
+          // Éléments centraux
           Center(
-            child: Container(
-              width: mediaWidth * 0.6,
-              height: mediaWidth * 0.6,
-              decoration: BoxDecoration(
-                color: const Color(0x00000000).withValues(alpha: 0.10),
-                border: Border.all(
-                  color: const Color(0x00000000).withValues(alpha: 0.70),
+            child: ConstrainedBox(
+              constraints: BoxConstraints.loose(const Size(400, 400)),
+              child: Container(
+                width: mediaWidth * 0.6,
+                height: mediaWidth * 0.6,
+                decoration: BoxDecoration(
+                  color: const Color(0x00000000).withValues(alpha: 0.10),
+                  border: Border.all(
+                    color: const Color(0x00000000).withValues(alpha: 0.70),
+                  ),
+                  borderRadius: BorderRadius.circular(250),
                 ),
-                borderRadius: BorderRadius.circular(250),
               ),
             ),
           ),
           Center(
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFFFFF).withValues(alpha: 0.40),
-                border: Border.all(
-                  color: Colors.white,
+            child: ConstrainedBox(
+              constraints: BoxConstraints.loose(const Size(350, 350)),
+              child: Container(
+                width: mediaWidth * 0.5,
+                height: mediaWidth * 0.5,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFFFFF).withValues(alpha: 0.40),
+                  border: Border.all(
+                    color: Colors.white,
+                  ),
+                  borderRadius: BorderRadius.circular(250),
                 ),
-                borderRadius: BorderRadius.circular(250),
               ),
-              width: mediaWidth * 0.5,
-              height: mediaWidth * 0.5,
             ),
           ),
           Center(
-            child: Image.asset(
-              'assets/images/ice-cream.png',
-              width: mediaWidth * 0.35,
+            child: ConstrainedBox(
+              constraints: BoxConstraints.loose(const Size(450, 450)),
+              child: Image.asset(
+                'assets/images/ice-cream.png',
+                width: mediaWidth * 0.35,
+              ),
             ),
           ),
         ],

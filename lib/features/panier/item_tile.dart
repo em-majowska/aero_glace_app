@@ -1,3 +1,4 @@
+import 'package:aero_glace_app/features/panier/quantity_selector.dart';
 import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
 import 'package:aero_glace_app/util/theme.dart';
@@ -12,132 +13,99 @@ final blob = BlobClipper(
   minGrowth: 7,
 );
 
+/// Widget affichant un item du panier avec des infos essentiels.
+///
+/// Permet de :
+/// - Afficher l'image, le titre et le prix d'un parfum.
+/// - Modifier la quantité avec les boutons + / -.
+/// - Supprimer l'item via un glissement [Slidable].
 class ItemTile extends StatelessWidget {
   final Flavor flavor;
   final int quantity;
-  final VoidCallback onAdd;
-  final VoidCallback onRemove;
-  final VoidCallback onDiscard;
 
   const ItemTile({
     super.key,
     required this.flavor,
     required this.quantity,
-    required this.onAdd,
-    required this.onRemove,
-    required this.onDiscard,
   });
 
   @override
   Widget build(BuildContext context) {
-    Widget quantitySelector() {
-      return Row(
-        spacing: 8,
-        children: [
-          IconButton(
-            onPressed: onRemove,
-            icon: Icon(
-              LucideIcons.minus,
-              color: context.colorSchema.onSurface,
-            ),
-            style: IconButton.styleFrom(
-              backgroundColor: context.colorSchema.surfaceDim,
-              shape: const CircleBorder(),
-            ),
-          ),
-          Consumer<CartController>(
-            builder: (context, cart, child) {
-              final quantity = cart.getItemQuantity(
-                flavor.id,
-              );
-              return Text(
-                quantity.toString(),
-                style: context.textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              );
-            },
-          ),
-          IconButton(
-            onPressed: onAdd,
-            icon: Icon(
-              LucideIcons.plus,
-              color: context.colorSchema.onPrimaryContainer,
-            ),
-            style: IconButton.styleFrom(
-              backgroundColor: context.colorSchema.inversePrimary,
-              shape: const CircleBorder(),
-            ),
-          ),
-        ],
-      );
-    }
-
-    return Slidable(
-      endActionPane: ActionPane(
-        motion: const ScrollMotion(),
-        children: [
-          SlidableAction(
-            onPressed: (context) => onDiscard(),
-            icon: LucideIcons.trash2,
-            backgroundColor: context.colorSchema.tertiary,
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 3, top: 8, right: 8, bottom: 0),
-        child: IntrinsicHeight(
-          child: Row(
-            spacing: 8,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    // Glissement pour supprimer l’item
+    return Consumer<CartController>(
+      builder: (context, cart, child) {
+        return Slidable(
+          endActionPane: ActionPane(
+            motion: const ScrollMotion(),
             children: [
-              // image
-              SizedBox(
-                width: 100,
-                height: 100,
-                child: ClipPath(
-                  clipper: blob,
-                  child: Image.asset(
-                    'assets/images/flavors/${flavor.imagePath}',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-
-              // title + price
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      flavor.title,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.titleMedium?.copyWith(height: 1.2),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Consumer<CartController>(
-                          builder: (context, cart, child) => Text(
-                            '${cart.getItemPrice(flavor).toStringAsFixed(2)} €',
-                            style: context.textTheme.titleMedium,
-                          ),
-                        ),
-
-                        // Add or remove item buttons
-                        quantitySelector(),
-                      ],
-                    ),
-                  ],
-                ),
+              SlidableAction(
+                onPressed: (context) => cart.discardItem(flavor),
+                icon: LucideIcons.trash2,
+                backgroundColor: context.colorSchema.tertiary,
               ),
             ],
           ),
-        ),
-      ),
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 3,
+              top: 8,
+              right: 8,
+              bottom: 0,
+            ),
+            child: IntrinsicHeight(
+              child: Row(
+                spacing: 8,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Image du parfum avec clipper décoratif
+                  SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: ClipPath(
+                      clipper: blob,
+                      child: Image.asset(
+                        'assets/images/flavors/${flavor.imagePath}',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+
+                  // Titre, prix et sélection de quantité
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          flavor.title,
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleMedium?.copyWith(height: 1.2),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Consumer<CartController>(
+                              builder: (context, cart, child) => Text(
+                                '${cart.getItemPrice(flavor).toStringAsFixed(2)} €',
+                                style: context.textTheme.titleMedium,
+                              ),
+                            ),
+
+                            // Boutons + / - pour modifier la quantité
+                            QuantitySelector(flavor: flavor),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
