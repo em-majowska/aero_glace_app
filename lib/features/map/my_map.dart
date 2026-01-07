@@ -129,8 +129,9 @@ class MyMapState extends State<MyMap> {
       serviceEnabled = await _location.requestService();
       if (!serviceEnabled) return false;
     }
-
+    // TODO handle try catch in case if there is no new location permission dialog prompt
     PermissionStatus permissionGranted = await _location.hasPermission();
+    // TODO handle PermissionStatus.deniedForever
 
     if (permissionGranted == PermissionStatus.denied) {
       permissionGranted = await _location.requestPermission();
