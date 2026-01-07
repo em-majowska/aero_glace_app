@@ -1,6 +1,5 @@
 import 'package:aero_glace_app/features/bonus/gift.dart';
 import 'package:aero_glace_app/model/fortune_wheel_controller.dart';
-import 'package:aero_glace_app/util/theme.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +7,14 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
-class CollectedPoints extends StatefulWidget {
-  const CollectedPoints({super.key});
+class CollectedPointsBox extends StatefulWidget {
+  const CollectedPointsBox({super.key});
 
   @override
-  State<CollectedPoints> createState() => _CollectedPointsState();
+  State<CollectedPointsBox> createState() => _CollectedPointsBoxState();
 }
 
-class _CollectedPointsState extends State<CollectedPoints> {
+class _CollectedPointsBoxState extends State<CollectedPointsBox> {
   @override
   Widget build(BuildContext context) {
     return GlossyBox(
@@ -42,12 +41,16 @@ class _CollectedPointsState extends State<CollectedPoints> {
                             width: 50,
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: context.colorSchema.tertiaryContainer,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.tertiaryContainer,
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
                               Icons.auto_awesome,
-                              color: context.colorSchema.onTertiaryFixed,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onTertiaryFixed,
                             ),
                           ),
 
@@ -58,17 +61,22 @@ class _CollectedPointsState extends State<CollectedPoints> {
                               children: [
                                 Text(
                                   context.tr('points_fidelite'),
-                                  style: context.textTheme.titleMedium
-                                      ?.copyWith(
+                                  style:
+                                      Theme.of(
+                                        context,
+                                      ).textTheme.titleMedium?.copyWith(
                                         height: 1.2,
                                       ),
                                 ),
                                 Text(
                                   fortuneWheel.points.toString(),
-                                  style: context.textTheme.titleLarge?.copyWith(
-                                    color: context.colorSchema.error,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: Theme.of(context).textTheme.titleLarge
+                                      ?.copyWith(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.error,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                 ),
                               ],
                             ),
@@ -83,11 +91,12 @@ class _CollectedPointsState extends State<CollectedPoints> {
                       children: [
                         Text(
                           'Lvl ${fortuneWheel.level.value}',
-                          style: context.textTheme.titleLarge?.copyWith(
-                            color: context.colorSchema.error,
-                            fontWeight: FontWeight.bold,
-                            height: 1,
-                          ),
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.error,
+                                fontWeight: FontWeight.bold,
+                                height: 1,
+                              ),
                         ),
                         Icon(
                           LucideIcons.trophy200,
@@ -133,8 +142,10 @@ class _CollectedPointsState extends State<CollectedPoints> {
                       currentStep: fortuneWheel.points,
                       size: 20,
                       padding: 0,
-                      selectedColor: context.colorSchema.tertiary,
-                      unselectedColor: context.colorSchema.tertiaryContainer,
+                      selectedColor: Theme.of(context).colorScheme.tertiary,
+                      unselectedColor: Theme.of(
+                        context,
+                      ).colorScheme.tertiaryContainer,
                       roundedEdges: const Radius.circular(10),
                       selectedGradientColor: LinearGradient(
                         begin: Alignment.topLeft,
@@ -148,8 +159,8 @@ class _CollectedPointsState extends State<CollectedPoints> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          context.colorSchema.surfaceContainerLowest,
-                          context.colorSchema.surfaceContainerLow,
+                          Theme.of(context).colorScheme.surfaceContainerLowest,
+                          Theme.of(context).colorScheme.surfaceContainerLow,
                         ],
                       ),
                     ),
@@ -160,7 +171,7 @@ class _CollectedPointsState extends State<CollectedPoints> {
                   children: [
                     Text(
                       context.tr('gagnez'),
-                      style: context.textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const IntrinsicHeight(
                       child: Row(

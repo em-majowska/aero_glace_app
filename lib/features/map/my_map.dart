@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:aero_glace_app/model/shop_location_model.dart';
+import 'package:aero_glace_app/util/theme.dart';
 import 'package:aero_glace_app/widgets/error_message.dart';
 import 'package:aero_glace_app/util/unpack_polyline.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -170,20 +171,16 @@ class MyMapState extends State<MyMap> {
           decoration: BoxDecoration(
             border: Border.all(
               width: 2,
-              color: Theme.of(context).colorScheme.tertiary,
+              color: context.colorSchema.tertiary,
             ),
             borderRadius: BorderRadius.circular(30),
           ),
           child: CircleAvatar(
-            backgroundColor: Theme.of(
-              context,
-            ).colorScheme.tertiaryContainer,
+            backgroundColor: context.colorSchema.tertiaryContainer,
             child: Icon(
               LucideIcons.iceCreamCone,
               size: 25,
-              color: Theme.of(
-                context,
-              ).colorScheme.onTertiaryContainer,
+              color: context.colorSchema.onTertiaryContainer,
             ),
           ),
         ),
@@ -233,12 +230,12 @@ class MyMapState extends State<MyMap> {
                       return Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
+                          color: context.colorSchema.surface,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           shop.address,
-                          style: Theme.of(context).textTheme.labelLarge,
+                          style: context.textTheme.labelLarge,
                         ),
                       );
                     },
@@ -262,10 +259,10 @@ class MyMapState extends State<MyMap> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _userCurrentLocation,
-        backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+        backgroundColor: context.colorSchema.tertiaryContainer,
         child: Icon(
           LucideIcons.locateFixed300,
-          color: Theme.of(context).colorScheme.onTertiaryContainer,
+          color: context.colorSchema.onTertiaryContainer,
           size: 30,
         ),
       ),

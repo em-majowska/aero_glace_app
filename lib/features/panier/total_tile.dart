@@ -1,5 +1,6 @@
 import 'package:aero_glace_app/data/flavors_list.dart';
 import 'package:aero_glace_app/model/cart_controller.dart';
+import 'package:aero_glace_app/util/theme.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class TotalTile extends StatelessWidget {
             actionsPadding: const EdgeInsets.all(16),
             title: Text(
               context.tr('btn_vider_panier'),
-              style: Theme.of(context).textTheme.titleLarge,
+              style: context.textTheme.titleLarge,
             ),
             content: Text(
               context.tr('vider_confirmation_message'),
@@ -45,7 +46,7 @@ class TotalTile extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  backgroundColor: Theme.of(context).colorScheme.error,
+                  backgroundColor: context.colorSchema.error,
                 ),
                 onPressed: () {
                   onDiscardAll();
@@ -54,7 +55,7 @@ class TotalTile extends StatelessWidget {
                 child: Text(
                   context.tr('btn_vider_panier'),
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onError,
+                    color: context.colorSchema.onError,
                   ),
                 ),
               ),
@@ -73,7 +74,7 @@ class TotalTile extends StatelessWidget {
             actionsPadding: const EdgeInsets.all(16),
             title: Text(
               context.tr('login_required_title'),
-              style: Theme.of(context).textTheme.titleLarge,
+              style: context.textTheme.titleLarge,
             ),
             content: Text(
               context.tr('login_required_message'),
@@ -122,7 +123,7 @@ class TotalTile extends StatelessWidget {
                           Text(
                             '- ${savings.toStringAsFixed(2)} €',
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.error,
+                              color: context.colorSchema.error,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -136,7 +137,7 @@ class TotalTile extends StatelessWidget {
                   children: [
                     Text(
                       context.tr('total'),
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      style: context.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -144,7 +145,7 @@ class TotalTile extends StatelessWidget {
                       (cart.discount > 0)
                           ? '${totalDiscounted.toStringAsFixed(2)} €'
                           : '${total.toStringAsFixed(2)} €',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      style: context.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -166,21 +167,21 @@ class TotalTile extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         side: BorderSide(
-                          color: Theme.of(context).colorScheme.error,
+                          color: context.colorSchema.error,
                         ),
-                        foregroundColor: Theme.of(context).colorScheme.error,
+                        foregroundColor: context.colorSchema.error,
                       ),
                       child: Row(
                         spacing: 8,
                         children: [
                           Icon(
                             LucideIcons.trash2,
-                            color: Theme.of(context).colorScheme.error,
+                            color: context.colorSchema.error,
                           ),
                           Text(
                             context.tr('btn_vider_panier'),
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.error,
+                              color: context.colorSchema.error,
                             ),
                           ),
                         ],
@@ -199,14 +200,12 @@ class TotalTile extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        backgroundColor: Theme.of(
-                          context,
-                        ).colorScheme.primary,
+                        backgroundColor: context.colorSchema.primary,
                       ),
                       child: Text(
                         context.tr('btn_commander'),
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          color: context.colorSchema.onPrimary,
                         ),
                       ),
                     ),

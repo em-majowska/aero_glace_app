@@ -1,4 +1,5 @@
 import 'package:aero_glace_app/model/fortune_wheel_controller.dart';
+import 'package:aero_glace_app/util/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +20,8 @@ class Gift extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: (fortuneWheel.points > minPoints)
-                  ? Theme.of(context).colorScheme.tertiaryContainer
-                  : Theme.of(context).colorScheme.surfaceContainerHighest,
+                  ? context.colorSchema.tertiaryContainer
+                  : context.colorSchema.surfaceContainerHighest,
             ),
             child: Column(
               children: [
@@ -33,10 +34,10 @@ class Gift extends StatelessWidget {
                 const SizedBox(height: 5),
                 Text(
                   '$minPoints pts',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: context.textTheme.bodyMedium?.copyWith(
                     color: (fortuneWheel.points > minPoints)
-                        ? Theme.of(context).colorScheme.onTertiaryContainer
-                        : Theme.of(context).colorScheme.onTertiaryContainer,
+                        ? context.colorSchema.onTertiaryContainer
+                        : context.colorSchema.onTertiaryContainer,
                     height: 1.2,
                   ),
                   textAlign: TextAlign.center,

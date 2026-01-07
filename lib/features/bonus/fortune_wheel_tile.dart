@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:aero_glace_app/features/bonus/fortune_wheel.dart';
 import 'package:aero_glace_app/features/bonus/result.dart';
 import 'package:aero_glace_app/model/fortune_wheel_controller.dart';
+import 'package:aero_glace_app/util/theme.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -59,10 +60,10 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
                     height: 270,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer,
+                      color: context.colorSchema.primaryContainer,
                       border: Border.all(
                         width: 2,
-                        color: Theme.of(context).colorScheme.primaryFixedDim,
+                        color: context.colorSchema.primaryFixedDim,
                       ),
                       shape: BoxShape.circle,
                     ),
@@ -93,14 +94,14 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
                             context.tr('spin_wheel'),
                             style: TextStyle(
                               fontSize: 16,
-                              color: Theme.of(context).colorScheme.onPrimary,
+                              color: context.colorSchema.onPrimary,
                             ),
                           )
                         : Text(
                             context.tr('try_tomorrow'),
                             style: TextStyle(
                               fontSize: 16,
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: context.colorSchema.secondary,
                             ),
                           ),
                   ),

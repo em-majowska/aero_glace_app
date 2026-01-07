@@ -1,5 +1,6 @@
 import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
+import 'package:aero_glace_app/util/theme.dart';
 import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -37,12 +38,10 @@ class ItemTile extends StatelessWidget {
             onPressed: onRemove,
             icon: Icon(
               LucideIcons.minus,
-              color: Theme.of(context).colorScheme.onSurface,
+              color: context.colorSchema.onSurface,
             ),
             style: IconButton.styleFrom(
-              backgroundColor: Theme.of(
-                context,
-              ).colorScheme.surfaceDim,
+              backgroundColor: context.colorSchema.surfaceDim,
               shape: const CircleBorder(),
             ),
           ),
@@ -53,7 +52,7 @@ class ItemTile extends StatelessWidget {
               );
               return Text(
                 quantity.toString(),
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                style: context.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               );
@@ -63,14 +62,10 @@ class ItemTile extends StatelessWidget {
             onPressed: onAdd,
             icon: Icon(
               LucideIcons.plus,
-              color: Theme.of(
-                context,
-              ).colorScheme.onPrimaryContainer,
+              color: context.colorSchema.onPrimaryContainer,
             ),
             style: IconButton.styleFrom(
-              backgroundColor: Theme.of(
-                context,
-              ).colorScheme.inversePrimary,
+              backgroundColor: context.colorSchema.inversePrimary,
               shape: const CircleBorder(),
             ),
           ),
@@ -85,7 +80,7 @@ class ItemTile extends StatelessWidget {
           SlidableAction(
             onPressed: (context) => onDiscard(),
             icon: LucideIcons.trash2,
-            backgroundColor: Theme.of(context).colorScheme.tertiary,
+            backgroundColor: context.colorSchema.tertiary,
           ),
         ],
       ),
@@ -128,7 +123,7 @@ class ItemTile extends StatelessWidget {
                         Consumer<CartController>(
                           builder: (context, cart, child) => Text(
                             '${cart.getItemPrice(flavor).toStringAsFixed(2)} €',
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: context.textTheme.titleMedium,
                           ),
                         ),
 

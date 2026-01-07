@@ -3,6 +3,7 @@ import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/features/panier/item_tile.dart';
 import 'package:aero_glace_app/features/panier/empty_cart_tile.dart';
 import 'package:aero_glace_app/features/panier/total_tile.dart';
+import 'package:aero_glace_app/util/theme.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
@@ -20,7 +21,7 @@ class CartPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.tr('votre_commande')),
         actions: [const LanguageMenuButton()],
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: context.colorSchema.surface,
         scrolledUnderElevation: 0.0,
         shadowColor: Colors.transparent,
       ),

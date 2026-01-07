@@ -1,5 +1,6 @@
 import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
+import 'package:aero_glace_app/util/theme.dart';
 import 'package:aero_glace_app/widgets/snack_bar.dart';
 import 'package:aero_glace_app/widgets/my_mesh.dart';
 import 'package:aero_glace_app/features/flavors/tag.dart';
@@ -71,8 +72,6 @@ class _FlavorTileState extends State<FlavorTile> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     Widget flavorDetails() {
       return Expanded(
         flex: 4,
@@ -89,17 +88,17 @@ class _FlavorTileState extends State<FlavorTile> {
                 children: [
                   Text(
                     widget.flavor.title,
-                    style: theme.textTheme.titleMedium,
+                    style: context.textTheme.titleMedium,
                   ),
                   Text(
                     widget.flavor.description,
-                    style: theme.textTheme.bodySmall,
+                    style: context.textTheme.bodySmall,
                   ),
                 ],
               ),
               Text(
                 '${widget.flavor.price.toStringAsFixed(2)} €',
-                style: theme.textTheme.titleLarge,
+                style: context.textTheme.titleLarge,
               ),
               Expanded(
                 child: Row(
@@ -121,17 +120,17 @@ class _FlavorTileState extends State<FlavorTile> {
                         backgroundColor: Theme.of(
                           context,
                         ).colorScheme.surfaceContainerLowest,
-                        overlayColor: theme.colorScheme.primary,
+                        overlayColor: context.colorSchema.primary,
                         shape: CircleBorder(
                           side: BorderSide(
-                            color: theme.colorScheme.outlineVariant,
+                            color: context.colorSchema.outlineVariant,
                           ),
                         ),
                       ),
                       onPressed: () => addFlavorToCart(widget.flavor),
                       icon: Icon(
                         LucideIcons.plus,
-                        color: theme.colorScheme.onSurface,
+                        color: context.colorSchema.onSurface,
                       ),
                     ),
                   ],

@@ -1,5 +1,6 @@
 import 'package:aero_glace_app/features/bonus/collected_points_tile.dart';
 import 'package:aero_glace_app/features/bonus/fortune_wheel_tile.dart';
+import 'package:aero_glace_app/util/theme.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -15,7 +16,7 @@ class BonusPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.tr('bonus')),
         actions: [const LanguageMenuButton()],
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: context.colorSchema.surface,
         scrolledUnderElevation: 0.0,
         shadowColor: Colors.transparent,
       ),
@@ -31,18 +32,9 @@ class BonusPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 24,
                 children: [
-                  Icon(
-                    LucideIcons.sparkles200,
-                    size: 24,
-                  ),
-                  Icon(
-                    LucideIcons.sparkles200,
-                    size: 24,
-                  ),
-                  Icon(
-                    LucideIcons.sparkles200,
-                    size: 24,
-                  ),
+                  Icon(LucideIcons.sparkles200, size: 24),
+                  Icon(LucideIcons.sparkles200, size: 24),
+                  Icon(LucideIcons.sparkles200, size: 24),
                 ],
               ),
               const SizedBox(height: 32),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/model/fortune_wheel_controller.dart';
+import 'package:aero_glace_app/util/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -60,7 +61,7 @@ class FortuneWheelElement extends StatelessWidget {
                   FortuneIndicator(
                     alignment: Alignment.topCenter,
                     child: TriangleIndicator(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: context.colorSchema.primary,
                       width: 25,
                       height: 25,
                       elevation: 3,
@@ -88,14 +89,11 @@ class FortuneWheelElement extends StatelessWidget {
                               fortuneWheel.displayValue(
                                 fortuneWheel.fortuneItems[i],
                               ),
-                              style: Theme.of(context).textTheme.labelLarge
-                                  ?.copyWith(
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onPrimaryContainer,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              style: context.textTheme.labelLarge?.copyWith(
+                                color: context.colorSchema.onPrimaryContainer,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -114,12 +112,12 @@ class FortuneWheelElement extends StatelessWidget {
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Theme.of(context).colorScheme.surface,
+              color: context.colorSchema.surface,
             ),
             child: Icon(
               LucideIcons.iceCreamCone300,
               size: 30,
-              color: Theme.of(context).colorScheme.primary,
+              color: context.colorSchema.primary,
             ),
           ),
         ),

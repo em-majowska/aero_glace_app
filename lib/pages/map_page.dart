@@ -1,4 +1,5 @@
 import 'package:aero_glace_app/data/shop_locations.dart';
+import 'package:aero_glace_app/util/theme.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:aero_glace_app/features/map/location_tile.dart';
@@ -23,7 +24,7 @@ class _MapPageState extends State<MapPage> {
       appBar: AppBar(
         title: Text(context.tr('nos_glaciers')),
         actions: [const LanguageMenuButton()],
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: context.colorSchema.surface,
         scrolledUnderElevation: 0.0,
         shadowColor: Colors.transparent,
       ),

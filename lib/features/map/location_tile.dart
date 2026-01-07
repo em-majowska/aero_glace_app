@@ -1,3 +1,4 @@
+import 'package:aero_glace_app/util/theme.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _LocationTileState extends State<LocationTile> {
               Icon(
                 LucideIcons.mapPin300,
                 size: 25,
-                color: Theme.of(context).colorScheme.primary,
+                color: context.colorSchema.primary,
               ),
               Flexible(
                 fit: FlexFit.tight,
@@ -47,11 +48,11 @@ class _LocationTileState extends State<LocationTile> {
                   children: [
                     Text(
                       '${context.tr('aero_glace')} - ${widget.city}',
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: context.textTheme.titleMedium,
                     ),
                     Text(
                       widget.address,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: context.textTheme.bodyMedium,
                     ),
                   ],
                 ),
@@ -60,9 +61,7 @@ class _LocationTileState extends State<LocationTile> {
                 onPressed: () => widget.onPressed!(widget.coordinates),
                 style: IconButton.styleFrom(
                   padding: const EdgeInsets.all(12),
-                  backgroundColor: Theme.of(
-                    context,
-                  ).colorScheme.primaryContainer,
+                  backgroundColor: context.colorSchema.primaryContainer,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -70,7 +69,7 @@ class _LocationTileState extends State<LocationTile> {
                 icon: Icon(
                   LucideIcons.navigation,
                   size: 25,
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  color: context.colorSchema.onPrimaryContainer,
                 ),
               ),
             ],

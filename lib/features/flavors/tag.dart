@@ -1,3 +1,4 @@
+import 'package:aero_glace_app/util/theme.dart';
 import 'package:flutter/material.dart';
 
 class Tag extends StatelessWidget {
@@ -12,13 +13,13 @@ class Tag extends StatelessWidget {
         vertical: 3,
       ),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerLowest,
+        color: context.colorSchema.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
         tag,
         style: TextStyle(
-          color: Theme.of(context).colorScheme.onSurface,
+          color: context.colorSchema.onSurface,
           fontSize: 10,
         ),
       ),
