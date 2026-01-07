@@ -1,8 +1,8 @@
-import 'package:aero_glace_app/model/cart_model.dart';
+import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
 import 'package:aero_glace_app/widgets/snack_bar.dart';
 import 'package:aero_glace_app/widgets/my_mesh.dart';
-import 'package:aero_glace_app/widgets/tag.dart';
+import 'package:aero_glace_app/features/flavors/tag.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class _FlavorTileState extends State<FlavorTile> {
   }
 
   void addFlavorToCart(Flavor flavor) {
-    Provider.of<Cart>(context, listen: false).addItem(flavor);
+    Provider.of<CartController>(context, listen: false).addItem(flavor);
     _showMessage(context, flavor);
     _controller.start();
     Future.delayed(const Duration(seconds: 2), () {

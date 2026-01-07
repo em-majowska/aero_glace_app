@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:aero_glace_app/features/bonus/fortune_wheel.dart';
-import 'package:aero_glace_app/features/bonus/prize.dart';
-import 'package:aero_glace_app/model/fortune_wheel_model.dart';
+import 'package:aero_glace_app/features/bonus/result.dart';
+import 'package:aero_glace_app/model/fortune_wheel_controller.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
     return GlossyBox(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Consumer<FortuneWheelModel>(
+        child: Consumer<FortuneWheelController>(
           builder: (context, fortuneWheel, child) {
             final isActive = fortuneWheel.isWheelActive;
 
@@ -75,9 +75,9 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
                   ),
                 ),
                 if (!isActive)
-                  Prize(
-                    result: fortuneWheel.outcome.value,
-                    isDiscount: fortuneWheel.outcome.type == 'discount',
+                  Result(
+                    result: fortuneWheel.result.value,
+                    isDiscount: fortuneWheel.result.type == 'discount',
                   ),
                 Center(
                   child: FilledButton(

@@ -5,7 +5,7 @@ import 'package:aero_glace_app/model/hive_item_model.dart';
 import 'package:aero_glace_app/model/item_model.dart';
 import 'package:flutter/material.dart';
 
-class Cart extends ChangeNotifier {
+class CartController extends ChangeNotifier {
   // get hive box
   late final Box _cartBox;
   late int _discount = 0;
@@ -24,7 +24,7 @@ class Cart extends ChangeNotifier {
     }).toList();
   }
 
-  Cart() {
+  CartController() {
     _cartBox = Hive.box('cartBox');
     _loadCart();
   }

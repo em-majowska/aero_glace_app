@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/model/cart_model.dart';
+import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
 import 'package:blobs/blobs.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +46,7 @@ class ItemTile extends StatelessWidget {
               shape: const CircleBorder(),
             ),
           ),
-          Consumer<Cart>(
+          Consumer<CartController>(
             builder: (context, cart, child) {
               final quantity = cart.getItemQuantity(
                 flavor.id,
@@ -125,7 +125,7 @@ class ItemTile extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Consumer<Cart>(
+                        Consumer<CartController>(
                           builder: (context, cart, child) => Text(
                             '${cart.getItemPrice(flavor).toStringAsFixed(2)} €',
                             style: Theme.of(context).textTheme.titleMedium,

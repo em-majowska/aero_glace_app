@@ -1,5 +1,5 @@
-import 'package:aero_glace_app/data/default_flavors.dart';
-import 'package:aero_glace_app/model/cart_model.dart';
+import 'package:aero_glace_app/data/flavors_list.dart';
+import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -97,9 +97,9 @@ class TotalTile extends StatelessWidget {
     return GlossyBox(
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Consumer<Cart>(
+        child: Consumer<CartController>(
           builder: (context, cart, child) {
-            final flavors = getDefaultFlavors(context);
+            final flavors = getFlavors(context);
             final total = cart.getTotalPrice(flavors);
             final savings = cart.getSavings(total);
             final totalDiscounted = cart.getTotalPriceDiscounted(total);

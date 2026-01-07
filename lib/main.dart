@@ -1,14 +1,14 @@
 import 'package:aero_glace_app/i18n/codegen_loader.g.dart';
 import 'package:aero_glace_app/model/hive_item_model.dart';
-import 'package:aero_glace_app/model/hive_level_model.dart';
-import 'package:aero_glace_app/model/hive_outcome_model.dart';
+import 'package:aero_glace_app/model/hive_fidelity_level.dart';
+import 'package:aero_glace_app/model/hive_fortune_result.dart';
 import 'package:flutter/material.dart';
 import 'package:aero_glace_app/pages/home_page.dart';
-import 'package:aero_glace_app/pages/accueil_page.dart';
-import 'package:aero_glace_app/pages/parfums_page.dart';
-import 'package:aero_glace_app/pages/panier_page.dart';
+import 'package:aero_glace_app/pages/about_page.dart';
+import 'package:aero_glace_app/pages/flavors_page.dart';
+import 'package:aero_glace_app/pages/cart_page.dart';
 import 'package:aero_glace_app/pages/bonus_page.dart';
-import 'package:aero_glace_app/pages/carte_page.dart';
+import 'package:aero_glace_app/pages/map_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 // import 'util.dart';
@@ -22,8 +22,8 @@ Future<void> main() async {
 
   // register adapter
   Hive.registerAdapter(HiveItemAdapter());
-  Hive.registerAdapter(HiveOutcomeAdapter());
-  Hive.registerAdapter(HiveLevelAdapter());
+  Hive.registerAdapter(HiveFortuneResultAdapter());
+  Hive.registerAdapter(HiveFidelityLevelAdapter());
   // open the box
   await Hive.openBox('cartBox');
   await Hive.openBox('fortuneBox');
@@ -61,11 +61,11 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       locale: context.locale,
       routes: {
-        '/accueil': (context) => const AccueilPage(),
-        '/parfums': (context) => const ParfumsPage(),
-        '/panier': (context) => const PanierPage(),
+        '/accueil': (context) => const AboutPage(),
+        '/parfums': (context) => const FlavorsPage(),
+        '/panier': (context) => const CartPage(),
         '/bonus': (context) => const BonusPage(),
-        '/carte': (context) => const CartePage(),
+        '/carte': (context) => const MapPage(),
       },
 
       home: Builder(

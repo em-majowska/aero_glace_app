@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:aero_glace_app/model/cart_model.dart';
-import 'package:aero_glace_app/model/fortune_wheel_model.dart';
+import 'package:aero_glace_app/model/cart_controller.dart';
+import 'package:aero_glace_app/model/fortune_wheel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -28,7 +28,7 @@ class FortuneWheelElement extends StatelessWidget {
         SizedBox(
           width: 250,
           height: 250,
-          child: Consumer<FortuneWheelModel>(
+          child: Consumer<FortuneWheelController>(
             builder: (context, fortuneWheel, child) {
               return FortuneWheel(
                 physics: CircularPanPhysics(
@@ -41,15 +41,18 @@ class FortuneWheelElement extends StatelessWidget {
                 onAnimationEnd: () {
                   if (!fortuneWheel.isWheelActive) return;
 
-                  final cart = Provider.of<Cart>(context, listen: false);
+                  final cart = Provider.of<CartController>(
+                    context,
+                    listen: false,
+                  );
                   final now = DateTime.now();
 
                   fortuneWheel.disableWheel(now);
-                  if (fortuneWheel.outcome.type == 'discount') {
-                    cart.setDiscount(fortuneWheel.outcome.value, now);
+                  if (fortuneWheel.result.type == 'discount') {
+                    cart.setDiscount(fortuneWheel.result.value, now);
                   } else {
                     cart.setDiscount(0, now);
-                    fortuneWheel.addPoints(fortuneWheel.outcome.value);
+                    fortuneWheel.addPoints(fortuneWheel.result.value);
                   }
                 },
                 animateFirst: false,
@@ -77,7 +80,7 @@ class FortuneWheelElement extends StatelessWidget {
                       alignment: Alignment.center,
                       children: [
                         Positioned(
-                          // position the outcome on the wheel
+                          // position the result on the wheel
                           right: 20,
                           child: RotatedBox(
                             quarterTurns: 5,

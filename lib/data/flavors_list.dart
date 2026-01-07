@@ -13,7 +13,7 @@ Map<String, String> getTags(BuildContext context) => {
   "cacahuetes": context.tr('tag.cacahuetes'),
 };
 
-List<Flavor> getDefaultFlavors(BuildContext context) => [
+List<Flavor> getFlavors(BuildContext context) => [
   Flavor(
     id: 1,
     title: LocaleKeys.chocolat_title.tr(),

@@ -1,5 +1,5 @@
-import 'package:aero_glace_app/data/default_flavors.dart';
-import 'package:aero_glace_app/model/cart_model.dart';
+import 'package:aero_glace_app/data/flavors_list.dart';
+import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/features/panier/item_tile.dart';
 import 'package:aero_glace_app/features/panier/empty_cart_tile.dart';
 import 'package:aero_glace_app/features/panier/total_tile.dart';
@@ -10,12 +10,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class PanierPage extends StatelessWidget {
-  const PanierPage({super.key});
+class CartPage extends StatelessWidget {
+  const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final flavors = getDefaultFlavors(context);
+    final flavors = getFlavors(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(context.tr('votre_commande')),
@@ -34,7 +34,7 @@ class PanierPage extends StatelessWidget {
               'assets/images/hovering-elements.png',
             ),
           ),
-          Consumer<Cart>(
+          Consumer<CartController>(
             builder: (context, cart, child) {
               cart.getItems(flavors);
               if (cart.items.isEmpty) {

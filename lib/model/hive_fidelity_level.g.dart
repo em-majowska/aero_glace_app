@@ -1,35 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'hive_outcome_model.dart';
+part of 'hive_fidelity_level.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class HiveOutcomeAdapter extends TypeAdapter<HiveOutcome> {
+class HiveFidelityLevelAdapter extends TypeAdapter<HiveFidelityLevel> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
-  HiveOutcome read(BinaryReader reader) {
+  HiveFidelityLevel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return HiveOutcome(
+    return HiveFidelityLevel(
       value: fields[0] as int,
-      type: fields[1] as String,
+      minPoints: fields[1] as int,
+      maxPoints: fields[2] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, HiveOutcome obj) {
+  void write(BinaryWriter writer, HiveFidelityLevel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.value)
       ..writeByte(1)
-      ..write(obj.type);
+      ..write(obj.minPoints)
+      ..writeByte(2)
+      ..write(obj.maxPoints);
   }
 
   @override
@@ -38,7 +41,7 @@ class HiveOutcomeAdapter extends TypeAdapter<HiveOutcome> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is HiveOutcomeAdapter &&
+      other is HiveFidelityLevelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

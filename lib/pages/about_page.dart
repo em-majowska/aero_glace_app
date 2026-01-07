@@ -6,14 +6,14 @@ import 'package:blobs/blobs.dart';
 import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-class AccueilPage extends StatefulWidget {
-  const AccueilPage({super.key});
+class AboutPage extends StatefulWidget {
+  const AboutPage({super.key});
 
   @override
-  State<AccueilPage> createState() => _AccueilPageState();
+  State<AboutPage> createState() => _AboutPageState();
 }
 
-class _AccueilPageState extends State<AccueilPage> {
+class _AboutPageState extends State<AboutPage> {
   // language selection menu
 
   @override

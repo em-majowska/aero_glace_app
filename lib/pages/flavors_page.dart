@@ -1,24 +1,24 @@
 // import 'package:aero_glace_app/data/default_flavors.dart';
-import 'package:aero_glace_app/data/default_flavors.dart';
+import 'package:aero_glace_app/data/flavors_list.dart';
 import 'package:aero_glace_app/features/flavors/flavor_tile.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class ParfumsPage extends StatefulWidget {
-  const ParfumsPage({super.key});
+class FlavorsPage extends StatefulWidget {
+  const FlavorsPage({super.key});
 
   @override
-  State<ParfumsPage> createState() => _ParfumsPageState();
+  State<FlavorsPage> createState() => _FlavorsPageState();
 }
 
-class _ParfumsPageState extends State<ParfumsPage> {
+class _FlavorsPageState extends State<FlavorsPage> {
   List<Flavor>? _flavors;
 
   @override
   Widget build(BuildContext context) {
-    _flavors = getDefaultFlavors(context);
+    _flavors = getFlavors(context);
 
     return Scaffold(
       appBar: AppBar(

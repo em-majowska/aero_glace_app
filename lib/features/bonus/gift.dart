@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/model/fortune_wheel_model.dart';
+import 'package:aero_glace_app/model/fortune_wheel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +10,7 @@ class Gift extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FortuneWheelModel>(
+    return Consumer<FortuneWheelController>(
       builder: (context, fortuneWheel, child) {
         return Expanded(
           flex: 1,

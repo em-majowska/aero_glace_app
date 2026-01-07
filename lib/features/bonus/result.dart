@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class Prize extends StatelessWidget {
+class Result extends StatelessWidget {
   final int result;
   final bool isDiscount;
-  const Prize({
+  const Result({
     super.key,
     required this.result,
     required this.isDiscount,

@@ -6,14 +6,14 @@ import 'package:aero_glace_app/features/map/my_map.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-class CartePage extends StatefulWidget {
-  const CartePage({super.key});
+class MapPage extends StatefulWidget {
+  const MapPage({super.key});
 
   @override
-  State<CartePage> createState() => _CartePageState();
+  State<MapPage> createState() => _MapPageState();
 }
 
-class _CartePageState extends State<CartePage> {
+class _MapPageState extends State<MapPage> {
   final GlobalKey<MyMapState> myMapKey = GlobalKey<MyMapState>();
   final shops = shopLocations;
 

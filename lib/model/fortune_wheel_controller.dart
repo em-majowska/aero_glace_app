@@ -1,47 +1,54 @@
 // import 'dart:async';
 import 'dart:math';
-import 'package:aero_glace_app/model/hive_level_model.dart';
-import 'package:aero_glace_app/model/hive_outcome_model.dart';
+import 'package:aero_glace_app/model/hive_fidelity_level.dart';
+import 'package:aero_glace_app/model/hive_fortune_result.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:aero_glace_app/util/next_day.dart';
 
-class FortuneWheelModel extends ChangeNotifier {
+class FortuneWheelController extends ChangeNotifier {
   late final Box _fortuneBox;
   late int _random = 0;
-  late HiveOutcome _outcome = HiveOutcome(value: 0, type: 'discount');
+  late HiveFortuneResult _result = HiveFortuneResult(
+    value: 0,
+    type: 'discount',
+  );
   bool _isWheelActive = true;
   DateTime _date = DateTime.now();
   int _points = 0;
-  HiveLevel _level = HiveLevel(value: 1, minPoints: 0, maxPoints: 250);
+  HiveFidelityLevel _level = HiveFidelityLevel(
+    value: 1,
+    minPoints: 0,
+    maxPoints: 250,
+  );
 
-  final List<HiveLevel> _levels = [
-    HiveLevel(value: 1, minPoints: 0, maxPoints: 250),
-    HiveLevel(value: 2, minPoints: 251, maxPoints: 500),
-    HiveLevel(value: 3, minPoints: 501, maxPoints: 1000),
-    HiveLevel(value: 4, minPoints: 1001, maxPoints: 1500),
+  final List<HiveFidelityLevel> _levels = [
+    HiveFidelityLevel(value: 1, minPoints: 0, maxPoints: 250),
+    HiveFidelityLevel(value: 2, minPoints: 251, maxPoints: 500),
+    HiveFidelityLevel(value: 3, minPoints: 501, maxPoints: 1000),
+    HiveFidelityLevel(value: 4, minPoints: 1001, maxPoints: 1500),
   ];
 
-  final List<HiveOutcome> _fortuneItems = [
-    HiveOutcome(value: 10, type: 'discount'),
-    HiveOutcome(value: 15, type: 'discount'),
-    HiveOutcome(value: 20, type: 'discount'),
-    HiveOutcome(value: 10, type: 'points'),
-    HiveOutcome(value: 20, type: 'points'),
-    HiveOutcome(value: 30, type: 'points'),
-    HiveOutcome(value: 40, type: 'points'),
-    HiveOutcome(value: 50, type: 'points'),
+  final List<HiveFortuneResult> _fortuneItems = [
+    HiveFortuneResult(value: 10, type: 'discount'),
+    HiveFortuneResult(value: 15, type: 'discount'),
+    HiveFortuneResult(value: 20, type: 'discount'),
+    HiveFortuneResult(value: 10, type: 'points'),
+    HiveFortuneResult(value: 20, type: 'points'),
+    HiveFortuneResult(value: 30, type: 'points'),
+    HiveFortuneResult(value: 40, type: 'points'),
+    HiveFortuneResult(value: 50, type: 'points'),
   ];
 
   int get random =>
       _random; // to add as index to the controller of fortune wheel
   bool get isWheelActive => _isWheelActive;
-  HiveOutcome get outcome => _outcome; // to keep in hive
-  List<HiveOutcome> get fortuneItems => _fortuneItems;
+  HiveFortuneResult get result => _result; // to keep in hive
+  List<HiveFortuneResult> get fortuneItems => _fortuneItems;
   int get points => _points;
-  HiveLevel get level => _level;
+  HiveFidelityLevel get level => _level;
 
-  FortuneWheelModel() {
+  FortuneWheelController() {
     _fortuneBox = Hive.box('fortuneBox');
 
     _loadState();
@@ -49,11 +56,11 @@ class FortuneWheelModel extends ChangeNotifier {
 
   void _loadState() {
     final state = _fortuneBox.get('status');
-    final fortuneOutcome = _fortuneBox.get('outcome');
+    final fortuneresult = _fortuneBox.get('result');
     final collectedPoints = _fortuneBox.get('points');
     final gainedLevel = _fortuneBox.get('level');
 
-    if (fortuneOutcome != null) _outcome = fortuneOutcome;
+    if (fortuneresult != null) _result = fortuneresult;
     if (collectedPoints != null) _points = collectedPoints;
     if (gainedLevel != null) _level = gainedLevel;
 
@@ -75,8 +82,8 @@ class FortuneWheelModel extends ChangeNotifier {
 
   void getRandomFortuneItem() {
     _random = Random().nextInt(fortuneItems.length);
-    _outcome = fortuneItems[_random];
-    _fortuneBox.put('outcome', _outcome);
+    _result = fortuneItems[_random];
+    _fortuneBox.put('result', _result);
 
     updateWheel();
   }
@@ -102,7 +109,7 @@ class FortuneWheelModel extends ChangeNotifier {
   }
 
   // string values to display on fortune wheel
-  String displayValue(HiveOutcome item) {
+  String displayValue(HiveFortuneResult item) {
     return (item.type == 'discount') ? '${item.value}%' : '${item.value} pts';
   }
 
@@ -133,7 +140,7 @@ class FortuneWheelModel extends ChangeNotifier {
   }
 
   // worked if controller.add didn't need an int
-  // HiveOutcome getRandomFortuneItem() {
+  // HiveFortuneResult getRandomFortuneItem() {
   //   final totalWeight = fortuneItems.fold(0, (sum, item) => sum + item.weight);
   //   final random = Random().nextInt(totalWeight);
   //   int cumulativeWeight = 0;

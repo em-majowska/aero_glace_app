@@ -1,9 +1,9 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
-part 'hive_level_model.g.dart';
+part 'hive_fidelity_level.g.dart';
 
 @HiveType(typeId: 2)
-class HiveLevel extends HiveObject {
+class HiveFidelityLevel extends HiveObject {
   @HiveField(0)
   final int value;
   @HiveField(1)
@@ -11,7 +11,7 @@ class HiveLevel extends HiveObject {
   @HiveField(2)
   final int maxPoints;
 
-  HiveLevel({
+  HiveFidelityLevel({
     required this.value,
     required this.minPoints,
     required this.maxPoints,

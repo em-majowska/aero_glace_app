@@ -1,38 +1,35 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'hive_level_model.dart';
+part of 'hive_fortune_result.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class HiveLevelAdapter extends TypeAdapter<HiveLevel> {
+class HiveFortuneResultAdapter extends TypeAdapter<HiveFortuneResult> {
   @override
-  final int typeId = 2;
+  final int typeId = 1;
 
   @override
-  HiveLevel read(BinaryReader reader) {
+  HiveFortuneResult read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return HiveLevel(
+    return HiveFortuneResult(
       value: fields[0] as int,
-      minPoints: fields[1] as int,
-      maxPoints: fields[2] as int,
+      type: fields[1] as String,
     );
   }
 
   @override
-  void write(BinaryWriter writer, HiveLevel obj) {
+  void write(BinaryWriter writer, HiveFortuneResult obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(2)
       ..writeByte(0)
       ..write(obj.value)
       ..writeByte(1)
-      ..write(obj.minPoints)
-      ..writeByte(2)
-      ..write(obj.maxPoints);
+      ..write(obj.type);
   }
 
   @override
@@ -41,7 +38,7 @@ class HiveLevelAdapter extends TypeAdapter<HiveLevel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is HiveLevelAdapter &&
+      other is HiveFortuneResultAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

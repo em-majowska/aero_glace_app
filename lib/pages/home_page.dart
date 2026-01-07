@@ -1,10 +1,10 @@
-import 'package:aero_glace_app/model/cart_model.dart';
-import 'package:aero_glace_app/model/fortune_wheel_model.dart';
-import 'package:aero_glace_app/pages/accueil_page.dart';
+import 'package:aero_glace_app/model/cart_controller.dart';
+import 'package:aero_glace_app/model/fortune_wheel_controller.dart';
+import 'package:aero_glace_app/pages/about_page.dart';
 import 'package:aero_glace_app/pages/bonus_page.dart';
-import 'package:aero_glace_app/pages/carte_page.dart';
-import 'package:aero_glace_app/pages/panier_page.dart';
-import 'package:aero_glace_app/pages/parfums_page.dart';
+import 'package:aero_glace_app/pages/map_page.dart';
+import 'package:aero_glace_app/pages/cart_page.dart';
+import 'package:aero_glace_app/pages/flavors_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -29,19 +29,19 @@ class _HomePageState extends State<HomePage> {
 
   // pages in the app
   final List _pages = [
-    const AccueilPage(),
-    const ParfumsPage(),
-    const PanierPage(),
+    const AboutPage(),
+    const FlavorsPage(),
+    const CartPage(),
     const BonusPage(),
-    const CartePage(),
+    const MapPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => Cart()),
-        ChangeNotifierProvider(create: (context) => FortuneWheelModel()),
+        ChangeNotifierProvider(create: (context) => CartController()),
+        ChangeNotifierProvider(create: (context) => FortuneWheelController()),
       ],
       child: Scaffold(
         body: _pages[_selectedIndex],
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
               // check if cart is empty and add badge if needed
               icon: Builder(
                 builder: (context) {
-                  final qty = Provider.of<Cart>(
+                  final qty = Provider.of<CartController>(
                     context,
                     listen: true,
                   ).totalQuantity;
