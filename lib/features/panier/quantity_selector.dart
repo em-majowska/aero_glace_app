@@ -1,0 +1,72 @@
+import 'package:aero_glace_app/model/cart_controller.dart';
+import 'package:aero_glace_app/model/flavor_model.dart';
+import 'package:aero_glace_app/util/theme.dart';
+import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:provider/provider.dart';
+
+/// Widget affichant les boutons + / - pour modifier la quantité d'un [flavor]
+/// dans le panier
+class QuantitySelector extends StatelessWidget {
+  /// Modèle de parfum associé à cet item.
+  final Flavor flavor;
+
+  /// Crée un widget [QuantitySelector] pour le [flavor] donné.
+  const QuantitySelector({
+    super.key,
+    required this.flavor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<CartController>(
+      builder: (context, cart, child) {
+        return Row(
+          spacing: 8,
+          children: [
+            // Bouton pour diminuer la quantité
+            IconButton(
+              onPressed: () => cart.removeItem(flavor),
+              icon: Icon(
+                LucideIcons.minus,
+                color: context.colorSchema.onSurface,
+              ),
+              style: IconButton.styleFrom(
+                backgroundColor: context.colorSchema.surfaceDim,
+                shape: const CircleBorder(),
+              ),
+            ),
+
+            // Affiche la quantité actuelle depuis le CartController
+            Consumer<CartController>(
+              builder: (context, cart, child) {
+                final quantity = cart.getItemQuantity(
+                  flavor.id,
+                );
+                return Text(
+                  quantity.toString(),
+                  style: context.textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
+              },
+            ),
+
+            // Bouton pour augmenter la quantité
+            IconButton(
+              onPressed: () => cart.addItem(flavor),
+              icon: Icon(
+                LucideIcons.plus,
+                color: context.colorSchema.onPrimaryContainer,
+              ),
+              style: IconButton.styleFrom(
+                backgroundColor: context.colorSchema.inversePrimary,
+                shape: const CircleBorder(),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
