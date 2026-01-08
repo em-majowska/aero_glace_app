@@ -43,51 +43,55 @@ class _FlavorTileState extends State<FlavorTile> {
 
   /// Ajoute le parfum au panier et déclenche l’animation du dégradé maillé.
   void addFlavorToCart(Flavor flavor) {
-    Provider.of<CartController>(context, listen: false).addItem(flavor);
+    final cart = context.read<CartController>();
+    cart.addItem(flavor);
+
     _showMessage(context, flavor);
     _controller.start();
+
     Future.delayed(const Duration(seconds: 2), () {
-      _controller.stop();
+      if (mounted) _controller.stop();
     });
   }
 
   /// Affiche un message de confirmation lorsque le parfum est ajouté au panier.
   void _showMessage(BuildContext context, Flavor flavor) {
-    ScaffoldMessenger.of(
-      context,
-    ).hideCurrentSnackBar(); // TODO add smooth animation
-    ScaffoldMessenger.of(context).showSnackBar(
-      /* snackBarAnimationStyle: AnimationStyle */
-      MySnackBar(
-        context: context,
-        icon: Icon(
-          LucideIcons.circleCheck300,
-          color: Theme.of(context).colorScheme.tertiary,
+    // TODO add smooth animation
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        /* snackBarAnimationStyle: AnimationStyle */
+        MySnackBar(
+          context: context,
+          icon: Icon(
+            LucideIcons.circleCheck300,
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
+          message: context.tr(
+            'added_to_cart',
+            namedArgs: {'flavorTitle': flavor.title.tr()},
+          ),
         ),
-        message: context.tr(
-          'added_to_cart',
-          namedArgs: {
-            'flavorTitle': flavor.title,
-          },
-        ),
-      ),
-    );
+      );
   }
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: GlossyBox(
-        child: ClipRRect(
-          borderRadius: BorderRadiusGeometry.circular(12),
-          child: Stack(
-            children: [
-              // Dégradé maillé animé
-              MyMesh(
+    return GlossyBox(
+      child: ClipRRect(
+        borderRadius: BorderRadiusGeometry.circular(12),
+        child: Stack(
+          children: [
+            // Dégradé maillé animé
+            Positioned.fill(
+              child: MyMesh(
                 meshColors: widget.flavor.meshColors,
                 controller: _controller,
               ),
-              Row(
+            ),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 190),
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Image
@@ -101,14 +105,17 @@ class _FlavorTileState extends State<FlavorTile> {
                   ),
 
                   // Details
-                  FlavorDetails(
-                    flavor: widget.flavor,
-                    onAddToCart: addFlavorToCart,
+                  Expanded(
+                    flex: 3,
+                    child: FlavorDetails(
+                      flavor: widget.flavor,
+                      onAddToCart: addFlavorToCart,
+                    ),
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
