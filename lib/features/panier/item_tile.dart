@@ -9,6 +9,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
+// Forme décorative utilisée pour découper l’image dans [ItemTile].
 final blob = BlobClipper(
   edgesCount: 8,
   minGrowth: 7,
@@ -20,10 +21,18 @@ final blob = BlobClipper(
 /// - Afficher l'image, le titre et le prix d'un parfum.
 /// - Modifier la quantité avec les boutons + / -.
 /// - Supprimer l'item via un glissement [Slidable].
+///
+/// Arguments :
+/// - [flavor] : le modèle de parfum associé à cet item.
+/// - [quantity] : la quantité actuelle de l'item dans le panier.
 class ItemTile extends StatelessWidget {
+  /// Modèle de parfum associé à cet item.
   final Flavor flavor;
+
+  /// Quantité actuelle de l'item dans le panier
   final int quantity;
 
+  /// Crée le widget [ItemTile] pour afficher [Item] dans le panier.
   const ItemTile({
     super.key,
     required this.flavor,

@@ -7,7 +7,18 @@ import 'package:aero_glace_app/features/map/my_map.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+/// Page affichant la carte des boutiques et la liste des emplacements.
+///
+/// Retourne un [Scaffold] contenant une [AppBar] incluant un sélecteur
+/// de langue et :
+/// - La carte ([MyMap]) affiche les emplacements des boutiques
+/// avec des marqueurs.
+/// - La liste ([LocationTile]) permet de sélectionner
+/// un emplacement et d’interagir avec la carte pour centrer sur celui-ci.
+/// - Utilise un [GlobalKey] pour accéder aux méthodes de [MyMap]
+/// depuis la liste.
 class MapPage extends StatefulWidget {
+  /// Crée la page de carte des boutiques.
   const MapPage({super.key});
 
   @override
@@ -15,6 +26,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
+  /// Clé globale pour accéder aux méthodes et à l'état de [MyMap].
   final GlobalKey<MyMapState> myMapKey = GlobalKey<MyMapState>();
   final shops = shopLocations;
 
@@ -36,9 +48,12 @@ class _MapPageState extends State<MapPage> {
             const MyBackground(assetPath: 'background3.jpg'),
             Column(
               children: [
+                /// Carte affichant les marqueurs des boutiques.
                 Expanded(
                   child: MyMap(key: myMapKey, shops: shops),
                 ),
+
+                /// Liste des boutiques avec possibilité de centrer la carte sur un emplacement.
                 Expanded(
                   child: ListView.separated(
                     separatorBuilder: (context, index) =>

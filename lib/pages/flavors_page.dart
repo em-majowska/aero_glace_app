@@ -6,13 +6,13 @@ import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+final flavors = getFlavors();
+
 /// Page affichant la liste des parfums disponibles.
 ///
 /// Retourne un [Scaffold] contenant une [AppBar] incluant
 /// un sélecteur de langue et une liste de parfums
 /// sous forme de tuiles [FlavorTile].
-final flavors = getFlavors();
-
 class FlavorsPage extends StatelessWidget {
   /// Crée la page des parfums.
   const FlavorsPage({super.key});

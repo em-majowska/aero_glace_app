@@ -165,7 +165,7 @@ class AboutPage extends StatelessWidget {
                   border: Border.all(
                     color: const Color(0x00000000).withValues(alpha: 0.70),
                   ),
-                  borderRadius: BorderRadius.circular(250),
+                  shape: BoxShape.circle,
                 ),
               ),
             ),
@@ -181,7 +181,7 @@ class AboutPage extends StatelessWidget {
                   border: Border.all(
                     color: Colors.white,
                   ),
-                  borderRadius: BorderRadius.circular(250),
+                  shape: BoxShape.circle,
                 ),
               ),
             ),

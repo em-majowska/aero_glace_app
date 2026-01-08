@@ -11,8 +11,10 @@ import 'package:provider/provider.dart';
 
 /// Page affichant le contenu du panier
 ///
-/// Montre la liste des parfums ajoutés, permet d'ajouter, supprimer ou vider
-/// des items, et affiche le total.
+/// Retourne un [Scaffold] contenant une [AppBar] incluant
+/// un sélecteur de langue et une liste de parfums ajoutés au panier.
+/// Permet d'ajouter, supprimer ou vider des items, et
+/// affiche le total avec la remise (si existe).
 class CartPage extends StatefulWidget {
   /// Crée la page du panier.
   const CartPage({super.key});

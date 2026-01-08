@@ -8,18 +8,30 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class FortuneWheelBox extends StatefulWidget {
-  const FortuneWheelBox({super.key});
+/// Widget affichant la roue de la fortune et la remise / les points gagné.
+///
+/// L’état et les résultats sont pilotés par le [FortuneWheelController].
+/// La roue de la fortune ne peut être utilisée qu'une fois par jour.
+/// L'état est mis à jour et la roue est débloquée automatiquement à minuit.
+class FortuneWheelTile extends StatefulWidget {
+  /// Crée le widget [FortuneWheelTile].
+  const FortuneWheelTile({super.key});
 
   @override
-  State<FortuneWheelBox> createState() => _FortuneWheelBoxState();
+  State<FortuneWheelTile> createState() => _FortuneWheelTileState();
 }
 
-class _FortuneWheelBoxState extends State<FortuneWheelBox> {
+class _FortuneWheelTileState extends State<FortuneWheelTile> {
+  /// Contrôleur de flux utilisé pour déclencher l’animation
+  /// de la roue de la fortune.
+  ///
+  /// Chaque valeur envoyée correspond à un index de résultat.
   late final StreamController<int> controller = StreamController<int>();
 
   @override
   void dispose() {
+    /// Libère le contrôleur de flux lors de la destruction du widget
+    /// poour éviter les fuites de données.
     controller.close();
     super.dispose();
   }
@@ -31,8 +43,13 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
         padding: const EdgeInsets.all(16.0),
         child: Consumer<FortuneWheelController>(
           builder: (context, fortuneWheel, child) {
+            // Indique si la roue peut actuellement être lancée.
             final isActive = fortuneWheel.isWheelActive;
 
+            /// Lance la roue de la fortune si elle est active.
+            ///
+            /// - Tire un résultat aléatoire via le contrôleur métier
+            /// - Envoie l’index au [controller] pour déclencher l’animation
             void spinTheWheel() {
               if (!isActive) return;
               fortuneWheel.getRandomFortuneItem();
@@ -46,15 +63,13 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
                 Center(
                   child: Text(
                     context.tr('fortune_wheel'),
-                    style:
-                        Theme.of(
-                          context,
-                        ).textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Center(
+                  // Conteneur circulaire de la roue
                   child: Container(
                     width: 270,
                     height: 270,
@@ -68,26 +83,35 @@ class _FortuneWheelBoxState extends State<FortuneWheelBox> {
                       shape: BoxShape.circle,
                     ),
 
-                    // Fortune Wheel
+                    /// Roue de la fortune animée
                     child: FortuneWheelElement(
                       controller: controller,
                       onSpin: spinTheWheel,
                     ),
                   ),
                 ),
+
+                /// Résultat affiché une fois la roue arrêtée
                 if (!isActive)
                   Result(
                     result: fortuneWheel.result.value,
                     isDiscount: fortuneWheel.result.type == 'discount',
                   ),
+
+                /// Bouton de lancement ou message d'attente
+                /// si la roue n'est pas active
                 Center(
                   child: FilledButton(
                     style: FilledButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
+
+                      // Change le style du bouton si la roue n'est pas active
                       disabledBackgroundColor: Colors.transparent,
                     ),
+
+                    // Bloque la roue si elle a déjà été lancée aujourd'hui
                     onPressed: (isActive) ? spinTheWheel : null,
                     child: (isActive)
                         ? Text(

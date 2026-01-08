@@ -1,4 +1,5 @@
-import 'package:aero_glace_app/data/flavors_list.dart';
+import 'package:aero_glace_app/features/panier/empty_cart_dialog.dart';
+import 'package:aero_glace_app/features/panier/login_dialog.dart';
 import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/util/theme.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
@@ -7,105 +8,30 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
+/// Widget affichant le total prix des items dans les panier.
+///
+/// Montre:
+/// - le total des produits,
+/// - les économies réalisées si une remise est appliquée,
+/// - le total après remise,
+/// - boutons 'vider le panier' et 'passer la commande'.
 class TotalTile extends StatelessWidget {
-  final VoidCallback onDiscardAll;
-
-  const TotalTile({
-    super.key,
-    required this.onDiscardAll,
-  });
+  /// Crée le widget [TotalTile].
+  const TotalTile({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // show dialog to confirm the action
-    void emptyCart() {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            actionsPadding: const EdgeInsets.all(16),
-            title: Text(
-              context.tr('btn_vider_panier'),
-              style: context.textTheme.titleLarge,
-            ),
-            content: Text(
-              context.tr('vider_confirmation_message'),
-            ),
-            actions: [
-              OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(context.tr('btn_cancel')),
-              ),
-              FilledButton(
-                style: FilledButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  backgroundColor: context.colorSchema.error,
-                ),
-                onPressed: () {
-                  onDiscardAll(); // TODO controller add here
-                  Navigator.of(context).pop();
-                },
-                child: Text(
-                  context.tr('btn_vider_panier'),
-                  style: TextStyle(
-                    color: context.colorSchema.onError,
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
-      );
-    }
-
-    // show dialog to log in
-    void showLoginRequiredDialog() {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            actionsPadding: const EdgeInsets.all(16),
-            title: Text(
-              context.tr('login_required_title'),
-              style: context.textTheme.titleLarge,
-            ),
-            content: Text(
-              context.tr('login_required_message'),
-            ),
-            actions: [
-              OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () => Navigator.of(context).pop(),
-                child: Text(context.tr('btn_cancel')),
-              ),
-            ],
-          );
-        },
-      );
-    }
-
     return GlossyBox(
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Consumer<CartController>(
           builder: (context, cart, child) {
-            final flavors = getFlavors(context);
-            final total = cart.getTotalPrice(flavors);
+            final total = cart.getTotalPrice();
             final savings = cart.getSavings(total);
             final totalDiscounted = cart.getTotalPriceDiscounted(total);
             return Column(
               children: [
+                // Total des produits et les économies
                 if (cart.discount > 0)
                   Column(
                     children: [
@@ -131,7 +57,10 @@ class TotalTile extends StatelessWidget {
                       ),
                     ],
                   ),
+
                 const Divider(),
+
+                // Total final
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -151,13 +80,17 @@ class TotalTile extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 16),
+
+                // Boutons d'action
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   spacing: 8,
                   children: [
+                    // Bouton pour vider le panier
                     OutlinedButton(
-                      onPressed: emptyCart,
+                      onPressed: () => emptyCartDialog(context),
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 16,
@@ -187,10 +120,12 @@ class TotalTile extends StatelessWidget {
                         ],
                       ),
                     ),
+
+                    // Bouton pour passer la commande
                     FilledButton(
                       onPressed: () {
                         bool isLoggedIn = false;
-                        if (!isLoggedIn) showLoginRequiredDialog();
+                        if (!isLoggedIn) loginDialog(context);
                       },
                       style: FilledButton.styleFrom(
                         padding: const EdgeInsets.symmetric(

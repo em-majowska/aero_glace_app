@@ -3,10 +3,21 @@ import 'package:aero_glace_app/util/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// Widget affichant une récompense déblocable
+///
+/// La récompense devient visuellment active lorsque l'utilisateur atteint
+/// le nombre de points requis [minPoints].
+///
+/// Argument :
+/// [emoji] : Emoji représentant la récompense.
 class Gift extends StatelessWidget {
+  /// Emoji représentant la récompense (ex : 🍨, 🎁).
   final String emoji;
+
+  /// Nombre minimum de points requis pour débloquer la récompense.
   final int minPoints;
 
+  /// Crée un widget [Gift].
   const Gift({super.key, required this.emoji, required this.minPoints});
 
   @override
@@ -19,7 +30,10 @@ class Gift extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: (fortuneWheel.points > minPoints)
+
+              // Vérifie si la récompense est débloquée et
+              //change couleur selon l'état
+              color: (fortuneWheel.points >= minPoints)
                   ? context.colorSchema.tertiaryContainer
                   : context.colorSchema.surfaceContainerHighest,
             ),
@@ -27,11 +41,11 @@ class Gift extends StatelessWidget {
               children: [
                 Text(
                   emoji,
-                  style: const TextStyle(
-                    fontSize: 30,
-                  ),
+                  style: const TextStyle(fontSize: 30),
                 ),
                 const SizedBox(height: 5),
+
+                // Texte indiquant le seuil de points requis
                 Text(
                   '$minPoints pts',
                   style: context.textTheme.bodyMedium?.copyWith(

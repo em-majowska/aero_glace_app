@@ -1,26 +1,46 @@
 import 'package:flutter/material.dart';
 
-/// Crée un nouveau parfum.
+/// Représente un nouveau parfum.
 ///
-/// @param id L'identifiant unique du parfum.
-/// @param title Le nom du parfum.
-/// @param description La description du parfum.
-/// @param tags Les étiquettes associées au parfum.
-/// @param imagePath Le chemin de l'image du parfum
-///     relatif aux 'assets/images/flavors/'.
-/// @param price Le prix du parfum.
-/// @param meshColors Les couleurs utilisées pour l'arrière-plan du parfum.
-///     4 couleurs sont attendues.
+/// Contient toutes les informations nécessaires pour l'affichage et la gestion
+/// d'un parfum dans le catalogue et le panier.
 ///
+/// Arguments :
+/// - [id] : Identifiant unique du parfum.
+/// - [title] : Le nom du parfum.
+/// - [description] : La description du parfum.
+/// - [tags] : Liste des étiquettes associées au parfum.
+/// - [imagePath] : Chemin de l'image du parfum relatif au dossier
+///     `assets/images/flavors/`.
+/// - [meshColors] : Couleurs utilisées pour le fond en dégradé maillé
+///     du parfum (4 requis).
 class Flavor {
+  /// Identifiant unique du parfum.
   final int id;
   final String title;
   final String description;
+
+  /// Liste des étiquettes associées au parfum (ex: "vegan", "bio").
+  ///
+  /// Chaque valeur correspond à une clé de traduction
+  /// (ex. `tags.vegan`, `tags.sansGluten`).
+  ///
+  /// Exemples de valeurs possibles :
+  /// `['vegan', 'sansGluten', 'bio', 'cafe', 'cacahuetes', 'sansLactose', 'alcoolise']`
   final List<String> tags;
+
+  /// Chemin de l'image du parfum relatif au dossier `assets/images/flavors/`.
   final String imagePath;
   final double price;
+
+  /// Couleurs utilisées pour le fond en dégradé maillé du parfum.
+  ///
+  /// Quatre couleurs sont attendues pour l'animation du mesh gradient.
   final List<Color> meshColors;
 
+  /// Crée un parfum avec toutes les propriétés requises.
+  ///
+  /// Tous les champs sont obligatoires.
   Flavor({
     required this.id,
     required this.title,

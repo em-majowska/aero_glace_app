@@ -7,7 +7,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+/// Page affichant la section bonus de l’application.
+///
+/// Retourne un [Scaffold] contenant une [AppBar] incluant
+/// un sélecteur de langue et :
+/// - les points collectés par l’utilisateur [CollectedPoints],
+/// - une roue de la fortune permettant d’obtenir des récompenses
+/// [FortuneWheelTile].
 class BonusPage extends StatelessWidget {
+  // Crée la page de bonus
   const BonusPage({super.key});
 
   @override
@@ -26,6 +34,7 @@ class BonusPage extends StatelessWidget {
           ListView(
             padding: const EdgeInsets.all(16),
             children: [
+              // Points de fidélité, niveau actuel et les récompenses
               const CollectedPoints(),
               const SizedBox(height: 32),
               const Row(
@@ -38,7 +47,9 @@ class BonusPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 32),
-              const FortuneWheelBox(),
+
+              // Widget de la roue de la fortune
+              const FortuneWheelTile(),
             ],
           ),
         ],

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Widget affichant un message indiquant que le panier est vide.
+///
+/// Affiché lorsque la quantité d'items dans le panier est inférieure à 1.
 class EmptyCartTile extends StatelessWidget {
   /// Crée le widget EmptyCartTile.
   const EmptyCartTile({super.key});

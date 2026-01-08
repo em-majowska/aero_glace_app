@@ -5,7 +5,7 @@ import '../model/flavor_model.dart';
 /// Retourne la liste des parfums.
 ///
 /// Le [context] est requis pour résoudre les chaînes localisées
-/// ([title], [description] et les tags via [getTags]).
+/// (`title`, `description` et les étiquettes (`tags`).
 List<Flavor> getFlavors() {
   return [
     Flavor(
@@ -87,7 +87,7 @@ List<Flavor> getFlavors() {
       id: 6,
       title: LocaleKeys.tiramisu_title,
       description: LocaleKeys.tiramisu_description,
-      tags: ['alcoholise'],
+      tags: ['alcoolise'],
       imagePath: 'strawberry.jpg',
       price: 4.50,
       meshColors: [

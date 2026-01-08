@@ -1,9 +1,16 @@
 import 'package:aero_glace_app/util/theme.dart';
 import 'package:flutter/material.dart';
 
-/// Widget affichant un tag avec un style spécifique.
+/// Widget affichant une étiquette avec un style spécifique.
+///
+/// Argument :
+/// - [tag] : texte du tag à afficher.
+/// L'element issu de la liste `tags` d'un [Flavor].
 class Tag extends StatelessWidget {
+  /// Libellé du tag à afficher.
   final String tag;
+
+  /// Crée un widget [Tag] avec le texte fourni.
   const Tag({super.key, required this.tag});
 
   @override

@@ -15,8 +15,20 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
+/// Widget affichant une carte avec les marqueurs de toutes les boutiques.
+///
+/// La carte permet :
+/// - d’afficher la position actuelle de l’utilisateur,
+/// - de placer des marqueurs pour toutes les boutiques fournies,
+/// - de générer un itinéraire depuis la localisation de l’utilisateur
+///     vers la boutique sélectionnée.
+///
+/// Arguments :
+/// - [shops] : liste des boutiques ([ShopLocation]) à afficher sur la carte.
 class MyMap extends StatefulWidget {
   final List<ShopLocation> shops;
+
+  /// Crée la carte [MyMap]
   const MyMap({super.key, required this.shops});
 
   @override
@@ -24,14 +36,23 @@ class MyMap extends StatefulWidget {
 }
 
 class MyMapState extends State<MyMap> {
+  /// Contrôleur de la carte.
   final MapController _mapController = MapController();
+
+  /// Service de localisation de l'utilisateur.
   final Location _location = Location();
   bool isLoading = true;
 
+  /// Localisation actuelle de l’utilisateur.
   LatLng? _currentLocation;
+
+  /// Boutique sélectionnée pour laquelle la route est générée.
   LatLng? _destination;
+
+  /// Liste de points représentant la route entre l’utilisateur et la boutique.
   List<LatLng> _route = [];
 
+  /// Abonnement à la mise à jour de la localisation de l’utilisateur.
   StreamSubscription<LocationData>? _locationSubscription;
 
   @override
@@ -46,6 +67,13 @@ class MyMapState extends State<MyMap> {
     super.dispose();
   }
 
+  /// Initialise la localisation et met à jour [_currentLocation]
+  /// lorsque les données sont disponibles.
+  ///
+  /// - Vérifie que les permissions sont accordées via [_checktheRequestPermissions].
+  /// - Écoute les changements de localisation en temps réel.
+  /// - Met à jour [_currentLocation] dès que les coordonnées sont disponibles.
+  /// - Met fin à l’état de chargement lorsque la localisation est connue.
   Future<void> _initializeLocation() async {
     if (!await _checktheRequestPermissions()) return;
 
@@ -67,7 +95,7 @@ class MyMapState extends State<MyMap> {
     });
   }
 
-  // fetch coords for a given location
+  /// Déclenche la récupération des coordonnées d’une boutique et génère la route.
   Future<void> _fetchCoordinatesPoint(LatLng coords) async {
     if (mounted) {
       setState(() {
@@ -77,7 +105,7 @@ class MyMapState extends State<MyMap> {
     await fetchRoute();
   }
 
-  // fetch the route between current location and the destination (OSRM API)
+  /// Récupère l’itinéraire entre [_currentLocation] et [_destination] via l’OSRM API.
   Future<void> fetchRoute() async {
     if (_currentLocation == null || _destination == null) return;
 
@@ -110,7 +138,7 @@ class MyMapState extends State<MyMap> {
     }
   }
 
-  // decode polyline string into a graphical route
+  /// Décode le polyline obtenu depuis l’API en liste de points pour affichage.
   void _decodePolyline(String encodedPolyline) {
     List<LatLng> decodedPoints = decodePolyline(
       encodedPolyline,
@@ -123,7 +151,7 @@ class MyMapState extends State<MyMap> {
     }
   }
 
-  // check if location service is enabled and granted
+  /// Vérifie que les permissions de localisation sont activées et accordées.
   Future<bool> _checktheRequestPermissions() async {
     bool serviceEnabled = await _location.serviceEnabled();
     if (!serviceEnabled) {
@@ -144,6 +172,7 @@ class MyMapState extends State<MyMap> {
     return true;
   }
 
+  /// Déclenche la génération de la route vers la boutique sélectionnée.
   Future<void> _userCurrentLocation() async {
     if (_currentLocation != null) {
       _mapController.move(_currentLocation!, 15);
@@ -159,7 +188,7 @@ class MyMapState extends State<MyMap> {
 
   @override
   Widget build(BuildContext context) {
-    // Marker template
+    // Génération des marqueurs pour toutes les boutiques
     final List<Marker> markers = List.generate(widget.shops.length, (
       index,
     ) {
@@ -207,6 +236,8 @@ class MyMapState extends State<MyMap> {
               MarkerLayer(
                 markers: markers,
               ),
+
+              // Affiche la route entre l’utilisateur et la boutique si disponible.
               if (_currentLocation != null &&
                   _destination != null &&
                   _route.isNotEmpty)
@@ -257,6 +288,8 @@ class MyMapState extends State<MyMap> {
           ),
         ],
       ),
+
+      // Bouton flottant pour centrer sur la position actuelle de l’utilisateur.
       floatingActionButton: FloatingActionButton(
         onPressed: _userCurrentLocation,
         backgroundColor: context.colorSchema.tertiaryContainer,

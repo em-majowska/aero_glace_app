@@ -5,12 +5,29 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:latlong2/latlong.dart';
 
+/// Widget affichant les informations d’une boutique et permettant d’interagir avec la carte.
+///
+/// Affiche l’adresse de la boutique et le bouton pour générer l'itinéraire depuis la location d'utilisateur.
+///
+/// Arguments :
+/// - [city] : nom de la ville où se situe la boutique.
+/// - [address] : adresse complète de la boutique.
+/// - [coordinates] : latitude et longitude de la boutique ([LatLng]).
+/// - [onPressed] : callback exécuté lorsque l’utilisateur appuie sur le bouton de navigation.
 class LocationTile extends StatefulWidget {
+  /// Nom de la ville de la boutique.
   final String city;
+
+  /// Adresse complète de la boutique.
   final String address;
+
+  /// Coordonnées GPS de la boutique ([LatLng]).
   final LatLng coordinates;
+
+  /// Callback appelé lorsque l'utilisateur appuie sur le bouton de navigation.
   final void Function(LatLng)? onPressed;
 
+  /// Crée un widget [LocationTile].
   const LocationTile({
     super.key,
     required this.city,
@@ -39,6 +56,8 @@ class _LocationTileState extends State<LocationTile> {
                 size: 25,
                 color: context.colorSchema.primary,
               ),
+
+              // Nom et adresse de la boutique.
               Flexible(
                 fit: FlexFit.tight,
                 child: Column(
@@ -57,6 +76,8 @@ class _LocationTileState extends State<LocationTile> {
                   ],
                 ),
               ),
+
+              // Bouton pour générer un itinéraire
               IconButton(
                 onPressed: () => widget.onPressed!(widget.coordinates),
                 style: IconButton.styleFrom(
@@ -79,5 +100,3 @@ class _LocationTileState extends State<LocationTile> {
     );
   }
 }
-
-// TODO fix splash button

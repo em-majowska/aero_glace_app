@@ -14,11 +14,15 @@ import 'package:provider/provider.dart';
 ///
 /// Affiche l’image du parfum, ses détails (titre, description, prix, tags)
 /// et un bouton pour l’ajouter au panier avec une animation de dégradé maillé.
-/// [flavor] Le modèle de données du parfum à afficher.
+///
+/// Argument :
+/// - [flavor] : le modèle de données du parfum à utiliser.
 class FlavorTile extends StatefulWidget {
   /// Modèle de parfum associé à cette tuile.
   final Flavor flavor;
 
+  /// Crée le widget [FlavorTile] pour afficher le parfum associé dans
+  /// la liste de parfums disponibles.
   const FlavorTile({super.key, required this.flavor});
 
   @override
@@ -37,12 +41,15 @@ class _FlavorTileState extends State<FlavorTile> {
 
   @override
   void dispose() {
+    /// Libère le contrôleur de l'animation lors de la destruction du widget
+    /// poour éviter les fuites de données.
     _controller.dispose();
     super.dispose();
   }
 
   /// Ajoute le parfum au panier et déclenche l’animation du dégradé maillé.
   void addFlavorToCart(Flavor flavor) {
+    // Permet d'accéder à méthode pour ajouter les items au panier.
     final cart = context.read<CartController>();
     cart.addItem(flavor);
 
@@ -67,6 +74,7 @@ class _FlavorTileState extends State<FlavorTile> {
             LucideIcons.circleCheck300,
             color: Theme.of(context).colorScheme.tertiary,
           ),
+
           message: context.tr(
             'added_to_cart',
             namedArgs: {'flavorTitle': flavor.title.tr()},
@@ -94,7 +102,7 @@ class _FlavorTileState extends State<FlavorTile> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Image
+                  // Image du parfum
                   Expanded(
                     flex: 2,
                     child: Image.asset(
@@ -104,7 +112,7 @@ class _FlavorTileState extends State<FlavorTile> {
                     ),
                   ),
 
-                  // Details
+                  // Details du parfum
                   Expanded(
                     flex: 3,
                     child: FlavorDetails(

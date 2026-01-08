@@ -1,5 +1,16 @@
 import 'package:flutter/material.dart';
 
+/// SnackBar personnalisé pour afficher un message avec une icône.
+///
+/// Ce widget étend [SnackBar] et permet d'afficher :
+/// - une icône à gauche,
+/// - un message texte étendu,
+/// - un style flottant avec coins arrondis et padding personnalisé.
+///
+/// Arguments :
+/// - [context] : le [BuildContext] utilisé pour récupérer le thème et les couleurs.
+/// - [icon] : le widget icône à afficher à gauche du message.
+/// - [message] : le texte du message à afficher.
 class MySnackBar extends SnackBar {
   MySnackBar({
     super.key,

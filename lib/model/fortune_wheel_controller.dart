@@ -6,22 +6,40 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:aero_glace_app/util/next_day.dart';
 
+/// Contrôleur gérant la roue de la fortune et le système de fidélité.
+///
+/// Ce contrôleur utilise **Hive** pour persister l'état de la roue,
+/// les points collectés, les niveaux de fidélité et la roue
 class FortuneWheelController extends ChangeNotifier {
+  /// Boîte **Hive** utilisée pour persister l'état de la roue.
   late final Box _fortuneBox;
+
+  /// Index aléatoire de l'élément sélectionné sur la roue.
   late int _random = 0;
+
+  /// Résultat du dernier tirage de la roue.
   late HiveFortuneResult _result = HiveFortuneResult(
     value: 0,
     type: 'discount',
   );
+
+  /// Indique si la roue peut être utilisée aujourd'hui.
   bool _isWheelActive = true;
+
+  /// Date du dernier tirage.
   DateTime _date = DateTime.now();
+
+  /// Points de fidélité collectés par l'utilisateur.
   int _points = 0;
+
+  /// Niveau actuel de fidélité.
   HiveFidelityLevel _level = HiveFidelityLevel(
     value: 1,
     minPoints: 0,
     maxPoints: 250,
   );
 
+  /// Liste des niveaux de fidélité.
   final List<HiveFidelityLevel> _levels = [
     HiveFidelityLevel(value: 1, minPoints: 0, maxPoints: 250),
     HiveFidelityLevel(value: 2, minPoints: 251, maxPoints: 500),
@@ -29,6 +47,7 @@ class FortuneWheelController extends ChangeNotifier {
     HiveFidelityLevel(value: 4, minPoints: 1001, maxPoints: 1500),
   ];
 
+  /// Liste des résultats possibles de la roue.
   final List<HiveFortuneResult> _fortuneItems = [
     HiveFortuneResult(value: 10, type: 'discount'),
     HiveFortuneResult(value: 15, type: 'discount'),
@@ -40,20 +59,31 @@ class FortuneWheelController extends ChangeNotifier {
     HiveFortuneResult(value: 50, type: 'points'),
   ];
 
-  int get random =>
-      _random; // to add as index to the controller of fortune wheel
+  /// Retourne l'index aléatoire de l'élément sélectionné.
+  int get random => _random;
+
+  /// Retourne si la roue peut être utilisée.
   bool get isWheelActive => _isWheelActive;
-  HiveFortuneResult get result => _result; // to keep in hive
+
+  /// Retourne le résultat actuel de la roue.
+  HiveFortuneResult get result => _result;
+
+  /// Retourne la liste dees éléments de la roue.
   List<HiveFortuneResult> get fortuneItems => _fortuneItems;
+
+  /// Retourne les points de fidélité collectés.
   int get points => _points;
+
+  /// Retourne le niveau de fidélité actuel.
   HiveFidelityLevel get level => _level;
 
+  /// Crée le contrôleur et charge l'état depuis **Hive**.
   FortuneWheelController() {
     _fortuneBox = Hive.box('fortuneBox');
-
     _loadState();
   }
 
+  /// Charge l'état de la roue et des points depuis **Hive**.
   void _loadState() {
     final state = _fortuneBox.get('status');
     final fortuneresult = _fortuneBox.get('result');
@@ -72,14 +102,12 @@ class FortuneWheelController extends ChangeNotifier {
       if (isNextDay(_date)) _isWheelActive = true;
     }
 
-    shuffleItemsList();
+    // Mélange la liste des éléments de la roue.
+    _fortuneItems.shuffle();
     updateWheel();
   }
 
-  void shuffleItemsList() {
-    _fortuneItems.shuffle();
-  }
-
+  /// Sélectionne un élément aléatoire de la roue et met à jour [_result].
   void getRandomFortuneItem() {
     _random = Random().nextInt(fortuneItems.length);
     _result = fortuneItems[_random];
@@ -88,6 +116,7 @@ class FortuneWheelController extends ChangeNotifier {
     updateWheel();
   }
 
+  /// Met à jour l'état de la roue dans Hive et notifie les widgets.
   void updateWheel() {
     _fortuneBox.put('status', {
       'isWheelActive': _isWheelActive,
@@ -97,6 +126,7 @@ class FortuneWheelController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Met à jour les points et le niveau dans **Hive** et notifie les widgets.
   void updatePoints() {
     _fortuneBox.put('points', _points);
     _fortuneBox.put('level', _level);
@@ -104,24 +134,22 @@ class FortuneWheelController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void randomizeItems() {
-    _fortuneItems.shuffle();
-  }
-
-  // string values to display on fortune wheel
+  /// Retourne la valeur à afficher sur la roue pour un élément donné.
+  ///
+  /// - `item.type == 'discount'` : retourne la valeur avec `%`.
+  /// - `item.type == 'points'` : retourne la valeur avec `pts`.
   String displayValue(HiveFortuneResult item) {
     return (item.type == 'discount') ? '${item.value}%' : '${item.value} pts';
   }
 
-  // save spinning date and disable till next day
+  /// Désactive la roue et sauvegarde la date de tirage.
   void disableWheel(DateTime date) {
     _date = date;
     _isWheelActive = false;
     updateWheel();
   }
 
-  // Collecting points
-
+  /// Ajoute des points de fidélité et met à jour le niveau.
   void addPoints(int result) {
     _points += result;
     _setLevel();
@@ -129,6 +157,7 @@ class FortuneWheelController extends ChangeNotifier {
     updatePoints();
   }
 
+  /// Détermine le niveau actuel en fonction du total des points.
   void _setLevel() {
     (_points < 250)
         ? _level = _levels[0]
@@ -138,20 +167,4 @@ class FortuneWheelController extends ChangeNotifier {
         ? _level = _levels[2]
         : _level = _levels[3];
   }
-
-  // worked if controller.add didn't need an int
-  // HiveFortuneResult getRandomFortuneItem() {
-  //   final totalWeight = fortuneItems.fold(0, (sum, item) => sum + item.weight);
-  //   final random = Random().nextInt(totalWeight);
-  //   int cumulativeWeight = 0;
-
-  //   for (final item in fortuneItems) {
-  //     cumulativeWeight += item.weight;
-  //     if (random < cumulativeWeight) {
-  //       return item;
-  //     }
-  //   }
-
-  //   return fortuneItems.first;
-  // }
 }

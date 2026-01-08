@@ -5,12 +5,20 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-/// Widget affichant les détails du parfum [flavor] (titre, description, prix, tags)
+/// Widget affichant les détails du parfum [flavor]
 /// et le bouton d'ajout au panier [onAddToCart].
+///
+/// Argument :
+/// - [flavor] : le modèle de données du parfum à afficher.
 class FlavorDetails extends StatelessWidget {
+  /// Modèle de parfum à afficher.
   final Flavor flavor;
+
+  /// Callback appelé lorsque l’utilisateur appuie sur le bouton
+  /// d’ajout au panier.
   final void Function(Flavor) onAddToCart;
 
+  /// Crée le widget [FlavorDetails].
   const FlavorDetails({
     super.key,
     required this.flavor,

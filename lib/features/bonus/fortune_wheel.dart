@@ -7,16 +7,32 @@ import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
+/// Widget affichant la roue de la fortune.
+///
+/// La roue peut générer un résultat aléatoire lorsqu'elle est lancée.
+/// Les résultats peuvent être :
+/// - une réduction (`discount`) appliquée au panier, ou
+/// - des points fidélité ajoutés au compte d'utilisateur.
+///
+/// Arguments :
+/// - [controller] : [StreamController<int>] utilisé pour indiquer
+///   la sélection actuelle de la roue et déclencher la mise à jour du résultat.
+/// - [onSpin] : Callback déclenché lorsque l'utilisateur fait tourner la roue.
 class FortuneWheelElement extends StatelessWidget {
+  /// Contrôleur pour gérer le flux de l'item sélectionné.
   final StreamController<int> controller;
+
+  /// Callback déclenché lors du lancement de la roue.
   final VoidCallback onSpin;
 
+  /// Crée un widget [FortuneWheelElement].
   const FortuneWheelElement({
     super.key,
     required this.controller,
     required this.onSpin,
   });
 
+  // Couleurs alternées pour les segments de la roue
   static final segmentColors = [
     Colors.blue.shade100,
     Colors.red.shade100,
@@ -39,13 +55,17 @@ class FortuneWheelElement extends StatelessWidget {
                 hapticImpact: HapticImpact.light,
                 selected: controller.stream,
                 onFling: onSpin,
+
+                /// Cette logique est exécutée à la fin de l'animation de la roue.
+                ///
+                /// - La roue est désactivée jusqu'au lendemain.
+                /// - Si le résultat est un `discount`, la date d'expiration est mise à jour dans le [CartController].
+                /// - Sinon, les points sont ajoutés à l'utilisateur.
+                /// - Le résultat obtenu est affiché à l'utilisateur.
                 onAnimationEnd: () {
                   if (!fortuneWheel.isWheelActive) return;
 
-                  final cart = Provider.of<CartController>(
-                    context,
-                    listen: false,
-                  );
+                  final cart = context.read<CartController>();
                   final now = DateTime.now();
 
                   fortuneWheel.disableWheel(now);
@@ -69,7 +89,7 @@ class FortuneWheelElement extends StatelessWidget {
                   ),
                 ],
 
-                // items
+                // Segments de la roue
                 items: List.generate(fortuneWheel.fortuneItems.length, (i) {
                   return FortuneItem(
                     style: FortuneItemStyle(
@@ -81,7 +101,7 @@ class FortuneWheelElement extends StatelessWidget {
                       alignment: Alignment.center,
                       children: [
                         Positioned(
-                          // position the result on the wheel
+                          // Positionne le texte représentant la valeur du segment sur la roue
                           right: 20,
                           child: RotatedBox(
                             quarterTurns: 5,
@@ -105,6 +125,8 @@ class FortuneWheelElement extends StatelessWidget {
             },
           ),
         ),
+
+        // Icône centrale
         Center(
           child: Container(
             width: 45,

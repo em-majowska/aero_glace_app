@@ -1,6 +1,13 @@
 import 'package:aero_glace_app/model/shop_location_model.dart';
 import 'package:latlong2/latlong.dart';
 
+/// Liste des boutiques avec leurs coordonnées géographiques.
+///
+/// Contient :
+/// - [city] : nom de la ville.
+/// - [address] : adresse complète de la boutique.
+/// - [coordinates] : latitude et longitude de la boutique ([LatLng])
+/// Utilisées pour l’affichage sur la carte.
 final List<ShopLocation> shopLocations = [
   ShopLocation(
     city: 'Saint-Denis',

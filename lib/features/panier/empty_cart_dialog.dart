@@ -4,8 +4,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// Affiche une boîte de dialogue pour confirmer la suppression de tous les
+/// [Item] du panier.
+///
+/// Utilise le [CartController] pour vider le panier.
+/// [context] est requis pour afficher la boîte de dialogue et
+/// accéder aux traductions
 void emptyCartDialog(BuildContext context) {
+  // Permet d'accéder à méthode pour vider les items du panier.
   final cart = context.read<CartController>();
+
   showDialog(
     context: context,
     builder: (context) {
@@ -18,7 +26,10 @@ void emptyCartDialog(BuildContext context) {
         content: Text(
           context.tr('vider_confirmation_message'),
         ),
+
+        // Boutons d'action
         actions: [
+          // Bouton Annuler
           OutlinedButton(
             style: OutlinedButton.styleFrom(
               shape: RoundedRectangleBorder(
@@ -28,6 +39,8 @@ void emptyCartDialog(BuildContext context) {
             onPressed: () => Navigator.of(context).pop(),
             child: Text(context.tr('btn_cancel')),
           ),
+
+          // Bouton Vider le panier
           FilledButton(
             style: FilledButton.styleFrom(
               shape: RoundedRectangleBorder(

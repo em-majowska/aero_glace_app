@@ -2,6 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+/// Ouvre un menu de sélection de la langue.
+///
+/// Permet à l'utilisateur de choisir entre le français et le japonais.
+/// Change la locale de l'application via [EasyLocalization].
+///
+/// Arguments :
+/// - [context] : contexte de l'application utilisé pour accéder à
+///   la localisation et naviguer.
 Widget openLanguageMenu(BuildContext context) {
   return SimpleDialog(
     title: Text(context.tr('langue')),
@@ -41,6 +49,9 @@ Widget openLanguageMenu(BuildContext context) {
   );
 }
 
+/// Bouton affichant une icône pour ouvrir le menu de langue.
+///
+/// Appuie sur le bouton pour lancer [openLanguageMenu] dans un [Dialog].
 class LanguageMenuButton extends StatelessWidget {
   const LanguageMenuButton({super.key});
 
@@ -49,9 +60,7 @@ class LanguageMenuButton extends StatelessWidget {
     return IconButton(
       onPressed: () => showDialog(
         context: context,
-        builder: (context) {
-          return openLanguageMenu(context);
-        },
+        builder: (context) => openLanguageMenu(context),
       ),
       icon: const Icon(LucideIcons.settings200, size: 35),
     );

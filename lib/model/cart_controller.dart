@@ -6,18 +6,30 @@ import 'package:aero_glace_app/model/hive_item_model.dart';
 import 'package:aero_glace_app/model/item_model.dart';
 import 'package:flutter/material.dart';
 
+/// Contrôleur pour gérer le panier de l'utilisateur.
+///
+/// Ce contrôleur utilise **Hive** pour persister les items [Item] ajoutés au panier
+/// et gère également les réductions et la date d'expirations de celles-ci.
 class CartController extends ChangeNotifier {
-  // get hive box
+  /// Boîte **Hive** utilisée pour stocker les items du panier et la réduction.
   late final Box _cartBox;
+
+  /// Réduction actuelle appliquée sur le panier.
   late int _discount = 0;
+
+  /// Date associée à la dernière réduction appliquée.
   DateTime _date = DateTime.now();
+
+  /// Liste des parfums disponibles.
   final List<Flavor> _flavors = getFlavors();
+
+  /// Liste des items actuellement dans le panier.
   List<Item> items = [];
 
-  // getters
+  /// Retourne la réduction actuelle.
   int get discount => _discount;
-  DateTime get date => _date;
 
+  /// Retourne la liste des items du panier avec leur quantité et les objets [Flavor] correspondants.
   List<Item> getItems() {
     return _filterItems().map((item) {
       final flavor = _flavors.firstWhere((f) => f.id == item.flavorId);
@@ -25,24 +37,25 @@ class CartController extends ChangeNotifier {
     }).toList();
   }
 
+  /// Crée une instance de [CartController] et initialise le panier depuis **Hive**.
   CartController() {
     _cartBox = Hive.box('cartBox');
     _loadCart();
-    _updateList();
+    _updateItems();
   }
 
-  void _updateList() {
+  /// Met à jour la liste locale [items] à partir de la boîte Hive.
+  void _updateItems() {
     items = _filterItems().map((hiveItem) {
       final flavor = _flavors.firstWhere((f) => f.id == hiveItem.flavorId);
       return Item(flavor: flavor, qty: hiveItem.qty);
     }).toList();
   }
 
-  // load cart from Hive
+  /// Charge le panier depuis la boîte **Hive** et vérifie la validité de la réduction.
   void _loadCart() {
     final cart = _cartBox.get('cart');
-    var isDiscountValid =
-        true; // fetch data from hive if discount is still valid
+    var isDiscountValid = true;
 
     if (cart != null) {
       _discount = cart['discount'] ?? _discount;
@@ -57,6 +70,7 @@ class CartController extends ChangeNotifier {
     if (isDiscountValid) notifyListeners();
   }
 
+  /// Met à jour la boîte **Hive** avec les informations actuelles du panier et de la réduction.
   void _updateCart() {
     _cartBox.put('cart', {
       'discount': _discount,
@@ -66,7 +80,9 @@ class CartController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // add item
+  /// Ajoute un item au panier ou incrémente la quantité si déjà présent.
+  ///
+  /// [flavor] : le parfum à ajouter au panier.
   void addItem(Flavor flavor) {
     final existingItem = _findCartItem(flavor.id);
 
@@ -80,7 +96,9 @@ class CartController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // remove item
+  /// Supprime un item du panier ou décrémente la quantité si plus d'un.
+  ///
+  /// [flavor] : le parfum à supprimer.
   void removeItem(Flavor flavor) {
     final existingItem = _findCartItem(flavor.id);
 
@@ -96,7 +114,9 @@ class CartController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // discard all items of the same flavor
+  /// Supprime tous les items d'un parfum spécifique du panier par [Slidable].
+  ///
+  /// [flavor] : le parfum à supprimer complètement.
   void discardItem(Flavor flavor) {
     final existingItem = _findCartItem(flavor.id);
 
@@ -107,7 +127,7 @@ class CartController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // empty the cart
+  /// Vide complètement le panier.
   void discardAllItems() {
     final keysToDelete = _cartBox.keys.where((key) {
       final value = _cartBox.get(key);
@@ -118,11 +138,13 @@ class CartController extends ChangeNotifier {
       _cartBox.delete(key);
     }
 
-    _updateList();
+    _updateItems();
     notifyListeners();
   }
 
-  // check if item already exists and get it
+  /// Cherche un item dans le panier par [flavorId].
+  ///
+  /// Retourne un [HiveItem] si trouvé, sinon null.
   HiveItem? _findCartItem(int flavorId) {
     try {
       return _cartBox.values.firstWhere(
@@ -133,7 +155,9 @@ class CartController extends ChangeNotifier {
     }
   }
 
-  // get quantity per item
+  /// Retourne la quantité d'un item dans le panier.
+  ///
+  /// [flavorId] : l'identifiant d'un parfum dont la quantité doit être calculé.
   int getItemQuantity(int flavorId) {
     try {
       return _cartBox.values
@@ -144,11 +168,13 @@ class CartController extends ChangeNotifier {
     }
   }
 
-  // get total quantity
+  /// Retourne la quantité totale d'items dans le panier.
   int get totalQuantity =>
       _filterItems().fold(0, (sum, item) => sum + item.qty);
 
-  // get price per item
+  /// Retourne le prix total d'un item dans le panier.
+  ///
+  /// [flavor] : le parfum dont le prix doit être calculé.
   double getItemPrice(Flavor flavor) {
     try {
       final item = _filterItems().firstWhere(
@@ -160,7 +186,7 @@ class CartController extends ChangeNotifier {
     }
   }
 
-  // get total  price
+  /// Retourne le prix total du panier sans réduction.
   double getTotalPrice() {
     return getItems().fold(
       0,
@@ -168,19 +194,29 @@ class CartController extends ChangeNotifier {
     );
   }
 
+  /// Retourne le prix total du panier après application de la réduction.
+  ///
+  /// [total] : prix total avant réduction.
   double getTotalPriceDiscounted(double total) {
     return (_discount != 0) ? total - (total * (_discount / 100)) : total;
   }
 
+  /// Calcule les économies réalisées en appliquant la réduction.
+  ///
+  /// [total] : prix total avant réduction.
   double getSavings(double total) => total * (_discount / 100);
 
+  /// Définit la réduction et la date associée.
+  ///
+  /// [result] : pourcentage de réduction à appliquer.
+  /// [now] : date de l'application de la réduction.
   void setDiscount(int result, DateTime? now) {
     _discount = result;
     _date = now ?? DateTime.now();
     _updateCart();
   }
 
-  // filter items from hivebox, exclude discount
+  /// Retourne tous les items de la boîte Hive (exclut la réduction et la date associée).
   Iterable<HiveItem> _filterItems() {
     return _cartBox.values.whereType<HiveItem>();
   }

@@ -8,7 +8,15 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
+/// Widget affichant le nombre de points bonus collectés par l’utilisateur.
+///
+/// Montre :
+/// - le total de points de fidélité collectés,
+/// - le niveau actuel,
+/// - une barre de progression vers le niveau suivant,
+/// - les récompenses déblocables.
 class CollectedPoints extends StatefulWidget {
+  /// Crée le widget [CollectedPoints] pour afficher le nombre de points bonus collectés par l’utilisateur.
   const CollectedPoints({super.key});
 
   @override
@@ -27,16 +35,17 @@ class _CollectedPointsState extends State<CollectedPoints> {
               spacing: 24,
               children: [
                 Row(
-                  // top row
+                  // Total de points et le niveau actuel
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   spacing: 16,
                   children: [
-                    // points + lvl
+                    // Icône + total des points de fidélité
                     Expanded(
                       child: Row(
                         spacing: 8,
                         children: [
+                          // Icône décorative représentant les points
                           Container(
                             height: 50,
                             width: 50,
@@ -51,7 +60,7 @@ class _CollectedPointsState extends State<CollectedPoints> {
                             ),
                           ),
 
-                          // points
+                          // Label et la valeur des points
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,8 +85,9 @@ class _CollectedPointsState extends State<CollectedPoints> {
                         ],
                       ),
                     ),
+
+                    // Niveau actuel + icône trophée
                     Row(
-                      // lvl + trophy
                       crossAxisAlignment: CrossAxisAlignment.end,
                       spacing: 5,
                       children: [
@@ -101,7 +111,6 @@ class _CollectedPointsState extends State<CollectedPoints> {
                   ],
                 ),
 
-                // points bar
                 Column(
                   spacing: 8,
                   children: [
@@ -128,9 +137,15 @@ class _CollectedPointsState extends State<CollectedPoints> {
                       ],
                     ),
 
+                    /// Barre de progression des points.
+                    ///
+                    /// - [currentStep] (`fortuneWheel.points`) : points actuellement collectés.
+                    /// - [totalSteps] (`fortuneWheel.level.maxPoints`) :
+                    /// points requis pour atteindre le prochain nivea et
+                    /// débloquer des récompenses.
                     StepProgressIndicator(
-                      totalSteps: fortuneWheel.level.maxPoints,
                       currentStep: fortuneWheel.points,
+                      totalSteps: fortuneWheel.level.maxPoints,
                       size: 20,
                       padding: 0,
                       selectedColor: context.colorSchema.tertiary,
@@ -155,6 +170,8 @@ class _CollectedPointsState extends State<CollectedPoints> {
                     ),
                   ],
                 ),
+
+                // Récompenses déblocables selon le nombre de points
                 Column(
                   spacing: 8,
                   children: [

@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
-/// Widget affichant les boutons + / - pour modifier la quantité d'un [flavor]
-/// dans le panier
+/// Widget affichant les boutons `+` / `-` pour modifier la quantité
+/// d'un parfum dans le panier.
+///
+/// Argument :
+/// - [flavor] : le parfum associé dont la quantité va être modifiée.
 class QuantitySelector extends StatelessWidget {
-  /// Modèle de parfum associé à cet item.
+  /// Modèle de parfum associé.
   final Flavor flavor;
 
-  /// Crée un widget [QuantitySelector] pour le [flavor] donné.
-  const QuantitySelector({
-    super.key,
-    required this.flavor,
-  });
+  /// Crée le widget [QuantitySelector] pour le parfum donné [flavor].
+  const QuantitySelector({super.key, required this.flavor});
 
   @override
   Widget build(BuildContext context) {
