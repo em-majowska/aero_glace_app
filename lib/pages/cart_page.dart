@@ -1,13 +1,11 @@
 import 'package:aero_glace_app/data/flavors_list.dart';
 import 'package:aero_glace_app/features/panier/cart_items_list.dart';
 import 'package:aero_glace_app/model/cart_controller.dart';
-import 'package:aero_glace_app/features/panier/item_tile.dart';
 import 'package:aero_glace_app/features/panier/empty_cart_tile.dart';
 import 'package:aero_glace_app/features/panier/total_tile.dart';
 import 'package:aero_glace_app/util/theme.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
-import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +25,6 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
-    final flavors = getFlavors(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(context.tr('votre_commande')),
@@ -53,24 +50,25 @@ class _CartPageState extends State<CartPage> {
           Consumer<CartController>(
             builder: (context, cart, child) {
               // Met à jour les items du panier
-              cart.getItems(flavors);
+              final flavors = getFlavors();
+              final items = cart.getItems(flavors);
 
-              if (cart.items.isEmpty) {
+              if (items.isEmpty) {
                 // Affiche un widget indiquant que le panier est vide
                 return const Padding(
                   padding: EdgeInsets.all(16.0),
                   child: EmptyCartTile(),
                 );
               } else {
-                // Affiche la liste des items et le total
+                // Liste des items et le total
                 return ListView(
                   padding: const EdgeInsets.all(16.0),
                   children: [
-                    const GlossyBox(child: CartItemsList()),
+                    CartItemsList(items: items),
                     const SizedBox(height: 24),
 
-                    // Widget affichant le total et bouton de suppression de tous les items
-                    TotalTile(onDiscardAll: cart.discardAllItems),
+                    // Total et bouton de suppression de tous les items
+                    const TotalTile(),
                   ],
                 );
               }

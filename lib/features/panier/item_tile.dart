@@ -3,6 +3,7 @@ import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
 import 'package:aero_glace_app/util/theme.dart';
 import 'package:blobs/blobs.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -77,7 +78,7 @@ class ItemTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          flavor.title,
+                          flavor.title.tr(),
                           style: Theme.of(
                             context,
                           ).textTheme.titleMedium?.copyWith(height: 1.2),

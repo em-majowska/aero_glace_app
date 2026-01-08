@@ -9,16 +9,14 @@ class CartController extends ChangeNotifier {
   // get hive box
   late final Box _cartBox;
   late int _discount = 0;
-  List<Item> items = [];
   DateTime _date = DateTime.now();
 
   // getters
   int get discount => _discount;
   DateTime get date => _date;
 
-  void getItems(List<Flavor> flavors) {
-    final filteredItems = _filterItems();
-    items = filteredItems.map((item) {
+  List<Item> getItems(List<Flavor> flavors) {
+    return _filterItems().map((item) {
       final flavor = flavors.firstWhere((f) => f.id == item.flavorId);
       return Item(flavor: flavor, qty: item.qty);
     }).toList();
