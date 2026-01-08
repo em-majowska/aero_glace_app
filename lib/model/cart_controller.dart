@@ -1,3 +1,4 @@
+import 'package:aero_glace_app/data/flavors_list.dart';
 import 'package:aero_glace_app/util/next_day.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
@@ -10,14 +11,16 @@ class CartController extends ChangeNotifier {
   late final Box _cartBox;
   late int _discount = 0;
   DateTime _date = DateTime.now();
+  final List<Flavor> _flavors = getFlavors();
+  List<Item> items = [];
 
   // getters
   int get discount => _discount;
   DateTime get date => _date;
 
-  List<Item> getItems(List<Flavor> flavors) {
+  List<Item> getItems() {
     return _filterItems().map((item) {
-      final flavor = flavors.firstWhere((f) => f.id == item.flavorId);
+      final flavor = _flavors.firstWhere((f) => f.id == item.flavorId);
       return Item(flavor: flavor, qty: item.qty);
     }).toList();
   }
@@ -25,6 +28,14 @@ class CartController extends ChangeNotifier {
   CartController() {
     _cartBox = Hive.box('cartBox');
     _loadCart();
+    _updateList();
+  }
+
+  void _updateList() {
+    items = _filterItems().map((hiveItem) {
+      final flavor = _flavors.firstWhere((f) => f.id == hiveItem.flavorId);
+      return Item(flavor: flavor, qty: hiveItem.qty);
+    }).toList();
   }
 
   // load cart from Hive
@@ -98,7 +109,16 @@ class CartController extends ChangeNotifier {
 
   // empty the cart
   void discardAllItems() {
-    _cartBox.clear();
+    final keysToDelete = _cartBox.keys.where((key) {
+      final value = _cartBox.get(key);
+      return value is HiveItem;
+    }).toList();
+
+    for (final key in keysToDelete) {
+      _cartBox.delete(key);
+    }
+
+    _updateList();
     notifyListeners();
   }
 
@@ -131,7 +151,7 @@ class CartController extends ChangeNotifier {
   // get price per item
   double getItemPrice(Flavor flavor) {
     try {
-      final item = _cartBox.values.firstWhere(
+      final item = _filterItems().firstWhere(
         (item) => item.flavorId == flavor.id,
       );
       return item.qty * flavor.price;
@@ -141,24 +161,22 @@ class CartController extends ChangeNotifier {
   }
 
   // get total  price
-  double getTotalPrice(List<Flavor> flavors) {
-    return _filterItems().fold(0.00, (sum, item) {
-      final flavor = flavors.firstWhere((f) => f.id == item.flavorId);
-      return sum + (flavor.price * item.qty);
-    });
+  double getTotalPrice() {
+    return getItems().fold(
+      0,
+      (sum, item) => sum + (item.flavor.price * item.qty),
+    );
   }
 
   double getTotalPriceDiscounted(double total) {
-    return (_discount != 0) ? total - (total * (discount / 100)) : total;
+    return (_discount != 0) ? total - (total * (_discount / 100)) : total;
   }
 
-  double getSavings(double total) {
-    return total * (discount / 100);
-  }
+  double getSavings(double total) => total * (_discount / 100);
 
   void setDiscount(int result, DateTime? now) {
     _discount = result;
-    _date = (now == null) ? DateTime.now() : now;
+    _date = now ?? DateTime.now();
     _updateCart();
   }
 

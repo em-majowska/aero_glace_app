@@ -1,4 +1,3 @@
-import 'package:aero_glace_app/data/flavors_list.dart';
 import 'package:aero_glace_app/features/panier/cart_items_list.dart';
 import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/features/panier/empty_cart_tile.dart';
@@ -50,8 +49,7 @@ class _CartPageState extends State<CartPage> {
           Consumer<CartController>(
             builder: (context, cart, child) {
               // Met à jour les items du panier
-              final flavors = getFlavors();
-              final items = cart.getItems(flavors);
+              final items = cart.getItems();
 
               if (items.isEmpty) {
                 // Affiche un widget indiquant que le panier est vide
