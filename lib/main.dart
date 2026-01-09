@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/i18n/codegen_loader.g.dart';
+import 'package:aero_glace_app/generated/codegen_loader.g.dart';
 import 'package:aero_glace_app/model/hive_item_model.dart';
 import 'package:aero_glace_app/model/hive_fidelity_level.dart';
 import 'package:aero_glace_app/model/hive_fortune_result.dart';

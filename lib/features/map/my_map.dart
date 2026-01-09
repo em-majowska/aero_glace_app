@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:aero_glace_app/features/panier/alert_dialogs.dart';
 import 'package:aero_glace_app/model/shop_location_model.dart';
 import 'package:aero_glace_app/util/theme.dart';
-import 'package:aero_glace_app/widgets/error_message.dart';
+import 'package:aero_glace_app/widgets/glossy_box.dart';
+import 'package:aero_glace_app/widgets/snackbars.dart';
 import 'package:aero_glace_app/util/unpack_polyline.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +12,12 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart';
+import 'package:location/location.dart' as loc;
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:permission_handler/permission_handler.dart' as p_handler;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
+import 'dart:math' show cos, sqrt, asin;
 
 /// Widget affichant une carte avec les marqueurs de toutes les boutiques.
 ///
@@ -35,86 +39,159 @@ class MyMap extends StatefulWidget {
   State<MyMap> createState() => MyMapState();
 }
 
-class MyMapState extends State<MyMap> {
+class MyMapState extends State<MyMap> with WidgetsBindingObserver {
   /// Contrôleur de la carte.
   final MapController _mapController = MapController();
 
   /// Service de localisation de l'utilisateur.
-  final Location _location = Location();
-  bool isLoading = true;
+  final loc.Location _location = loc.Location();
 
-  /// Localisation actuelle de l’utilisateur.
-  LatLng? _currentLocation;
+  /// Localisation actuelle de l’utilisateur et boutique sélectionnée pour laquelle la route est générée.
+  LatLng? _currentLocation, _destination;
+  String? _destinationTitle;
+  double? _distance;
+  LatLng? _lastRouteUpdateLocation;
+  static const double _minDistanceForRouteUpdate = 0.1;
+  Timer? _throttleTimer;
 
-  /// Boutique sélectionnée pour laquelle la route est générée.
-  LatLng? _destination;
-
-  /// Liste de points représentant la route entre l’utilisateur et la boutique.
+  /// Liste de points représentant l'itinéraire entre l’utilisateur et la boutique.
   List<LatLng> _route = [];
 
   /// Abonnement à la mise à jour de la localisation de l’utilisateur.
-  StreamSubscription<LocationData>? _locationSubscription;
+  StreamSubscription<loc.LocationData>? _locationSubscription;
+  late p_handler.PermissionStatus permission;
 
   @override
   void initState() {
-    _initializeLocation();
+    _handlePermission();
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
     _locationSubscription?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    _throttleTimer?.cancel();
+
     super.dispose();
+  }
+
+  // Recheck location when the app resumes
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _handlePermission();
+    }
+  }
+
+  /// Vérifie que les permissions de localisation sont activées et accordées.
+  Future<void> _handlePermission() async {
+    if (!mounted) return;
+    bool serviceEnabled = await _location.serviceEnabled();
+
+    if (!serviceEnabled) {
+      serviceEnabled = await _location.requestService();
+      if (!serviceEnabled) return;
+    }
+
+    permission = await p_handler.Permission.locationWhenInUse.status;
+
+    // Permission granted ?
+    if (permission.isDenied) {
+      permission = await p_handler.Permission.locationWhenInUse.request();
+
+      if (permission.isDenied && mounted) {
+        showErrorMessage(
+          message: context.tr('localization_permission_refussed'),
+        );
+        return;
+      } else if (permission.isGranted) {
+        await _initializeLocation();
+        return;
+      }
+    } else if (permission.isPermanentlyDenied && mounted) {
+      showErrorMessage(
+        message: context.tr('localization_permission_refussed'),
+      );
+      grantLocationDialog(context);
+    } else if (permission.isGranted) {
+      await _initializeLocation();
+      return;
+    }
   }
 
   /// Initialise la localisation et met à jour [_currentLocation]
   /// lorsque les données sont disponibles.
   ///
-  /// - Vérifie que les permissions sont accordées via [_checktheRequestPermissions].
   /// - Écoute les changements de localisation en temps réel.
   /// - Met à jour [_currentLocation] dès que les coordonnées sont disponibles.
   /// - Met fin à l’état de chargement lorsque la localisation est connue.
   Future<void> _initializeLocation() async {
-    if (!await _checktheRequestPermissions()) return;
+    try {
+      _locationSubscription = _location.onLocationChanged.listen((
+        locationData,
+      ) {
+        if (_throttleTimer?.isActive ?? false) return;
 
-    // update current location
-    _locationSubscription = _location.onLocationChanged.listen((
-      LocationData locationData,
-    ) {
-      if (locationData.latitude != null && locationData.longitude != null) {
-        if (mounted) {
-          setState(() {
-            _currentLocation = LatLng(
+        _throttleTimer = Timer(const Duration(seconds: 1), () async {
+          if (locationData.latitude != null &&
+              locationData.longitude != null &&
+              mounted) {
+            final newLocation = LatLng(
               locationData.latitude!,
               locationData.longitude!,
             );
-            isLoading = false; // stop loading when location is known
-          });
-        }
-      }
-    });
+
+            setState(() {
+              _currentLocation = newLocation;
+              if (_destination != null) {
+                _distance = getDistance(_destination!);
+              }
+            });
+
+            // Mis à jour l'itinéraire si l'utilisateur a bougé
+            if (_destination != null &&
+                (_lastRouteUpdateLocation == null ||
+                    calculateDistance(
+                          _lastRouteUpdateLocation!.latitude,
+                          _lastRouteUpdateLocation!.longitude,
+                          newLocation.latitude,
+                          newLocation.longitude,
+                        ) >
+                        _minDistanceForRouteUpdate)) {
+              _lastRouteUpdateLocation = newLocation;
+              fetchRoute();
+            }
+          }
+        });
+      });
+    } catch (e) {
+      showErrorMessage(message: context.tr('localization_permissions_error'));
+    }
   }
 
-  /// Déclenche la récupération des coordonnées d’une boutique et génère la route.
+  /// Déclenche la récupération des coordonnées d’une boutique et génère l'itinéraire.
   Future<void> _fetchCoordinatesPoint(LatLng coords) async {
-    if (mounted) {
-      setState(() {
-        _destination = coords;
-      });
-    }
+    if (mounted) setState(() => _destination = coords);
+
     await fetchRoute();
   }
 
   /// Récupère l’itinéraire entre [_currentLocation] et [_destination] via l’OSRM API.
   Future<void> fetchRoute() async {
-    if (_currentLocation == null || _destination == null) return;
+    if (!mounted) return;
+    if (_currentLocation == null || _destination == null) {
+      showErrorMessage(message: context.tr('localization_permissions_error'));
+      return;
+    }
 
-    final url = Uri.parse(
-      'https://router.project-osrm.org/route/v1/driving/'
-      '${_currentLocation!.longitude},${_currentLocation!.latitude};'
-      '${_destination!.longitude},${_destination!.latitude}?overview=full&geometries=polyline',
-    );
     try {
+      final url = Uri.parse(
+        'https://router.project-osrm.org/route/v1/driving/'
+        '${_currentLocation!.longitude},${_currentLocation!.latitude};'
+        '${_destination!.longitude},${_destination!.latitude}?overview=full&geometries=polyline',
+      );
       final response = await http.get(url);
 
       if (!mounted) return;
@@ -125,15 +202,12 @@ class MyMapState extends State<MyMap> {
 
         _decodePolyline(geometry);
       } else {
-        if (mounted) {
-          errorMessage(context, context.tr('fetch_route_error'));
-          await _location.requestService();
-        }
+        showErrorMessage(message: context.tr('fetch_route_error'));
+        await _location.requestService();
         return;
       }
     } catch (e) {
-      errorMessage(context, context.tr('fetch_route_error'));
-
+      showErrorMessage(message: context.tr('fetch_route_error'));
       return;
     }
   }
@@ -144,46 +218,83 @@ class MyMapState extends State<MyMap> {
       encodedPolyline,
     ).unpackPolyline();
 
-    if (mounted) {
-      setState(() {
-        _route = decodedPoints;
-      });
-    }
+    if (mounted) setState(() => _route = decodedPoints);
   }
 
-  /// Vérifie que les permissions de localisation sont activées et accordées.
-  Future<bool> _checktheRequestPermissions() async {
-    bool serviceEnabled = await _location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await _location.requestService();
-      if (!serviceEnabled) return false;
-    }
-    // TODO handle try catch in case if there is no new location permission dialog prompt
-    PermissionStatus permissionGranted = await _location.hasPermission();
-    // TODO handle PermissionStatus.deniedForever
-
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await _location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        return false;
-      }
-    }
-
-    return true;
+  String getCity() {
+    final shop = widget.shops.firstWhere(
+      (shop) => shop.coordinates == _destination,
+    );
+    return shop.city;
   }
 
-  /// Déclenche la génération de la route vers la boutique sélectionnée.
+  Widget createInfoWindow() {
+    return Positioned(
+      bottom: 5,
+      left: 5,
+      child: GlossyBox(
+        width: 220,
+        height: 70,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${context.tr('aero_glace')} - $_destinationTitle',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              Text(
+                _distance != null
+                    ? '${_distance!.toStringAsFixed(2)} km'
+                    : 'Calcul en cours...',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  double getDistance(LatLng? destination) {
+    if (_currentLocation == null) return 0.0;
+    return calculateDistance(
+      _currentLocation!.latitude,
+      _currentLocation!.longitude,
+      destination!.latitude,
+      destination.longitude,
+    );
+  }
+
+  double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+    const p = 0.017453292519943295;
+    final a =
+        0.5 -
+        cos((lat2 - lat1) * p) / 2 +
+        cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a));
+  }
+
+  /// Mettre la localisation d'utilisateur au milieu de la carte.
   Future<void> _userCurrentLocation() async {
     if (_currentLocation != null) {
       _mapController.move(_currentLocation!, 15);
-    } else {
-      errorMessage(context, context.tr('localization_permissions_error'));
-      _initializeLocation();
+    } else if (permission.isDenied && mounted ||
+        permission.isPermanentlyDenied && mounted) {
+      grantLocationDialog(context);
     }
   }
 
   void showLocation(LatLng coords) {
     _fetchCoordinatesPoint(coords);
+    _destinationTitle = getCity();
+
+    // if (_destination != null && mounted) {
+    //   setState(() {
+    //     _distance = getDistance(_destination!);
+    //   });
+    // }
   }
 
   @override
@@ -273,6 +384,7 @@ class MyMapState extends State<MyMap> {
                   ),
                 ),
               ),
+              if (_route.isNotEmpty || _destination != null) createInfoWindow(),
               RichAttributionWidget(
                 attributions: [
                   TextSourceAttribution(
@@ -283,7 +395,10 @@ class MyMapState extends State<MyMap> {
                   ),
                 ],
               ),
-              if (_currentLocation != null) const CurrentLocationLayer(),
+              if (_currentLocation != null)
+                const CurrentLocationLayer(
+                  alignPositionOnUpdate: AlignOnUpdate.always,
+                ),
             ],
           ),
         ],

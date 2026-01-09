@@ -5,14 +5,20 @@ import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 ///
 /// Argument :
 /// - [child] : contenu affiché à l’intérieur du conteneur glossy.
+/// - [width], [height] sont optionnels.
 class GlossyBox extends StatelessWidget {
   /// Contenu affiché à l’intérieur du conteneur glossy.
   final Widget child;
-  double? width;
-  double? height;
+  final double? width;
+  final double? height;
 
   /// Crée un widget [GlossyBox].
-  GlossyBox({super.key, required this.child, this.width, this.height});
+  const GlossyBox({
+    super.key,
+    required this.child,
+    this.width,
+    this.height,
+  });
 
   @override
   Widget build(BuildContext context) {

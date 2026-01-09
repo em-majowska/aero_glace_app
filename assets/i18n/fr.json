@@ -27,25 +27,13 @@
   "matcha_description": "Thé matcha de Kyoto et mangue en un tourbillon brumeux.",
   "caramel_title": "Caramel Stellaire",
   "caramel_description": "Caramel au beurre salé de Bretagne, glacé comme les plaines de Pluton.",
-  "tag": {
-    "vegan": "Végan",
-    "sansLactose": "SansLactose",
-    "sansGluten": "SansGluten",
-    "bio": "Bio",
-    "cafe": "Caféine",
-    "alcoolise": "Alcoholisé",
-    "cacahuetes": "Cacahuètes"
-  },
+
   "votre_commande": "Votre Commande",
   "panier_vide": "Votre panier est vide",
-  "btn_vider_panier": "Vider le panier",
   "vider_confirmation_message": "Êtes vous sûr de vouloir vider votre panier ? Cette action est irréversible et tous les articles seront supprimés.",
-  "btn_cancel": "Annuler",
   "total_produits": "Total produits",
   "economie_realisee": "Économie réalisée",
   "total": "Total",
-  "btn_vider": "Vider",
-  "btn_commander": "Commander",
   "login_required_title": "Connexion requise",
   "login_required_message": "Vous devez être connecté pour passer une commande.",
   "points_fidelite": "Points de fidelité",
@@ -59,6 +47,22 @@
   "result_points": "{result} points",
   "vous_avez_gagne": "Vous avez gagné",
   "nos_glaciers": "Nos Glaciers",
+  "destination": "Destination :",
   "fetch_route_error": "Échec de la récupération de l'itinéraire. Veuillez réessayer plus tard.",
-  "localization_permissions_error": "Impossible d'accéder à l'emplacement. Veuillez vérifier les autorisations."
+  "localization_permissions_error": "Impossible d'accéder à l'emplacement. Veuillez vérifier les autorisations.",
+  "localization_permission_refussed": "Autorisation de localisation refusée.",
+  "tag": {
+    "vegan": "Végan",
+    "sansLactose": "SansLactose",
+    "sansGluten": "SansGluten",
+    "bio": "Bio",
+    "cafe": "Caféine",
+    "alcoolise": "Alcoholisé",
+    "cacahuetes": "Cacahuètes"
+  },
+  "btn_cancel": "Annuler",
+  "btn_empty": "Vider",
+  "btn_empty_cart": "Vider le panier",
+  "btn_settings": "Ouvrir les paramètres",
+  "btn_order": "Commander"
 }

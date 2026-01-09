@@ -31,24 +31,12 @@ abstract class  LocaleKeys {
   static const matcha_description = 'matcha_description';
   static const caramel_title = 'caramel_title';
   static const caramel_description = 'caramel_description';
-  static const tag_vegan = 'tag.vegan';
-  static const tag_sansLactose = 'tag.sansLactose';
-  static const tag_sansGluten = 'tag.sansGluten';
-  static const tag_bio = 'tag.bio';
-  static const tag_cafe = 'tag.cafe';
-  static const tag_alcoholise = 'tag.alcoholise';
-  static const tag_cacahuetes = 'tag.cacahuetes';
-  static const tag = 'tag';
   static const votre_commande = 'votre_commande';
   static const panier_vide = 'panier_vide';
-  static const btn_vider_panier = 'btn_vider_panier';
   static const vider_confirmation_message = 'vider_confirmation_message';
-  static const btn_cancel = 'btn_cancel';
   static const total_produits = 'total_produits';
   static const economie_realisee = 'economie_realisee';
   static const total = 'total';
-  static const btn_vider = 'btn_vider';
-  static const btn_commander = 'btn_commander';
   static const login_required_title = 'login_required_title';
   static const login_required_message = 'login_required_message';
   static const points_fidelite = 'points_fidelite';
@@ -62,7 +50,22 @@ abstract class  LocaleKeys {
   static const result_points = 'result_points';
   static const vous_avez_gagne = 'vous_avez_gagne';
   static const nos_glaciers = 'nos_glaciers';
+  static const destination = 'destination';
   static const fetch_route_error = 'fetch_route_error';
   static const localization_permissions_error = 'localization_permissions_error';
+  static const localization_permission_refussed = 'localization_permission_refussed';
+  static const tag_vegan = 'tag.vegan';
+  static const tag_sansLactose = 'tag.sansLactose';
+  static const tag_sansGluten = 'tag.sansGluten';
+  static const tag_bio = 'tag.bio';
+  static const tag_cafe = 'tag.cafe';
+  static const tag_alcoolise = 'tag.alcoolise';
+  static const tag_cacahuetes = 'tag.cacahuetes';
+  static const tag = 'tag';
+  static const btn_cancel = 'btn_cancel';
+  static const btn_empty = 'btn_empty';
+  static const btn_empty_cart = 'btn_empty_cart';
+  static const btn_settings = 'btn_settings';
+  static const btn_order = 'btn_order';
 
 }

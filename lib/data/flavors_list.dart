@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/i18n/locale_keys.g.dart';
+import 'package:aero_glace_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import '../model/flavor_model.dart';
 
