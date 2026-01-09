@@ -1,7 +1,7 @@
-import 'package:aero_glace_app/features/panier/empty_cart_dialog.dart';
-import 'package:aero_glace_app/features/panier/login_dialog.dart';
+import 'package:aero_glace_app/features/panier/alert_dialogs.dart';
 import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/util/theme.dart';
+import 'package:aero_glace_app/widgets/btn_style.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -91,14 +91,8 @@ class TotalTile extends StatelessWidget {
                     // Bouton pour vider le panier
                     OutlinedButton(
                       onPressed: () => emptyCartDialog(context),
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                      style: btnStyle(
+                        'outlined',
                         side: BorderSide(
                           color: context.colorSchema.error,
                         ),
@@ -112,7 +106,7 @@ class TotalTile extends StatelessWidget {
                             color: context.colorSchema.error,
                           ),
                           Text(
-                            context.tr('btn_vider_panier'),
+                            context.tr('btn_empty_cart'),
                             style: TextStyle(
                               color: context.colorSchema.error,
                             ),
@@ -127,18 +121,12 @@ class TotalTile extends StatelessWidget {
                         bool isLoggedIn = false;
                         if (!isLoggedIn) loginDialog(context);
                       },
-                      style: FilledButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                      style: btnStyle(
+                        'filled',
                         backgroundColor: context.colorSchema.primary,
                       ),
                       child: Text(
-                        context.tr('btn_commander'),
+                        context.tr('btn_order'),
                         style: TextStyle(
                           color: context.colorSchema.onPrimary,
                         ),

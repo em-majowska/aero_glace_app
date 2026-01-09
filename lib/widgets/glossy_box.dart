@@ -8,9 +8,11 @@ import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 class GlossyBox extends StatelessWidget {
   /// Contenu affiché à l’intérieur du conteneur glossy.
   final Widget child;
+  double? width;
+  double? height;
 
   /// Crée un widget [GlossyBox].
-  const GlossyBox({super.key, required this.child});
+  GlossyBox({super.key, required this.child, this.width, this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,8 @@ class GlossyBox extends StatelessWidget {
       children: [
         Container(
           // Empêche le débordement du contenu
+          width: width,
+          height: height,
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
