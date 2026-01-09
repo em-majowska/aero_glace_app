@@ -12,7 +12,7 @@ import 'package:aero_glace_app/pages/map_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-
+import 'util/scaffold_messenger.dart';
 // import 'util.dart';
 // import 'theme.dart';
 
@@ -64,6 +64,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: scaffoldMessengerKey,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurpleAccent,

@@ -1,9 +1,9 @@
 import 'package:aero_glace_app/features/flavors/flavor_details.dart';
 import 'package:aero_glace_app/model/cart_controller.dart';
 import 'package:aero_glace_app/model/flavor_model.dart';
-import 'package:aero_glace_app/widgets/snack_bar.dart';
 import 'package:aero_glace_app/widgets/my_mesh.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
+import 'package:aero_glace_app/widgets/snackbars.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -53,7 +53,16 @@ class _FlavorTileState extends State<FlavorTile> {
     final cart = context.read<CartController>();
     cart.addItem(flavor);
 
-    _showMessage(context, flavor);
+    showSnack(
+      message: context.tr(
+        'added_to_cart',
+        namedArgs: {'flavorTitle': flavor.title.tr()},
+      ),
+      icon: Icon(
+        LucideIcons.circleCheck300,
+        color: Theme.of(context).colorScheme.tertiary,
+      ),
+    );
     _controller.start();
 
     Future.delayed(const Duration(seconds: 2), () {
@@ -62,26 +71,7 @@ class _FlavorTileState extends State<FlavorTile> {
   }
 
   /// Affiche un message de confirmation lorsque le parfum est ajouté au panier.
-  void _showMessage(BuildContext context, Flavor flavor) {
-    // TODO add smooth animation
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        /* snackBarAnimationStyle: AnimationStyle */
-        MySnackBar(
-          context: context,
-          icon: Icon(
-            LucideIcons.circleCheck300,
-            color: Theme.of(context).colorScheme.tertiary,
-          ),
-
-          message: context.tr(
-            'added_to_cart',
-            namedArgs: {'flavorTitle': flavor.title.tr()},
-          ),
-        ),
-      );
-  }
+  // void _showMessage(BuildContext context, Flavor flavor) {}
 
   @override
   Widget build(BuildContext context) {
