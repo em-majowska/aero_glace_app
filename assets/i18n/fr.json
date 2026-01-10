@@ -48,8 +48,9 @@
   "nos_glaciers": "Nos Glaciers",
   "destination": "Destination :",
   "fetch_route_error": "Échec de la récupération de l'itinéraire. Veuillez réessayer plus tard.",
-  "localization_permissions_error": "Impossible d'accéder à l'emplacement. Veuillez vérifier les autorisations.",
-  "localization_permission_refussed": "Autorisation de localisation refusée.",
+  "localization_permissions_error": "Autorisation de localisation refusée. Activez-la dans les paramètres.",
+  "localization_permission_refused": "Autorisation de localisation refusée.",
+  "localization_refused": "Localisation refusée",
   "tag": {
     "vegan": "Végan",
     "sansLactose": "SansLactose",

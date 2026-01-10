@@ -53,7 +53,8 @@ abstract class  LocaleKeys {
   static const destination = 'destination';
   static const fetch_route_error = 'fetch_route_error';
   static const localization_permissions_error = 'localization_permissions_error';
-  static const localization_permission_refussed = 'localization_permission_refussed';
+  static const localization_permission_refused = 'localization_permission_refused';
+  static const localization_refused = 'localization_refused';
   static const tag_vegan = 'tag.vegan';
   static const tag_sansLactose = 'tag.sansLactose';
   static const tag_sansGluten = 'tag.sansGluten';

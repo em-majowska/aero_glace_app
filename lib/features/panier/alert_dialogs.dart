@@ -92,10 +92,8 @@ void grantLocationDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Localisation refusée'), // TODO translate
-      content: const Text(
-        'Autorisation de localisation refusée. Activez-la dans les paramètres.', // TODO translate
-      ),
+      title: Text(context.tr('localization_refused')),
+      content: Text(context.tr('localization_permissions_error')),
       actions: [
         OutlinedButton(
           style: btnStyle('outlined'),

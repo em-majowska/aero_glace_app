@@ -64,8 +64,9 @@ class CodegenLoader extends AssetLoader{
   "nos_glaciers": "店舗一覧",
   "destination": "行き先 ：",
   "fetch_route_error": "ルートの取得に失敗しました。後でもう一度試してください。",
-  "localization_permissions_error": "場所にアクセスできません。権限を確認してください。",
-  "localization_permission_refussed": "位置情報の許可が拒否されました。",
+  "localization_permissions_error": "位置情報の許可が拒否されました。設定で有効にしてください。",
+  "localization_permission_refused": "位置情報の許可が拒否されました。",
+  "localization_refused": "位置情報が拒否されました",
   "tag": {
     "vegan": "ビーガン",
     "sansLactose": "ラクトースフリー",
@@ -131,8 +132,9 @@ static const Map<String,dynamic> _fr = {
   "nos_glaciers": "Nos Glaciers",
   "destination": "Destination :",
   "fetch_route_error": "Échec de la récupération de l'itinéraire. Veuillez réessayer plus tard.",
-  "localization_permissions_error": "Impossible d'accéder à l'emplacement. Veuillez vérifier les autorisations.",
-  "localization_permission_refussed": "Autorisation de localisation refusée.",
+  "localization_permissions_error": "Autorisation de localisation refusée. Activez-la dans les paramètres.",
+  "localization_permission_refused": "Autorisation de localisation refusée.",
+  "localization_refused": "Localisation refusée",
   "tag": {
     "vegan": "Végan",
     "sansLactose": "SansLactose",
