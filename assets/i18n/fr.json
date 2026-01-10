@@ -50,6 +50,7 @@
   "fetch_route_error": "Échec de la récupération de l'itinéraire. Veuillez réessayer plus tard.",
   "localization_permissions_error": "Autorisation de localisation refusée. Activez-la dans les paramètres.",
   "localization_permission_refused": "Autorisation de localisation refusée.",
+  "localization_off": "Le service de localisation est désactivé.",
   "localization_refused": "Localisation refusée",
   "distance_loading": "Calcul en cours...",
   "km": "km",

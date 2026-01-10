@@ -1,21 +1,20 @@
 import 'dart:async';
-import 'dart:convert';
+import 'package:aero_glace_app/features/map/location_service.dart';
 import 'package:aero_glace_app/features/map/map_elements.dart';
+import 'package:aero_glace_app/features/map/permission_service.dart';
+import 'package:aero_glace_app/features/map/routing_service.dart';
 import 'package:aero_glace_app/features/map/shop_markers.dart';
 import 'package:aero_glace_app/features/panier/alert_dialogs.dart';
 import 'package:aero_glace_app/model/shop_location_model.dart';
 import 'package:aero_glace_app/util/calculate.distance.dart';
 import 'package:aero_glace_app/widgets/snackbars.dart';
-import 'package:aero_glace_app/util/unpack_polyline.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart' as loc;
 import 'package:permission_handler/permission_handler.dart' as p_handler;
-import 'package:http/http.dart' as http;
 
 /// Widget affichant une carte avec les marqueurs de toutes les boutiques.
 ///
@@ -41,8 +40,11 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
   /// Contrôleur de la carte.
   final MapController _mapController = MapController();
 
-  /// Service de localisation de l'utilisateur.
-  final loc.Location _location = loc.Location();
+  /// Contróleur de mark. // TODO
+  final PopupController _popupController = PopupController();
+  final PermissionService _permissionService = PermissionService();
+  final RouteService _routeService = RouteService();
+  final LocationService _locationService = LocationService();
 
   /// Localisation actuelle de l’utilisateur et boutique sélectionnée pour laquelle la route est générée.
   LatLng? _currentLocation, _destination;
@@ -51,25 +53,24 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
   LatLng? _lastRouteUpdateLocation;
   static const double _minDistanceForRouteUpdate = 0.1;
   Timer? _throttleTimer;
-  final PopupController _popupController = PopupController();
 
   /// Liste de points représentant l'itinéraire entre l’utilisateur et la boutique.
   List<LatLng> _route = [];
 
-  /// Abonnement à la mise à jour de la localisation de l’utilisateur.
-  StreamSubscription<loc.LocationData>? _locationSubscription;
+  StreamSubscription<LatLng>? _locationSubscription;
   late p_handler.PermissionStatus permission;
 
   @override
   void initState() {
     _handlePermission();
-    super.initState();
     WidgetsBinding.instance.addObserver(this);
+    super.initState();
   }
 
   @override
   void dispose() {
     _locationSubscription?.cancel();
+    _locationService.dispose();
     WidgetsBinding.instance.removeObserver(this);
     _throttleTimer?.cancel();
 
@@ -87,18 +88,12 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
   /// Vérifie que les permissions de localisation sont activées et accordées.
   Future<void> _handlePermission() async {
     if (!mounted) return;
-    bool serviceEnabled = await _location.serviceEnabled();
 
-    if (!serviceEnabled) {
-      serviceEnabled = await _location.requestService();
-      if (!serviceEnabled) return;
-    }
-
-    permission = await p_handler.Permission.locationWhenInUse.status;
+    permission = await _permissionService.checkLocationPermission();
 
     // Permission granted ?
     if (permission.isDenied) {
-      permission = await p_handler.Permission.locationWhenInUse.request();
+      permission = await _permissionService.requestLocationPermission();
 
       if (permission.isDenied && mounted) {
         showErrorMessage(
@@ -128,25 +123,27 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
   /// - Met fin à l’état de chargement lorsque la localisation est connue.
   Future<void> _initializeLocation() async {
     try {
-      _locationSubscription = _location.onLocationChanged.listen((
-        locationData,
+      bool serviceEnabled = await _locationService.isServiceEnabled();
+
+      if (!serviceEnabled) {
+        serviceEnabled = await _locationService.requestService();
+        if (!serviceEnabled && mounted) {
+          showErrorMessage(message: context.tr("localization_off"));
+          return;
+        }
+      }
+
+      // listen
+      _locationSubscription = _locationService.onLocationChanged.listen((
+        LatLng newLocation,
       ) {
         if (_throttleTimer?.isActive ?? false) return;
 
-        _throttleTimer = Timer(const Duration(seconds: 1), () async {
-          if (locationData.latitude != null &&
-              locationData.longitude != null &&
-              mounted) {
-            final newLocation = LatLng(
-              locationData.latitude!,
-              locationData.longitude!,
-            );
-
+        _throttleTimer = Timer(const Duration(seconds: 1), () {
+          if (mounted) {
             setState(() {
               _currentLocation = newLocation;
-              if (_destination != null) {
-                _distance = getDistance(_destination!);
-              }
+              if (_destination != null) _distance = getDistance(_destination!);
             });
 
             // Mis à jour l'itinéraire si l'utilisateur a bougé
@@ -160,64 +157,44 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
                         ) >
                         _minDistanceForRouteUpdate)) {
               _lastRouteUpdateLocation = newLocation;
-              fetchRoute();
+              _fetchCoordinatesPoint(_destination!);
             }
           }
         });
       });
     } catch (e) {
-      showErrorMessage(message: context.tr('localization_permissions_error'));
+      if (mounted) {
+        showErrorMessage(message: context.tr('localization_permissions_error'));
+      }
     }
   }
 
   /// Déclenche la récupération des coordonnées d’une boutique et génère l'itinéraire.
   Future<void> _fetchCoordinatesPoint(LatLng coords) async {
-    if (mounted) setState(() => _destination = coords);
-
-    await fetchRoute();
-  }
-
-  /// Récupère l’itinéraire entre [_currentLocation] et [_destination] via l’OSRM API.
-  Future<void> fetchRoute() async {
     if (!mounted) return;
-    if (_currentLocation == null || _destination == null) {
-      showErrorMessage(message: context.tr('localization_permissions_error'));
-      return;
-    }
+
+    setState(() {
+      _destination = coords;
+      _destinationTitle = _getCity();
+    });
 
     try {
-      final url = Uri.parse(
-        'https://router.project-osrm.org/route/v1/driving/'
-        '${_currentLocation!.longitude},${_currentLocation!.latitude};'
-        '${_destination!.longitude},${_destination!.latitude}?overview=full&geometries=polyline',
-      );
-      final response = await http.get(url);
-
-      if (!mounted) return;
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        final geometry = data['routes'][0]['geometry'];
-
-        _decodePolyline(geometry);
-      } else {
-        showErrorMessage(message: context.tr('fetch_route_error'));
-        await _location.requestService();
-        return;
+      if (_currentLocation != null) {
+        final route = await _routeService.fetchRoute(
+          start: _currentLocation!,
+          end: coords,
+        );
+        if (mounted) {
+          setState(() {
+            _route = route;
+            _distance = getDistance(_destination);
+          });
+        }
       }
     } catch (e) {
-      showErrorMessage(message: context.tr('fetch_route_error'));
-      return;
+      if (mounted) showErrorMessage(message: context.tr('fetch_route_error'));
+      return; // TODO check if error showing
     }
-  }
-
-  /// Décode le polyline obtenu depuis l’API en liste de points pour affichage.
-  void _decodePolyline(String encodedPolyline) {
-    List<LatLng> decodedPoints = decodePolyline(
-      encodedPolyline,
-    ).unpackPolyline();
-
-    if (mounted) setState(() => _route = decodedPoints);
   }
 
   String _getCity() {
@@ -249,7 +226,6 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
 
   void showRoute(LatLng coords) {
     _fetchCoordinatesPoint(coords);
-    _destinationTitle = _getCity();
   }
 
   @override

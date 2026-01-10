@@ -54,6 +54,7 @@ abstract class  LocaleKeys {
   static const fetch_route_error = 'fetch_route_error';
   static const localization_permissions_error = 'localization_permissions_error';
   static const localization_permission_refused = 'localization_permission_refused';
+  static const localization_off = 'localization_off';
   static const localization_refused = 'localization_refused';
   static const distance_loading = 'distance_loading';
   static const km = 'km';
