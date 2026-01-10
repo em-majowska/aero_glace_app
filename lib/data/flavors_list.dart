@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import '../model/flavor_model.dart';
 
 /// Retourne la liste des parfums.
-///
-/// Le [context] est requis pour résoudre les chaînes localisées
-/// (`title`, `description` et les étiquettes (`tags`).
 List<Flavor> getFlavors() {
   return [
     Flavor(

@@ -104,7 +104,7 @@ class _FortuneWheelTileState extends State<FortuneWheelTile> {
                 Center(
                   child: FilledButton(
                     style: btnStyle(
-                      'filled',
+                      ButtonType.filled,
                       disabledBackgroundColor: Colors.transparent,
                     ),
                     // Bloque la roue si elle a déjà été lancée aujourd'hui

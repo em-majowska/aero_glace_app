@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 /// - le total des produits,
 /// - les économies réalisées si une remise est appliquée,
 /// - le total après remise,
-/// - boutons 'vider le panier' et 'passer la commande'.
+/// - boutons 'vider le panier' et 'commander'.
 class TotalTile extends StatelessWidget {
   /// Crée le widget [TotalTile].
   const TotalTile({super.key});
@@ -92,10 +92,8 @@ class TotalTile extends StatelessWidget {
                     OutlinedButton(
                       onPressed: () => emptyCartDialog(context),
                       style: btnStyle(
-                        'outlined',
-                        side: BorderSide(
-                          color: context.colorSchema.error,
-                        ),
+                        ButtonType.outlined,
+                        side: BorderSide(color: context.colorSchema.error),
                         foregroundColor: context.colorSchema.error,
                       ),
                       child: Row(
@@ -107,9 +105,7 @@ class TotalTile extends StatelessWidget {
                           ),
                           Text(
                             context.tr('btn_empty_cart'),
-                            style: TextStyle(
-                              color: context.colorSchema.error,
-                            ),
+                            style: TextStyle(color: context.colorSchema.error),
                           ),
                         ],
                       ),
@@ -122,14 +118,12 @@ class TotalTile extends StatelessWidget {
                         if (!isLoggedIn) loginDialog(context);
                       },
                       style: btnStyle(
-                        'filled',
+                        ButtonType.filled,
                         backgroundColor: context.colorSchema.primary,
                       ),
                       child: Text(
                         context.tr('btn_order'),
-                        style: TextStyle(
-                          color: context.colorSchema.onPrimary,
-                        ),
+                        style: TextStyle(color: context.colorSchema.onPrimary),
                       ),
                     ),
                   ],

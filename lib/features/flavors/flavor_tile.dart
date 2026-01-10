@@ -53,6 +53,7 @@ class _FlavorTileState extends State<FlavorTile> {
     final cart = context.read<CartController>();
     cart.addItem(flavor);
 
+    /// Affiche un message de confirmation lorsque le parfum est ajouté au panier.
     showSnack(
       message: context.tr(
         'added_to_cart',
@@ -69,9 +70,6 @@ class _FlavorTileState extends State<FlavorTile> {
       if (mounted) _controller.stop();
     });
   }
-
-  /// Affiche un message de confirmation lorsque le parfum est ajouté au panier.
-  // void _showMessage(BuildContext context, Flavor flavor) {}
 
   @override
   Widget build(BuildContext context) {

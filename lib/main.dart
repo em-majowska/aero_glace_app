@@ -16,18 +16,31 @@ import 'util/scaffold_messenger.dart';
 // import 'util.dart';
 // import 'theme.dart';
 
+/// Point d’entrée principal de l’application.
+///
+/// Initialise :
+/// - Flutter bindings
+/// - l’écran de splash natif
+/// - la localisation (EasyLocalization)
+/// - Hive et ses adapters
+/// - les boxes persistantes
+///
+/// Puis lance l’application avec le support de la localisation.
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  // Préserve l'écran de splash natif pendant l'initialisation
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  // Initialise la localisation
   await EasyLocalization.ensureInitialized();
-  // init the hive
+  // Initialise Hive
   await Hive.initFlutter();
 
-  // register adapter
+  // Enregistre les adapters Hive
   Hive.registerAdapter(HiveItemAdapter());
   Hive.registerAdapter(HiveFortuneResultAdapter());
   Hive.registerAdapter(HiveFidelityLevelAdapter());
-  // open the box
+
+  // Ouvre les boxes Hive nécessaires à l'application
   await Hive.openBox('cartBox');
   await Hive.openBox('fortuneBox');
 
@@ -64,7 +77,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // Clé globale permettant d'afficher des SnackBars
+      //sans dépendre d'un BuildContext.
       scaffoldMessengerKey: scaffoldMessengerKey,
+
+      // La configuration globale du thème
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurpleAccent,
@@ -77,9 +94,11 @@ class _MyAppState extends State<MyApp> {
       //   ),
       // ),
       // ),
+      // Configuration de la localisation
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
       locale: context.locale,
+      // Routes nommées de l’application
       routes: {
         '/accueil': (context) => const AboutPage(),
         '/parfums': (context) => const FlavorsPage(),
@@ -88,11 +107,7 @@ class _MyAppState extends State<MyApp> {
         '/carte': (context) => const MapPage(),
       },
 
-      home: Builder(
-        builder: (context) {
-          return const HomePage();
-        },
-      ),
+      home: const HomePage(),
     );
   }
 }

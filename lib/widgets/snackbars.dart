@@ -4,35 +4,21 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 final theme = ThemeData.light();
 
-/// SnackBar personnalisé pour afficher un message avec une icône.
-///
-/// Ce widget étend [SnackBar] et permet d'afficher :
-/// - une icône à gauche,
-/// - un message texte étendu,
-/// - un style flottant avec coins arrondis et padding personnalisé.
-///
-/// Arguments :
-/// - [message] : le texte du message à afficher.
-/// - [icon] : le widget icône à afficher à gauche du message, optionnel. // TODO change doc blocks
+/// SnackBar personnalisé permettant d'afficher un message avec
+/// un style cohérent et une icône optionnelle.
 class MySnackBar extends SnackBar {
   MySnackBar({
     super.key,
     required String message,
-    Icon? icon,
     required Color textColor,
     required Color backgroundColor,
+    Icon? icon,
   }) : super(
          content: Row(
            children: [
-             if (icon != null) ...[
-               icon,
-               const SizedBox(width: 8),
-             ],
+             if (icon != null) ...[icon, const SizedBox(width: 8)],
              Expanded(
-               child: Text(
-                 message,
-                 style: TextStyle(color: textColor),
-               ),
+               child: Text(message, style: TextStyle(color: textColor)),
              ),
            ],
          ),
@@ -47,6 +33,16 @@ class MySnackBar extends SnackBar {
        );
 }
 
+/// Affiche une [SnackBar] globale à l'aide du [ScaffoldMessenger].
+///
+/// Affiche un message depuis n'importe quel endroit de l'application
+/// sans dépendre d'un [BuildContext].
+///
+/// Arguments :
+/// - [message] : le texte du message à afficher.
+/// - [icon] : icône optionnelle affichée à gauche du message.
+/// - [textColor] : couleur du texte (par défaut `onSurface`).
+/// - [backgroundColor] : couleur de fond (par défaut `surfaceContainerLow`).
 void showSnack({
   required String message,
   Icon? icon,
@@ -71,8 +67,9 @@ void showSnack({
 
 /// Affiche un message d'erreur à l'utilisateur sous forme de [SnackBar].
 ///
-/// Utilise [ScaffoldMessenger] pour afficher un [MySnackBar] personnalisé
-/// avec une icône d'alerte et le texte fourni.
+/// Cette méthode est un raccourci de [showSnack] avec :
+/// - une icône d'alerte,
+/// - des couleurs adaptées aux messages d'erreur.
 ///
 /// Argument :
 /// - [message] : le texte du message d'erreur à afficher.
