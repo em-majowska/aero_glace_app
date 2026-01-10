@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:aero_glace_app/features/map/map_elements.dart';
+import 'package:aero_glace_app/features/map/shop_markers.dart';
 import 'package:aero_glace_app/features/panier/alert_dialogs.dart';
 import 'package:aero_glace_app/model/shop_location_model.dart';
-import 'package:aero_glace_app/util/theme.dart';
-import 'package:aero_glace_app/widgets/glossy_box.dart';
+import 'package:aero_glace_app/util/calculate.distance.dart';
 import 'package:aero_glace_app/widgets/snackbars.dart';
 import 'package:aero_glace_app/util/unpack_polyline.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -13,11 +14,8 @@ import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart' as loc;
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:permission_handler/permission_handler.dart' as p_handler;
-import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
-import 'dart:math' show cos, sqrt, asin;
 
 /// Widget affichant une carte avec les marqueurs de toutes les boutiques.
 ///
@@ -222,40 +220,11 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
     if (mounted) setState(() => _route = decodedPoints);
   }
 
-  String getCity() {
+  String _getCity() {
     final shop = widget.shops.firstWhere(
       (shop) => shop.coordinates == _destination,
     );
     return shop.city;
-  }
-
-  Widget createInfoWindow() {
-    return Positioned(
-      bottom: 5,
-      left: 5,
-      child: GlossyBox(
-        width: 220,
-        height: 70,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${context.tr('aero_glace')} - $_destinationTitle',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              Text(
-                _distance != null
-                    ? '${_distance!.toStringAsFixed(2)} km'
-                    : 'Calcul en cours...',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   double getDistance(LatLng? destination) {
@@ -268,15 +237,6 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
     );
   }
 
-  double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-    const p = 0.017453292519943295;
-    final a =
-        0.5 -
-        cos((lat2 - lat1) * p) / 2 +
-        cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
-    return 12742 * asin(sqrt(a));
-  }
-
   /// Mettre la localisation d'utilisateur au milieu de la carte.
   Future<void> _userCurrentLocation() async {
     if (_currentLocation != null) {
@@ -287,46 +247,15 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
     }
   }
 
-  void showLocation(LatLng coords) {
+  void showRoute(LatLng coords) {
     _fetchCoordinatesPoint(coords);
-    _destinationTitle = getCity();
-
-    // if (_destination != null && mounted) {
-    //   setState(() {
-    //     _distance = getDistance(_destination!);
-    //   });
-    // }
+    _destinationTitle = _getCity();
   }
 
   @override
   Widget build(BuildContext context) {
     // Génération des marqueurs pour toutes les boutiques
-    final List<Marker> markers = List.generate(widget.shops.length, (
-      index,
-    ) {
-      return Marker(
-        point: widget.shops[index].coordinates,
-        width: 45,
-        height: 45,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 2,
-              color: context.colorSchema.tertiary,
-            ),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: CircleAvatar(
-            backgroundColor: context.colorSchema.tertiaryContainer,
-            child: Icon(
-              LucideIcons.iceCreamCone,
-              size: 25,
-              color: context.colorSchema.onTertiaryContainer,
-            ),
-          ),
-        ),
-      );
-    });
+    final List<Marker> markers = buildShopMarkers(context, widget.shops);
 
     return Scaffold(
       body: Stack(
@@ -341,104 +270,26 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
               maxZoom: 100,
             ),
             children: [
-              TileLayer(
-                urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                userAgentPackageName: 'com.aero_glace_app',
-              ),
-              MarkerLayer(
-                markers: markers,
-              ),
+              mapView(),
+              MarkerLayer(markers: markers),
 
               // Affiche la route entre l’utilisateur et la boutique si disponible.
               if (_currentLocation != null &&
                   _destination != null &&
                   _route.isNotEmpty)
-                PolylineLayer(
-                  polylines: [
-                    Polyline(
-                      points: _route,
-                      strokeWidth: 5,
-                      color: Colors.blue,
-                    ),
-                  ],
-                ),
-              PopupMarkerLayer(
-                options: PopupMarkerLayerOptions(
-                  markers: markers,
-                  popupController: _popupController,
-                  markerCenterAnimation: const MarkerCenterAnimation(),
-                  popupDisplayOptions: PopupDisplayOptions(
-                    builder: (BuildContext context, Marker marker) {
-                      final shop = widget.shops.firstWhere(
-                        (shop) => shop.coordinates == marker.point,
-                      );
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: context.colorSchema.surface,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        constraints: const BoxConstraints(
-                          maxWidth: 200,
-                          maxHeight: 70,
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SingleChildScrollView(
-                                  // scroll if text is too long
-                                  child: Text(
-                                    shop.address,
-                                    style: context.textTheme.labelLarge,
-                                  ),
-                                ),
-                              ),
-                            ),
+                polylines(_route),
+              popupWindow(
+                markers,
+                widget.shops,
+                _popupController,
+                showRoute,
+              ),
 
-                            SizedBox(
-                              height: double.infinity,
-                              child: IconButton(
-                                onPressed: () {
-                                  showLocation(shop.coordinates);
-                                  _popupController.hideAllPopups();
-                                },
-                                style: IconButton.styleFrom(
-                                  padding: const EdgeInsets.all(12),
-                                  backgroundColor:
-                                      context.colorSchema.tertiaryContainer,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(12),
-                                      bottomRight: Radius.circular(12),
-                                    ),
-                                  ),
-                                ),
-                                icon: Icon(
-                                  LucideIcons.navigation,
-                                  color:
-                                      context.colorSchema.onTertiaryContainer,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              if (_route.isNotEmpty || _destination != null) createInfoWindow(),
-              RichAttributionWidget(
-                attributions: [
-                  TextSourceAttribution(
-                    '© OpenStreetMap contributors',
-                    onTap: () => launchUrl(
-                      Uri.parse('https://www.openstreetmap.org/copyright'),
-                    ),
-                  ),
-                ],
-              ),
+              if (_destination != null && _route.isNotEmpty)
+                distancePreview(context, _destinationTitle, _distance),
+
+              watermark(),
+
               if (_currentLocation != null)
                 const CurrentLocationLayer(
                   alignPositionOnUpdate: AlignOnUpdate.always,
@@ -449,15 +300,7 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
       ),
 
       // Bouton flottant pour centrer sur la position actuelle de l’utilisateur.
-      floatingActionButton: FloatingActionButton(
-        onPressed: _userCurrentLocation,
-        backgroundColor: context.colorSchema.tertiaryContainer,
-        child: Icon(
-          LucideIcons.locateFixed300,
-          color: context.colorSchema.onTertiaryContainer,
-          size: 30,
-        ),
-      ),
+      floatingActionButton: floatingBtn(context, _userCurrentLocation),
     );
   }
 }

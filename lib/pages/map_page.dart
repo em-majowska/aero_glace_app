@@ -68,7 +68,7 @@ class _MapPageState extends State<MapPage> {
                         city: shops[index].city,
                         address: shops[index].address,
                         coordinates: shops[index].coordinates,
-                        onPressed: myMapKey.currentState?.showLocation,
+                        onPressed: myMapKey.currentState?.showRoute,
                       );
                     },
                   ),

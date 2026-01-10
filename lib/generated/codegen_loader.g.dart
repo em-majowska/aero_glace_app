@@ -67,6 +67,8 @@ class CodegenLoader extends AssetLoader{
   "localization_permissions_error": "位置情報の許可が拒否されました。設定で有効にしてください。",
   "localization_permission_refused": "位置情報の許可が拒否されました。",
   "localization_refused": "位置情報が拒否されました",
+  "distance_loading": "計算中です...",
+  "km": "km",
   "tag": {
     "vegan": "ビーガン",
     "sansLactose": "ラクトースフリー",
@@ -135,6 +137,8 @@ static const Map<String,dynamic> _fr = {
   "localization_permissions_error": "Autorisation de localisation refusée. Activez-la dans les paramètres.",
   "localization_permission_refused": "Autorisation de localisation refusée.",
   "localization_refused": "Localisation refusée",
+  "distance_loading": "Calcul en cours...",
+  "km": "km",
   "tag": {
     "vegan": "Végan",
     "sansLactose": "SansLactose",
