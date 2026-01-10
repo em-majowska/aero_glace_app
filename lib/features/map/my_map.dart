@@ -53,6 +53,7 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
   LatLng? _lastRouteUpdateLocation;
   static const double _minDistanceForRouteUpdate = 0.1;
   Timer? _throttleTimer;
+  final PopupController _popupController = PopupController();
 
   /// Liste de points représentant l'itinéraire entre l’utilisateur et la boutique.
   List<LatLng> _route = [];
@@ -364,20 +365,63 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
               PopupMarkerLayer(
                 options: PopupMarkerLayerOptions(
                   markers: markers,
+                  popupController: _popupController,
+                  markerCenterAnimation: const MarkerCenterAnimation(),
                   popupDisplayOptions: PopupDisplayOptions(
                     builder: (BuildContext context, Marker marker) {
                       final shop = widget.shops.firstWhere(
                         (shop) => shop.coordinates == marker.point,
                       );
                       return Container(
-                        padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: context.colorSchema.surface,
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Text(
-                          shop.address,
-                          style: context.textTheme.labelLarge,
+                        constraints: const BoxConstraints(
+                          maxWidth: 200,
+                          maxHeight: 70,
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SingleChildScrollView(
+                                  // scroll if text is too long
+                                  child: Text(
+                                    shop.address,
+                                    style: context.textTheme.labelLarge,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(
+                              height: double.infinity,
+                              child: IconButton(
+                                onPressed: () {
+                                  showLocation(shop.coordinates);
+                                  _popupController.hideAllPopups();
+                                },
+                                style: IconButton.styleFrom(
+                                  padding: const EdgeInsets.all(12),
+                                  backgroundColor:
+                                      context.colorSchema.tertiaryContainer,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(12),
+                                      bottomRight: Radius.circular(12),
+                                    ),
+                                  ),
+                                ),
+                                icon: Icon(
+                                  LucideIcons.navigation,
+                                  color:
+                                      context.colorSchema.onTertiaryContainer,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       );
                     },
