@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class RouteService {
   double? duration;
 
-  /// Récupère l’itinéraire entre [_currentLocation] et [_destination] via l’OSRM API.
+  /// Récupère l’itinéraire entre [start] et [end] via l’OSRM API.
   ///
   /// Arguments :
   /// - [start] : Point de départ de l'itinéraire (coordonnées géographiques).

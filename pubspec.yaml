@@ -91,7 +91,7 @@ flutter_launcher_icons:
   adaptive_icon_background: '#e2bdff'
   adaptive_icon_foreground: 'assets/images/icons/icon.png'
 
-  flutter_native_splash:
+flutter_native_splash:
   web: false
   background_image: 'assets/images/splash/background.png'
   background_image_dark: 'assets/images/splash/background-dark.png'

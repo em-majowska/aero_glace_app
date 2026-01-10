@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 /// Widget affichant la liste des items au panier.
 ///
 /// Argument :
-/// - [items] : liste des objets [Item] à afficher dans le panier, sauvegardés dans le [HiveBox].
+/// - [items] : liste des objets [Item] à afficher dans le panier, sauvegardés dans le `HiveBox`.
 class CartItemsList extends StatelessWidget {
   /// Liste des items du panier provenant du HiveBox.
   final List<Item> items;
