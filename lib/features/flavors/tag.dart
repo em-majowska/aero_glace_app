@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/util/theme.dart';
+import 'package:aero_glace_app/utils/theme.dart';
 import 'package:flutter/material.dart';
 
 /// Widget affichant une étiquette avec un style spécifique.

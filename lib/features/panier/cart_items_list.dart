@@ -1,6 +1,6 @@
 import 'package:aero_glace_app/features/panier/item_tile.dart';
-import 'package:aero_glace_app/model/cart_controller.dart';
-import 'package:aero_glace_app/model/item_model.dart';
+import 'package:aero_glace_app/providers/cart_controller.dart';
+import 'package:aero_glace_app/models/item_model.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

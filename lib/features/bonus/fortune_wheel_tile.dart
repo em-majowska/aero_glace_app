@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:aero_glace_app/features/bonus/fortune_wheel.dart';
 import 'package:aero_glace_app/features/bonus/result.dart';
-import 'package:aero_glace_app/model/fortune_wheel_controller.dart';
-import 'package:aero_glace_app/util/theme.dart';
+import 'package:aero_glace_app/providers/fortune_wheel_controller.dart';
+import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/btn_style.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';

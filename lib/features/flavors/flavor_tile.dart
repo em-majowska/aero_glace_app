@@ -1,6 +1,6 @@
 import 'package:aero_glace_app/features/flavors/flavor_details.dart';
-import 'package:aero_glace_app/model/cart_controller.dart';
-import 'package:aero_glace_app/model/flavor_model.dart';
+import 'package:aero_glace_app/providers/cart_controller.dart';
+import 'package:aero_glace_app/models/flavor_model.dart';
 import 'package:aero_glace_app/widgets/my_mesh.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:aero_glace_app/widgets/snackbars.dart';

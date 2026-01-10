@@ -1,9 +1,9 @@
 import 'package:aero_glace_app/data/shop_locations.dart';
-import 'package:aero_glace_app/util/theme.dart';
+import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
-import 'package:aero_glace_app/features/map/location_tile.dart';
-import 'package:aero_glace_app/features/map/my_map.dart';
+import 'package:aero_glace_app/features/cart/location_tile.dart';
+import 'package:aero_glace_app/features/cart/my_map.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 

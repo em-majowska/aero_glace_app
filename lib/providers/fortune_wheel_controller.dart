@@ -1,10 +1,10 @@
 // import 'dart:async';
 import 'dart:math';
-import 'package:aero_glace_app/model/hive_fidelity_level.dart';
-import 'package:aero_glace_app/model/hive_fortune_result.dart';
+import 'package:aero_glace_app/models/hive_fidelity_level.dart';
+import 'package:aero_glace_app/models/hive_fortune_result.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:aero_glace_app/util/next_day.dart';
+import 'package:aero_glace_app/utils/next_day.dart';
 
 /// Contrôleur gérant la roue de la fortune et le système de fidélité.
 ///

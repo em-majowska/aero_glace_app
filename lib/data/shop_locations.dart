@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/model/shop_location_model.dart';
+import 'package:aero_glace_app/models/shop_location_model.dart';
 import 'package:latlong2/latlong.dart';
 
 /// Liste des boutiques avec leurs coordonnées géographiques.

@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:aero_glace_app/model/cart_controller.dart';
-import 'package:aero_glace_app/model/fortune_wheel_controller.dart';
-import 'package:aero_glace_app/util/theme.dart';
+import 'package:aero_glace_app/providers/cart_controller.dart';
+import 'package:aero_glace_app/providers/fortune_wheel_controller.dart';
+import 'package:aero_glace_app/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';

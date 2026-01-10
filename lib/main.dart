@@ -1,7 +1,7 @@
 import 'package:aero_glace_app/generated/codegen_loader.g.dart';
-import 'package:aero_glace_app/model/hive_item_model.dart';
-import 'package:aero_glace_app/model/hive_fidelity_level.dart';
-import 'package:aero_glace_app/model/hive_fortune_result.dart';
+import 'package:aero_glace_app/models/hive_item_model.dart';
+import 'package:aero_glace_app/models/hive_fidelity_level.dart';
+import 'package:aero_glace_app/models/hive_fortune_result.dart';
 import 'package:flutter/material.dart';
 import 'package:aero_glace_app/pages/home_page.dart';
 import 'package:aero_glace_app/pages/about_page.dart';
@@ -12,7 +12,7 @@ import 'package:aero_glace_app/pages/map_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'util/scaffold_messenger.dart';
+import 'utils/scaffold_messenger.dart';
 // import 'util.dart';
 // import 'theme.dart';
 
@@ -80,7 +80,7 @@ class _MyAppState extends State<MyApp> {
       // Clé globale permettant d'afficher des SnackBars
       //sans dépendre d'un BuildContext.
       scaffoldMessengerKey: scaffoldMessengerKey,
-
+      debugShowCheckedModeBanner: false,
       // La configuration globale du thème
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(

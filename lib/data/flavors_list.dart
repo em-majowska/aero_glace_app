@@ -1,6 +1,6 @@
 import 'package:aero_glace_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
-import '../model/flavor_model.dart';
+import '../models/flavor_model.dart';
 
 /// Retourne la liste des parfums.
 List<Flavor> getFlavors() {

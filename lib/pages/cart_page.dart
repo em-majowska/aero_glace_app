@@ -1,8 +1,8 @@
 import 'package:aero_glace_app/features/panier/cart_items_list.dart';
-import 'package:aero_glace_app/model/cart_controller.dart';
+import 'package:aero_glace_app/providers/cart_controller.dart';
 import 'package:aero_glace_app/features/panier/empty_cart_tile.dart';
 import 'package:aero_glace_app/features/panier/total_tile.dart';
-import 'package:aero_glace_app/util/theme.dart';
+import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:easy_localization/easy_localization.dart';

@@ -1,5 +1,5 @@
-import 'package:aero_glace_app/model/fortune_wheel_controller.dart';
-import 'package:aero_glace_app/util/theme.dart';
+import 'package:aero_glace_app/providers/fortune_wheel_controller.dart';
+import 'package:aero_glace_app/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

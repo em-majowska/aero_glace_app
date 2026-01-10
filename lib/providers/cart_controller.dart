@@ -1,9 +1,9 @@
 import 'package:aero_glace_app/data/flavors_list.dart';
-import 'package:aero_glace_app/util/next_day.dart';
+import 'package:aero_glace_app/utils/next_day.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:aero_glace_app/model/flavor_model.dart';
-import 'package:aero_glace_app/model/hive_item_model.dart';
-import 'package:aero_glace_app/model/item_model.dart';
+import 'package:aero_glace_app/models/flavor_model.dart';
+import 'package:aero_glace_app/models/hive_item_model.dart';
+import 'package:aero_glace_app/models/item_model.dart';
 import 'package:flutter/material.dart';
 
 /// Contrôleur pour gérer le panier de l'utilisateur.

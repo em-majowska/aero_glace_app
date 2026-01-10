@@ -1,7 +1,7 @@
 // import 'package:aero_glace_app/data/default_flavors.dart';
 import 'package:aero_glace_app/data/flavors_list.dart';
 import 'package:aero_glace_app/features/flavors/flavor_tile.dart';
-import 'package:aero_glace_app/util/theme.dart';
+import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

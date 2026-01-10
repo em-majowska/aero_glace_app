@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/model/flavor_model.dart';
+import 'package:aero_glace_app/models/flavor_model.dart';
 
 /// Représente un parfum affiché dans le panier.
 ///

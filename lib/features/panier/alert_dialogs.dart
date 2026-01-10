@@ -1,5 +1,5 @@
-import 'package:aero_glace_app/model/cart_controller.dart';
-import 'package:aero_glace_app/util/theme.dart';
+import 'package:aero_glace_app/providers/cart_controller.dart';
+import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/btn_style.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

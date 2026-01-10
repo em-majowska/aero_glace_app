@@ -1,6 +1,6 @@
 import 'package:aero_glace_app/features/bonus/collected_points_tile.dart';
 import 'package:aero_glace_app/features/bonus/fortune_wheel_tile.dart';
-import 'package:aero_glace_app/util/theme.dart';
+import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:easy_localization/easy_localization.dart';

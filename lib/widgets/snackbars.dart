@@ -1,4 +1,4 @@
-import 'package:aero_glace_app/util/scaffold_messenger.dart';
+import 'package:aero_glace_app/utils/scaffold_messenger.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 

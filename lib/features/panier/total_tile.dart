@@ -1,6 +1,6 @@
 import 'package:aero_glace_app/features/panier/alert_dialogs.dart';
-import 'package:aero_glace_app/model/cart_controller.dart';
-import 'package:aero_glace_app/util/theme.dart';
+import 'package:aero_glace_app/providers/cart_controller.dart';
+import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/btn_style.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
