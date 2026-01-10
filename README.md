@@ -109,6 +109,13 @@ lib/
 └── main.dart # Point d'entrée de l'application
 ```
 
+# Documentation
+
+La documentation complète du projet, incluant les détails techniques et les fonctionnalités est disponible aux emplacements suivants :
+
+Documentation technique (Dart/Flutter) : Consultez le dossier doc/api pour accéder à la documentation générée automatiquement des classes, widgets et méthodes.
+Documentation en ligne : La documentation est également hébergée en ligne sur [GitHub Pages](https://em-majowska.github.io/aero_glace_app/).
+
 # Contact
 
 Pour toute question ou opportunité professionnelle :
