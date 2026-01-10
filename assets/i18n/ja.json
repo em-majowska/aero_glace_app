@@ -54,6 +54,7 @@
   "localization_refused": "位置情報が拒否されました",
   "distance_loading": "計算中です...",
   "km": "km",
+  "mins": "分",
   "tag": {
     "vegan": "ビーガン",
     "sansLactose": "ラクトースフリー",

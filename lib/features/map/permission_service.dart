@@ -1,11 +1,12 @@
-import 'package:permission_handler/permission_handler.dart' as p_handler;
+import 'package:permission_handler/permission_handler.dart';
 
+/// Service pour gérer les permissions liées à la localisation de l'application.
 class PermissionService {
-  Future<p_handler.PermissionStatus> checkLocationPermission() async {
-    return await p_handler.Permission.locationWhenInUse.status;
+  Future<PermissionStatus> checkLocationPermission() async {
+    return await Permission.locationWhenInUse.status;
   }
 
-  Future<p_handler.PermissionStatus> requestLocationPermission() async {
-    return await p_handler.Permission.locationWhenInUse.request();
+  Future<PermissionStatus> requestLocationPermission() async {
+    return await Permission.locationWhenInUse.request();
   }
 }

@@ -83,7 +83,8 @@ class CodegenLoader extends AssetLoader{
   "btn_empty": "空にする",
   "btn_empty_cart": "カートを空にする",
   "btn_settings": "設定を開く",
-  "btn_order": "確認"
+  "btn_order": "確認",
+  "mins": "分"
 };
 static const Map<String,dynamic> _fr = {
   "aero_glace": "Aero Glace",
@@ -141,6 +142,7 @@ static const Map<String,dynamic> _fr = {
   "localization_refused": "Localisation refusée",
   "distance_loading": "Calcul en cours...",
   "km": "km",
+  "mins": "mins",
   "tag": {
     "vegan": "Végan",
     "sansLactose": "SansLactose",

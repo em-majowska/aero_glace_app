@@ -37,27 +37,38 @@ class MyMap extends StatefulWidget {
 }
 
 class MyMapState extends State<MyMap> with WidgetsBindingObserver {
-  /// Contrôleur de la carte.
   final MapController _mapController = MapController();
 
-  /// Contróleur de mark. // TODO
+  /// Contrôleur de la carte.
   final PopupController _popupController = PopupController();
+
+  // Services pour gérer la localisation, les permissions et les itinéraires.
   final PermissionService _permissionService = PermissionService();
   final RouteService _routeService = RouteService();
   final LocationService _locationService = LocationService();
 
-  /// Localisation actuelle de l’utilisateur et boutique sélectionnée pour laquelle la route est générée.
-  LatLng? _currentLocation, _destination;
+  // Localisation actuelle de l’utilisateur, boutique sélectionnée et
+  //dernière localisation connue.
+  LatLng? _currentLocation, _destination, _lastRouteUpdateLocation;
+
+  // Titre de la destination et informations sur l'itinéraire.
   String? _destinationTitle;
-  double? _distance;
-  LatLng? _lastRouteUpdateLocation;
+  double? _distance, _duration;
+
+  // Distance minimale (en kilomètres) pour déclencher une mise à jour de
+  // l'itinéraire.
   static const double _minDistanceForRouteUpdate = 0.1;
+
+  // Timer pour limiter la fréquence des mises à jour de localisation.
   Timer? _throttleTimer;
 
-  /// Liste de points représentant l'itinéraire entre l’utilisateur et la boutique.
+  // Liste de points représentant l'itinéraire entre l’utilisateur et la boutique.
   List<LatLng> _route = [];
 
+  // Abonnement au flux de localisation.
   StreamSubscription<LatLng>? _locationSubscription;
+
+  // Statut de la permission de localisation.
   late p_handler.PermissionStatus permission;
 
   @override
@@ -77,7 +88,7 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  // Recheck location when the app resumes
+  /// Vérifie à nouveau la localisation lorsque l'application reprend.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
@@ -85,13 +96,13 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
     }
   }
 
-  /// Vérifie que les permissions de localisation sont activées et accordées.
+  /// Vérifie et demande la permission de localisation si nécessaire.
   Future<void> _handlePermission() async {
     if (!mounted) return;
 
+    // Vérifie le statut actuel de la permission
     permission = await _permissionService.checkLocationPermission();
 
-    // Permission granted ?
     if (permission.isDenied) {
       permission = await _permissionService.requestLocationPermission();
 
@@ -115,14 +126,15 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
     }
   }
 
-  /// Initialise la localisation et met à jour [_currentLocation]
-  /// lorsque les données sont disponibles.
+  /// Initialise la localisation et écoute les changements de position.
   ///
+  /// - Vérifie si le service de localisation est activé.
+  /// - Demande à l'utilisateur d'activer le service si nécessaire.
   /// - Écoute les changements de localisation en temps réel.
-  /// - Met à jour [_currentLocation] dès que les coordonnées sont disponibles.
-  /// - Met fin à l’état de chargement lorsque la localisation est connue.
+  /// - Met à jour [_currentLocation] et déclenche la mise à jour de l'itinéraire si nécessaire.
   Future<void> _initializeLocation() async {
     try {
+      // Vérifie si le service de localisation est activé et commence à écouter les changements.
       bool serviceEnabled = await _locationService.isServiceEnabled();
 
       if (!serviceEnabled) {
@@ -133,7 +145,7 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
         }
       }
 
-      // listen
+      // Écoute les changements de localisation
       _locationSubscription = _locationService.onLocationChanged.listen((
         LatLng newLocation,
       ) {
@@ -144,9 +156,10 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
             setState(() {
               _currentLocation = newLocation;
               if (_destination != null) _distance = getDistance(_destination!);
+              if (_duration != null) _duration = _routeService.getDuration;
             });
 
-            // Mis à jour l'itinéraire si l'utilisateur a bougé
+            // Met à jour l'itinéraire si l'utilisateur a bougé suffisamment
             if (_destination != null &&
                 (_lastRouteUpdateLocation == null ||
                     calculateDistance(
@@ -169,7 +182,10 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
     }
   }
 
-  /// Déclenche la récupération des coordonnées d’une boutique et génère l'itinéraire.
+  /// Récupère l'itinéraire entre la position actuelle et la boutique sélectionnée.
+  ///
+  /// Arguments :
+  /// - [coords] : Coordonnées de la boutique de destination.
   Future<void> _fetchCoordinatesPoint(LatLng coords) async {
     if (!mounted) return;
 
@@ -188,15 +204,20 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
           setState(() {
             _route = route;
             _distance = getDistance(_destination);
+            _duration = _routeService.getDuration;
           });
         }
       }
     } catch (e) {
       if (mounted) showErrorMessage(message: context.tr('fetch_route_error'));
-      return; // TODO check if error showing
+      return;
     }
   }
 
+  /// Récupère le nom de la ville de la boutique sélectionnée.
+  ///
+  /// Retourne :
+  /// - Le nom de la ville de la boutique associée à [_destination].
   String _getCity() {
     final shop = widget.shops.firstWhere(
       (shop) => shop.coordinates == _destination,
@@ -204,6 +225,13 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
     return shop.city;
   }
 
+  /// Calcule la distance entre la position actuelle et une destination.
+  ///
+  /// Arguments :
+  /// - [destination] : Coordonnées de la destination.
+  ///
+  /// Retourne :
+  /// - La distance en kilomètres entre [_currentLocation] et [destination].
   double getDistance(LatLng? destination) {
     if (_currentLocation == null) return 0.0;
     return calculateDistance(
@@ -214,7 +242,7 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
     );
   }
 
-  /// Mettre la localisation d'utilisateur au milieu de la carte.
+  /// Centre la carte sur la position actuelle de l'utilisateur.
   Future<void> _userCurrentLocation() async {
     if (_currentLocation != null) {
       _mapController.move(_currentLocation!, 15);
@@ -224,6 +252,10 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
     }
   }
 
+  /// Affiche l'itinéraire vers une boutique donnée.
+  ///
+  /// Arguments :
+  /// - [coords] : Coordonnées de la boutique de destinatio
   void showRoute(LatLng coords) {
     _fetchCoordinatesPoint(coords);
   }
@@ -246,14 +278,20 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
               maxZoom: 100,
             ),
             children: [
+              // Tuiles de la carte
               mapView(),
+
+              // Marqueurs des boutiques
               MarkerLayer(markers: markers),
 
-              // Affiche la route entre l’utilisateur et la boutique si disponible.
+              // Itinéraire si disponible
               if (_currentLocation != null &&
                   _destination != null &&
                   _route.isNotEmpty)
+                // Popups des marqueurs
                 polylines(_route),
+
+              // Fenêtre d'aperçu de la distance
               popupWindow(
                 markers,
                 widget.shops,
@@ -262,10 +300,17 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
               ),
 
               if (_destination != null && _route.isNotEmpty)
-                distancePreview(context, _destinationTitle, _distance),
+                distancePreview(
+                  context,
+                  _destinationTitle,
+                  _distance,
+                  _duration,
+                ),
 
+              // Filigrane OpenStreetMap
               watermark(),
 
+              // Position actuelle de l'utilisateur
               if (_currentLocation != null)
                 const CurrentLocationLayer(
                   alignPositionOnUpdate: AlignOnUpdate.always,

@@ -1,5 +1,3 @@
-// map floating action button
-
 import 'package:aero_glace_app/model/shop_location_model.dart';
 import 'package:aero_glace_app/util/theme.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
@@ -11,8 +9,10 @@ import 'package:latlong2/latlong.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// map
-
+/// Couche de tuiles pour afficher la carte OpenStreetMap.
+///
+/// Cette couche utilise les tuiles d'OpenStreetMap pour afficher la carte de base.
+/// Le `userAgentPackageName` est requis pour identifier l'application auprès du serveur de tuiles.
 Widget mapView() {
   return TileLayer(
     urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -20,7 +20,13 @@ Widget mapView() {
   );
 }
 
-// route layer
+/// Couche pour afficher un itinéraire sur la carte sous forme de polyligne.
+///
+/// Cette couche prend une liste de points `LatLng` représentant l'itinéraire
+/// et les affiche comme une ligne bleue sur la carte.
+///
+/// Paramètres :
+/// - [route] : Liste de coordonnées `LatLng` définissant l'itinéraire.
 Widget polylines(List<LatLng> route) {
   return PolylineLayer(
     polylines: [
@@ -33,7 +39,17 @@ Widget polylines(List<LatLng> route) {
   );
 }
 
-// popup marker layer
+/// Couche pour afficher des marqueurs avec des fenêtres popups sur la carte.
+///
+/// Cette couche gère l'affichage des marqueurs pour chaque boutique et permet
+/// d'afficher une fenêtre popup lorsque l'utilisateur clique sur un marqueur.
+/// La popup contient l'adresse de la boutique et un bouton pour calculer l'itinéraire.
+///
+/// Paramètres :
+/// - [markers] : Liste des marqueurs à afficher sur la carte.
+/// - [shops] : Liste des boutiques associées aux marqueurs.
+/// - [controller] : Contrôleur pour gérer l'affichage des popups.
+/// - [showRoute] : Fonction appelée pour afficher l'itinéraire vers la boutique sélectionnée.
 Widget popupWindow(
   List<Marker> markers,
   List<ShopLocation> shops,
@@ -47,6 +63,7 @@ Widget popupWindow(
       markerCenterAnimation: const MarkerCenterAnimation(),
       popupDisplayOptions: PopupDisplayOptions(
         builder: (BuildContext context, Marker marker) {
+          // Trouve la boutique associée au marqueur cliqué
           final shop = shops.firstWhere(
             (shop) => shop.coordinates == marker.point,
           );
@@ -54,8 +71,10 @@ Widget popupWindow(
             context,
             shop,
             () {
-              showRoute(shop.coordinates);
-              controller.hideAllPopups();
+              showRoute(
+                shop.coordinates,
+              ); // Affiche l'itinéraire vers la boutique
+              controller.hideAllPopups(); // Ferme la popup après le clic
             },
           );
         },
@@ -64,7 +83,7 @@ Widget popupWindow(
   );
 }
 
-// popup marker window
+/// Contenu de la fenêtre popup affichée lors du clic sur un marqueur.
 Widget popupWindowChild(
   BuildContext context,
   ShopLocation shop,
@@ -81,6 +100,7 @@ Widget popupWindowChild(
     ),
     child: Row(
       children: [
+        // Adresse de la boutique
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -91,6 +111,7 @@ Widget popupWindowChild(
           ),
         ),
 
+        // Bouton
         SizedBox(
           height: double.infinity,
           child: IconButton(
@@ -116,15 +137,25 @@ Widget popupWindowChild(
   );
 }
 
-// distance preview window
-
-Widget distancePreview(BuildContext context, title, double? distance) {
+/// Fenêtre d'aperçu affichant la distance entre l'utilisateur et
+/// la destination.
+///
+/// Paramètres :
+/// - [context] : Contexte Flutter pour accéder au thème et aux ressources.
+/// - [title] : Titre de la destination (ex: nom de la ville).
+/// - [distance] : Distance en kilomètres entre l'utilisateur et la destination.
+Widget distancePreview(
+  BuildContext context,
+  title,
+  double? distance,
+  double? duration,
+) {
   return Positioned(
     bottom: 5,
     left: 5,
     child: GlossyBox(
-      width: 220,
-      height: 70,
+      width: 240,
+      height: 75,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -134,11 +165,23 @@ Widget distancePreview(BuildContext context, title, double? distance) {
               '${context.tr('aero_glace')} - $title',
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            Text(
-              distance != null
-                  ? '${distance.toStringAsFixed(2)} ${context.tr('km')}'
-                  : context.tr('distance_loading'),
-              style: Theme.of(context).textTheme.titleLarge,
+            Row(
+              spacing: 8,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  distance != null
+                      ? '${distance.toStringAsFixed(2)} ${context.tr('km')}'
+                      : context.tr('distance_loading'),
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Text(
+                  duration != null
+                      ? '${duration.toStringAsFixed(0)} ${context.tr('mins')}'
+                      : '',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ],
             ),
           ],
         ),
@@ -147,7 +190,7 @@ Widget distancePreview(BuildContext context, title, double? distance) {
   );
 }
 
-// watermark openstreetmaps
+/// Filigrane pour attribuer les contributeurs d'OpenStreetMap.
 Widget watermark() {
   return RichAttributionWidget(
     attributions: [
@@ -161,8 +204,11 @@ Widget watermark() {
   );
 }
 
-// floating btn
-
+/// Bouton flottant pour centrer la carte sur la position actuelle
+/// de l'utilisateur.
+///
+/// Déclenche la fonction `_userCurrentLocation`
+/// pour recentrer la carte sur la position GPS de l'utilisateur.
 Widget floatingBtn(BuildContext context, curLocation) {
   return FloatingActionButton(
     onPressed: curLocation,
