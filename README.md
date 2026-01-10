@@ -73,7 +73,7 @@ L'application suit un design futuriste avec :
 ### **Paramètres et Personnalisation**
 
 - Activation/désactivation de la localisation.
-- Choix de la langue (français, anglais, etc.).
+- Choix de la langue (français, japonais).
 
 ### **Persistance des Données**
 
@@ -99,7 +99,7 @@ lib/
 		|── bonus/
 		|── flavors/
 		|── map/
-		|── cart/
+		└── cart/
 ├── generated/ # Fichiers d'internationalisation générés
 ├── models/ # Modèles de données (FortuneOutcome, Cart, etc.)
 ├── pages/ # Écrans principaux de l'application
