@@ -1,6 +1,7 @@
 import 'package:aero_glace_app/features/flavors/flavor_details.dart';
 import 'package:aero_glace_app/providers/cart_controller.dart';
 import 'package:aero_glace_app/models/flavor_model.dart';
+import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/my_mesh.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:aero_glace_app/widgets/snackbars.dart';
@@ -13,7 +14,7 @@ import 'package:provider/provider.dart';
 /// Widget affichant une tuile de parfum.
 ///
 /// Affiche l’image du parfum, ses détails (titre, description, prix, tags)
-/// et un bouton pour l’ajouter au panier avec une animation de dégradé maillé.
+/// et un bouton pour l’ajouter au panier [onAddToCart] avec une animation de dégradé maillé.
 ///
 /// Argument :
 /// - [flavor] : le modèle de données du parfum à utiliser.
@@ -29,9 +30,14 @@ class FlavorTile extends StatefulWidget {
   State<FlavorTile> createState() => _FlavorTileState();
 }
 
-class _FlavorTileState extends State<FlavorTile> {
+class _FlavorTileState extends State<FlavorTile>
+    with AutomaticKeepAliveClientMixin {
   // Contrôleur de l’animation du dégradé maillé
   late final AnimatedMeshGradientController _controller;
+  bool _animated = false;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -73,47 +79,78 @@ class _FlavorTileState extends State<FlavorTile> {
 
   @override
   Widget build(BuildContext context) {
-    return GlossyBox(
-      child: ClipRRect(
-        borderRadius: BorderRadiusGeometry.circular(12),
-        child: Stack(
-          children: [
-            // Dégradé maillé animé
-            Positioned.fill(
-              child: MyMesh(
-                meshColors: widget.flavor.meshColors,
-                controller: _controller,
-              ),
-            ),
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 190),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  // Image du parfum
-                  Expanded(
-                    flex: 2,
-                    child: Image.asset(
-                      'assets/images/flavors/${widget.flavor.imagePath}',
-                      fit: BoxFit.cover,
-                      alignment: Alignment.center,
-                    ),
-                  ),
+    super.build(context);
 
-                  // Details du parfum
-                  Expanded(
-                    flex: 3,
-                    child: FlavorDetails(
-                      flavor: widget.flavor,
-                      onAddToCart: addFlavorToCart,
+    Widget tileContent() {
+      return GlossyBox(
+        child: ClipRRect(
+          borderRadius: BorderRadiusGeometry.circular(12),
+          child: Stack(
+            children: [
+              // Dégradé maillé animé
+              Positioned.fill(
+                child: MyMesh(
+                  meshColors: widget.flavor.meshColors,
+                  controller: _controller,
+                ),
+              ),
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxHeight: 190),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Image du parfum
+                    Expanded(
+                      flex: 2,
+                      child: Image.asset(
+                        'assets/images/flavors/${widget.flavor.imagePath}',
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                      ),
+                    ),
+
+                    // Details du parfum
+                    Expanded(
+                      flex: 3,
+                      child: FlavorDetails(flavor: widget.flavor),
+                    ),
+                  ],
+                ),
+              ),
+
+              Positioned(
+                right: 5,
+                bottom: 5,
+                child: IconButton.filled(
+                  style: IconButton.styleFrom(
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.surfaceContainerLowest,
+                    overlayColor: context.colorSchema.primary,
+                    shape: CircleBorder(
+                      side: BorderSide(
+                        color: context.colorSchema.outlineVariant,
+                      ),
                     ),
                   ),
-                ],
+                  onPressed: () => addFlavorToCart(widget.flavor),
+                  icon: Icon(
+                    LucideIcons.plus,
+                    color: context.colorSchema.onSurface,
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
+
+    if (_animated) {
+      _animated = true;
+      return tileContent();
+    }
+
+    return tileContent();
   }
 }

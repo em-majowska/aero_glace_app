@@ -105,21 +105,11 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
 
     if (permission.isDenied) {
       permission = await _permissionService.requestLocationPermission();
-
-      if (permission.isDenied && mounted) {
-        showErrorMessage(
-          message: context.tr('localization_permission_refused'),
-        );
-        return;
-      } else if (permission.isGranted) {
-        await _initializeLocation();
-        return;
-      }
     } else if (permission.isPermanentlyDenied && mounted) {
       showErrorMessage(
         message: context.tr('localization_permission_refused'),
       );
-      grantLocationDialog(context);
+      return;
     } else if (permission.isGranted) {
       await _initializeLocation();
       return;

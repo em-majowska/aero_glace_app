@@ -105,6 +105,7 @@ lib/
 ├── pages/ # Écrans principaux de l'application
 ├── providers/ # Gestion d'état avec Provider
 ├── widgets/ # Composants réutilisables
+├── theme/ # Thèmes et styles globaux (couleurs, polices, MaterialApp).
 ├── utils/ # Fonctions utilitaires et helpers
 └── main.dart # Point d'entrée de l'application
 ```

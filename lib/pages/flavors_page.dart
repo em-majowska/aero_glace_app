@@ -1,10 +1,12 @@
 // import 'package:aero_glace_app/data/default_flavors.dart';
 import 'package:aero_glace_app/data/flavors_list.dart';
 import 'package:aero_glace_app/features/flavors/flavor_tile.dart';
+import 'package:aero_glace_app/utils/animations.dart';
 import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 final flavors = getFlavors();
 
@@ -30,15 +32,14 @@ class FlavorsPage extends StatelessWidget {
       backgroundColor: context.colorSchema.secondaryContainer,
       body: ListView.separated(
         padding: const EdgeInsets.all(16),
-        separatorBuilder: (context, index) => const SizedBox(
-          height: 16,
-        ),
+        separatorBuilder: (context, index) => const SizedBox(height: 16),
         itemCount: flavors.length,
         itemBuilder: (context, index) {
           // Récupère la liste des parfums en fonction de la localisation
           final flavor = flavors[index];
-          return FlavorTile(
-            flavor: flavor,
+          return FlavorTile(flavor: flavor).animate(
+            delay: Duration(milliseconds: index * 300),
+            effects: slideIn,
           );
         },
       ),

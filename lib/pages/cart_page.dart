@@ -2,11 +2,13 @@ import 'package:aero_glace_app/features/panier/cart_items_list.dart';
 import 'package:aero_glace_app/providers/cart_controller.dart';
 import 'package:aero_glace_app/features/panier/empty_cart_tile.dart';
 import 'package:aero_glace_app/features/panier/total_tile.dart';
+import 'package:aero_glace_app/utils/animations.dart';
 import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 
 /// Page affichant le contenu du panier
@@ -42,9 +44,26 @@ class _CartPageState extends State<CartPage> {
           Positioned(
             bottom: -200,
             right: -80,
-            child: Image.asset(
-              'assets/images/hovering-elements.png',
-            ),
+            child:
+                Image.asset(
+                      'assets/images/hovering-elements.png',
+                    )
+                    .animate(
+                      delay: 200.ms,
+                      onPlay: (controller) => controller.forward(),
+                    )
+                    .slide(
+                      begin: const Offset(-0.2, 0.8),
+                      end: const Offset(0, 0.15),
+                      duration: 5.seconds,
+                      curve: Curves.easeInOutBack,
+                    )
+                    .rotate(
+                      begin: -0.08,
+                      end: 0,
+                      duration: 5.seconds,
+                      curve: Curves.easeInOutBack,
+                    ),
           ),
 
           // Contenu principal du panier
@@ -55,20 +74,22 @@ class _CartPageState extends State<CartPage> {
 
               if (items.isEmpty) {
                 // Affiche un widget indiquant que le panier est vide
-                return const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: EmptyCartTile(),
+                return Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: const EmptyCartTile().animate(delay: 200.ms).fadeIn(),
                 );
               } else {
                 // Liste des items et le total
                 return ListView(
                   padding: const EdgeInsets.all(16.0),
                   children: [
-                    CartItemsList(items: items),
+                    CartItemsList(
+                      items: items,
+                    ).animate(delay: 200.ms, effects: slideIn),
                     const SizedBox(height: 24),
 
                     // Total et bouton de suppression de tous les items
-                    const TotalTile(),
+                    const TotalTile().animate(delay: 400.ms, effects: slideIn),
                   ],
                 );
               }

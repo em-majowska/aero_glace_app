@@ -5,6 +5,7 @@ import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Page affichant la section bonus de l’application.
@@ -35,7 +36,7 @@ class BonusPage extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             children: [
               // Points de fidélité, niveau actuel et les récompenses
-              const CollectedPoints(),
+              const CollectedPoints().animate(delay: 200.ms).fadeIn(),
               const SizedBox(height: 32),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +50,7 @@ class BonusPage extends StatelessWidget {
               const SizedBox(height: 32),
 
               // Widget de la roue de la fortune
-              const FortuneWheelTile(),
+              const FortuneWheelTile().animate(delay: 400.ms).fadeIn(),
             ],
           ),
         ],

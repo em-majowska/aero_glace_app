@@ -2,6 +2,7 @@ import 'package:aero_glace_app/providers/cart_controller.dart';
 import 'package:aero_glace_app/models/flavor_model.dart';
 import 'package:aero_glace_app/utils/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:provider/provider.dart';
 
@@ -40,15 +41,20 @@ class QuantitySelector extends StatelessWidget {
             // Affiche la quantité actuelle depuis le CartController
             Consumer<CartController>(
               builder: (context, cart, child) {
-                final quantity = cart.getItemQuantity(
-                  flavor.id,
-                );
-                return Text(
-                  quantity.toString(),
-                  style: context.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                );
+                final quantity = cart.getItemQuantity(flavor.id);
+                return Animate(key: ValueKey<int>(quantity))
+                    .toggle(
+                      builder: (context, value, child) => AnimatedContainer(
+                        duration: 200.ms,
+                        child: Text(
+                          quantity.toString(),
+                          style: context.textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
+                    .fadeIn();
               },
             ),
 

@@ -3,6 +3,7 @@ import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/btn_style.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -52,7 +53,7 @@ void emptyCartDialog(BuildContext context) {
             ),
           ),
         ],
-      );
+      ).animate().fadeIn();
     },
   );
 }
@@ -82,7 +83,7 @@ void loginDialog(BuildContext context) {
             child: Text(context.tr('btn_cancel')),
           ),
         ],
-      );
+      ).animate().fadeIn();
     },
   );
 }
@@ -93,7 +94,7 @@ void loginDialog(BuildContext context) {
 /// Utilise [permission_handler] pour ouvrir les paramètres système.
 /// [context] est requis pour afficher la boîte de dialogue et
 /// accéder aux traductions.
-void grantLocationDialog(BuildContext context) {
+Future<void> grantLocationDialog(BuildContext context) async {
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
@@ -114,6 +115,6 @@ void grantLocationDialog(BuildContext context) {
           child: Text(context.tr('btn_settings')),
         ),
       ],
-    ),
+    ).animate().fadeIn(),
   );
 }
