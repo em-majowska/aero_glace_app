@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Ouvre un menu de sélection de la langue.
@@ -11,42 +12,44 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 /// - [context] : contexte de l'application utilisé pour accéder à
 ///   la localisation et naviguer.
 Widget openLanguageMenu(BuildContext context) {
-  return SimpleDialog(
-    title: Text(context.tr('langue')),
-    titleTextStyle: Theme.of(context).textTheme.titleLarge,
-    alignment: Alignment.topRight,
-    constraints: const BoxConstraints(maxWidth: 200),
-    contentPadding: const EdgeInsetsGeometry.all(16),
-    children: [
-      SimpleDialogOption(
-        onPressed: () {
-          context.setLocale(const Locale('fr'));
-          Navigator.of(context).pop();
-        },
-        child: const Row(
-          children: [
-            Text('FR'),
-            SizedBox(width: 16),
-            Text('Français'),
-          ],
+  return Animate(
+    child: SimpleDialog(
+      title: Text(context.tr('langue')),
+      titleTextStyle: Theme.of(context).textTheme.titleLarge,
+      alignment: Alignment.topRight,
+      constraints: const BoxConstraints(maxWidth: 200),
+      contentPadding: const EdgeInsetsGeometry.all(16),
+      children: [
+        SimpleDialogOption(
+          onPressed: () {
+            context.setLocale(const Locale('fr'));
+            Navigator.of(context).pop();
+          },
+          child: const Row(
+            children: [
+              Text('FR'),
+              SizedBox(width: 16),
+              Text('Français'),
+            ],
+          ),
         ),
-      ),
-      const Divider(),
-      SimpleDialogOption(
-        onPressed: () {
-          context.setLocale(const Locale('ja'));
-          Navigator.of(context).pop();
-        },
-        child: Row(
-          children: [
-            const Text('JP'),
-            const SizedBox(width: 16),
-            Text(context.tr('japonais')),
-          ],
+        const Divider(),
+        SimpleDialogOption(
+          onPressed: () {
+            context.setLocale(const Locale('ja'));
+            Navigator.of(context).pop();
+          },
+          child: Row(
+            children: [
+              const Text('JP'),
+              const SizedBox(width: 16),
+              Text(context.tr('japonais')),
+            ],
+          ),
         ),
-      ),
-    ],
-  );
+      ],
+    ),
+  ).animate().fadeIn();
 }
 
 /// Bouton affichant une icône pour ouvrir le menu de langue.

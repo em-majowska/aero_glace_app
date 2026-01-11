@@ -7,6 +7,7 @@ import 'package:aero_glace_app/widgets/btn_style.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 
 /// Widget affichant la roue de la fortune et la remise / les points gagné.
@@ -94,9 +95,15 @@ class _FortuneWheelTileState extends State<FortuneWheelTile> {
 
                 /// Résultat affiché une fois la roue arrêtée
                 if (!isActive)
-                  Result(
-                    result: fortuneWheel.result.value,
-                    isDiscount: fortuneWheel.result.type == 'discount',
+                  Animate(
+                    child:
+                        Result(
+                          result: fortuneWheel.result.value,
+                          isDiscount: fortuneWheel.result.type == 'discount',
+                        ).animate().scale(
+                          curve: Curves.elasticOut,
+                          duration: 800.ms,
+                        ),
                   ),
 
                 /// Bouton de lancement ou message d'attente

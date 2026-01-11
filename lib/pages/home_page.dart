@@ -28,16 +28,33 @@ class _HomePageState extends State<HomePage> {
   // Index de l’onglet actuellement sélectionné
   int _selectedIndex = 0;
 
+  /// Contrôleur pour piloter la navigation entre
+  /// les pages de la [PageView].
+  final PageController _pageController = PageController();
+
   // Change la page affichée lors de la sélection
   // d’un élément de la barre de navigation
   void _navigateBottomBar(int index) {
     setState(() {
       _selectedIndex = index;
     });
+
+    // Animation fluide vers la page sélectionnée
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   // Liste des pages associées aux onglets
-  final List _pages = [
+  final List<Widget> _pages = [
     const AboutPage(),
     const FlavorsPage(),
     const CartPage(),
@@ -55,7 +72,16 @@ class _HomePageState extends State<HomePage> {
         ChangeNotifierProvider(create: (context) => FortuneWheelController()),
       ],
       child: Scaffold(
-        body: _pages[_selectedIndex],
+        body: PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          onPageChanged: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          children: _pages,
+        ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: context.colorSchema.surfaceContainer,
           unselectedItemColor: context.colorSchema.onSurfaceVariant,

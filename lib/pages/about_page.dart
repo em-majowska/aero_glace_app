@@ -1,16 +1,23 @@
+import 'package:aero_glace_app/utils/animations.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:blobs/blobs.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 /// Page “À propos” de l’application.
-class AboutPage extends StatelessWidget {
+class AboutPage extends StatefulWidget {
   /// Crée la page "À propos"
   const AboutPage({super.key});
 
+  @override
+  State<AboutPage> createState() => _AboutPageState();
+}
+
+class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     final mediaWidth = MediaQuery.of(context).size.width;
@@ -18,7 +25,10 @@ class AboutPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.tr('aero_glace')),
+        title: Text(
+          context.tr('aero_glace'),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         actions: [const LanguageMenuButton()],
       ),
       body: Stack(
@@ -53,7 +63,7 @@ class AboutPage extends StatelessWidget {
             top: mediaHeight * -0.2,
             left: mediaWidth * -0.4,
             child: Blob.random(
-              size: 500,
+              size: mediaHeight * 0.65,
               edgesCount: 10,
               styles: BlobStyles(
                 gradient: LinearGradient(
@@ -83,7 +93,6 @@ class AboutPage extends StatelessWidget {
               ),
             ),
           ),
-          // TODO animations
 
           // Blob bas-gauche (contour)
           Positioned(
@@ -110,14 +119,44 @@ class AboutPage extends StatelessWidget {
           Positioned(
             left: mediaWidth * 0.1,
             bottom: mediaHeight * 0.07,
-            child: Icon(LucideIcons.sparkles100, size: mediaHeight * 0.1),
+            child: Animate(
+              child: Icon(LucideIcons.sparkles100, size: mediaHeight * 0.1)
+                  .animate(
+                    delay: 600.ms,
+                    effects: scaleElastic,
+                  )
+                  .swap(
+                    builder: (_, child) => child!
+                        .animate(
+                          onComplete: (controller) => controller.repeat(),
+                        )
+                        .shimmer(delay: 4.seconds),
+                  ),
+            ),
           ),
 
           // Haut-droite
           Positioned(
             right: mediaWidth * 0.1,
             top: mediaHeight * 0.17,
-            child: Icon(LucideIcons.sparkle100, size: mediaHeight * 0.08),
+            child:
+                Animate(
+                      child: Icon(
+                        LucideIcons.sparkle100,
+                        size: mediaHeight * 0.08,
+                      ),
+                    )
+                    .animate(
+                      delay: 300.ms,
+                      effects: scaleElastic,
+                    )
+                    .swap(
+                      builder: (_, child) => child!
+                          .animate(
+                            onComplete: (controller) => controller.repeat(),
+                          )
+                          .shimmer(delay: 6.seconds),
+                    ),
           ),
 
           // Étoiles décoratives
@@ -125,18 +164,32 @@ class AboutPage extends StatelessWidget {
           Positioned(
             top: mediaHeight * 0.05,
             left: 0,
-            child: Blur(
-              blur: 2,
-              child: RotatedBox(
-                quarterTurns: -1,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints.loose(const Size(400, 400)),
-                  child: Image.asset(
-                    'assets/images/star.png',
-                    width: mediaWidth * 0.4,
-                  ),
-                ),
-              ),
+            child: Animate(
+              child:
+                  Blur(
+                        blur: 2,
+                        child: RotatedBox(
+                          quarterTurns: -1,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints.loose(
+                              const Size(400, 400),
+                            ),
+                            child: Image.asset(
+                              'assets/images/star.png',
+                              width: mediaWidth * 0.4,
+                            ),
+                          ),
+                        ),
+                      )
+                      .animate(
+                        onInit: (controller) =>
+                            controller..repeat(max: 1, count: 1),
+                        effects: starBstart,
+                      )
+                      .swap(
+                        builder: (_, child) =>
+                            child!.animate(effects: starBend),
+                      ),
             ),
           ),
 
@@ -144,12 +197,14 @@ class AboutPage extends StatelessWidget {
           Positioned(
             bottom: mediaHeight * 0.1,
             right: mediaWidth * 0.2,
-            child: ConstrainedBox(
-              constraints: BoxConstraints.loose(const Size(150, 150)),
-              child: Image.asset(
-                'assets/images/star.png',
-                width: mediaWidth * 0.15,
-              ),
+            child: Animate(
+              child: ConstrainedBox(
+                constraints: BoxConstraints.loose(const Size(150, 150)),
+                child: Image.asset(
+                  'assets/images/star.png',
+                  width: mediaWidth * 0.15,
+                ),
+              ).animate(delay: 500.ms, effects: starA),
             ),
           ),
 
@@ -163,12 +218,14 @@ class AboutPage extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: const Color(0x00000000).withValues(alpha: 0.10),
                   border: Border.all(
-                    color: const Color(0x00000000).withValues(alpha: 0.70),
+                    color: const Color(
+                      0x00000000,
+                    ).withValues(alpha: 0.70),
                   ),
                   shape: BoxShape.circle,
                 ),
               ),
-            ),
+            ).animate(delay: 200.ms, effects: scaleElastic),
           ),
           Center(
             child: ConstrainedBox(
@@ -184,16 +241,27 @@ class AboutPage extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
               ),
-            ),
+            ).animate(delay: 800.ms, effects: scaleElastic),
           ),
           Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints.loose(const Size(450, 450)),
-              child: Image.asset(
-                'assets/images/ice-cream.png',
-                width: mediaWidth * 0.35,
-              ),
-            ),
+            child:
+                ConstrainedBox(
+                      constraints: BoxConstraints.loose(
+                        const Size(450, 450),
+                      ),
+                      child: Image.asset(
+                        'assets/images/ice-cream.png',
+                        width: mediaWidth * 0.35,
+                      ),
+                    )
+                    .animate(delay: 1.seconds, effects: iceCreamA)
+                    .swap(
+                      builder: (_, child) => child!.animate(
+                        onPlay: (controller) =>
+                            controller.repeat(reverse: true),
+                        effects: iceCreamB,
+                      ),
+                    ),
           ),
         ],
       ),

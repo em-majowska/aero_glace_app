@@ -1,6 +1,7 @@
 import 'package:aero_glace_app/providers/fortune_wheel_controller.dart';
 import 'package:aero_glace_app/utils/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 
 /// Widget affichant une récompense déblocable
@@ -24,16 +25,28 @@ class Gift extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<FortuneWheelController>(
       builder: (context, fortuneWheel, child) {
-        return Expanded(
-          flex: 1,
-          child: Container(
+        final isUnlocked = fortuneWheel.points >= minPoints;
+
+        return Animate(
+          effects: [
+            if (isUnlocked)
+              const ScaleEffect(
+                begin: Offset(0.9, 0.9),
+                end: Offset(1, 1),
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+              ),
+          ],
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
 
               // Vérifie si la récompense est débloquée et
               //change couleur selon l'état
-              color: (fortuneWheel.points >= minPoints)
+              color: (isUnlocked)
                   ? context.colorSchema.tertiaryContainer
                   : context.colorSchema.surfaceContainerHighest,
             ),

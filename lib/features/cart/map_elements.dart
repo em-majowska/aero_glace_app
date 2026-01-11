@@ -3,6 +3,7 @@ import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/glossy_box.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:latlong2/latlong.dart';
@@ -16,7 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 Widget mapView() {
   return TileLayer(
     urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    userAgentPackageName: 'com.aero_glace_app',
+    userAgentPackageName: 'com.aero_glace_app_v2',
   );
 }
 
@@ -134,7 +135,7 @@ Widget popupWindowChild(
         ),
       ],
     ),
-  );
+  ).animate().fadeIn();
 }
 
 /// Fenêtre d'aperçu affichant la distance entre l'utilisateur et
@@ -161,32 +162,54 @@ Widget distancePreview(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '${context.tr('aero_glace')} - $title',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            Animate(key: ValueKey<dynamic>(title))
+                .toggle(
+                  builder: (context, value, child) => AnimatedContainer(
+                    duration: 200.ms,
+                    child: Text(
+                      '${context.tr('aero_glace')} - $title',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                )
+                .fadeIn(),
+
             Row(
               spacing: 8,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  distance != null
-                      ? '${distance.toStringAsFixed(2)} ${context.tr('km')}'
-                      : context.tr('distance_loading'),
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                Text(
-                  duration != null
-                      ? '${duration.toStringAsFixed(0)} ${context.tr('mins')}'
-                      : '',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
+                Animate(key: ValueKey<double?>(distance))
+                    .toggle(
+                      builder: (_, value, _) => AnimatedContainer(
+                        duration: 200.ms,
+                        child: Text(
+                          distance != null
+                              ? '${distance.toStringAsFixed(2)} ${context.tr('km')}'
+                              : context.tr('distance_loading'),
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                    )
+                    .fadeIn(),
+                Animate(key: ValueKey<double?>(duration))
+                    .toggle(
+                      builder: (_, value, _) => AnimatedContainer(
+                        duration: 200.ms,
+                        child: Text(
+                          duration != null
+                              ? '${duration.toStringAsFixed(0)} ${context.tr('mins')}'
+                              : '',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                    )
+                    .fadeIn(),
               ],
             ),
           ],
         ),
       ),
-    ),
+    ).animate().fadeIn(),
   );
 }
 

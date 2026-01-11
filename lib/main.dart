@@ -2,6 +2,8 @@ import 'package:aero_glace_app/generated/codegen_loader.g.dart';
 import 'package:aero_glace_app/models/hive_item_model.dart';
 import 'package:aero_glace_app/models/hive_fidelity_level.dart';
 import 'package:aero_glace_app/models/hive_fortune_result.dart';
+import 'package:aero_glace_app/theme/theme.dart';
+import 'package:aero_glace_app/theme/util.dart';
 import 'package:flutter/material.dart';
 import 'package:aero_glace_app/pages/home_page.dart';
 import 'package:aero_glace_app/pages/about_page.dart';
@@ -70,30 +72,23 @@ class _MyAppState extends State<MyApp> {
   }
 
   void initialization() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
     FlutterNativeSplash.remove();
   }
 
   @override
   Widget build(BuildContext context) {
+    // La configuration globale du thème
+    TextTheme textTheme = createTextTheme(context, "Roboto", "Inter Tight");
+    MaterialTheme theme = MaterialTheme(textTheme);
+
     return MaterialApp(
       // Clé globale permettant d'afficher des SnackBars
       //sans dépendre d'un BuildContext.
       scaffoldMessengerKey: scaffoldMessengerKey,
       debugShowCheckedModeBanner: false,
-      // La configuration globale du thème
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurpleAccent,
-          brightness: Brightness.light,
-        ),
-      ),
-      // textTheme: TextTheme(
-      //   headlineMedium: GoogleFonts.inter(
-      //     fontWeight: FontWeight.bold,
-      //   ),
-      // ),
-      // ),
+      theme: theme.light(),
+
       // Configuration de la localisation
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
@@ -111,27 +106,3 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
-// my theme
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final brightness = View.of(context).platformDispatcher.platformBrightness;
-//     TextTheme textTheme = createTextTheme(context, "Roboto", "Inter Tight");
-
-//     MaterialTheme theme = MaterialTheme(textTheme);
-//     return MaterialApp(
-//       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
-//       routes: {
-//         '/parfums': (context) => const Parfums(),
-//         '/panier': (context) => const Panier(),
-//         '/bonus': (context) => const Bonus(),
-//         '/carte': (context) => const Carte(),
-//       },
-//       home: const Home(),
-//     );
-//   }
-// }

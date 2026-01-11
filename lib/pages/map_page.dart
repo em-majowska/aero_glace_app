@@ -1,4 +1,5 @@
 import 'package:aero_glace_app/data/shop_locations.dart';
+import 'package:aero_glace_app/utils/animations.dart';
 import 'package:aero_glace_app/utils/theme.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
@@ -6,6 +7,7 @@ import 'package:aero_glace_app/features/cart/location_tile.dart';
 import 'package:aero_glace_app/features/cart/my_map.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 /// Page affichant la carte des boutiques et la liste des emplacements.
 ///
@@ -34,7 +36,10 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.tr('nos_glaciers')),
+        title: Text(
+          context.tr('nos_glaciers'),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         actions: [const LanguageMenuButton()],
         backgroundColor: context.colorSchema.surface,
         scrolledUnderElevation: 0.0,
@@ -50,8 +55,11 @@ class _MapPageState extends State<MapPage> {
               children: [
                 /// Carte affichant les marqueurs des boutiques.
                 Expanded(
-                  child: MyMap(key: myMapKey, shops: shops),
-                ),
+                  child: MyMap(
+                    key: myMapKey,
+                    shops: shops,
+                  ),
+                ).animate(delay: 200.ms).fadeIn(),
 
                 /// Liste des boutiques avec possibilité de centrer la carte sur un emplacement.
                 Expanded(
@@ -65,11 +73,19 @@ class _MapPageState extends State<MapPage> {
                     itemCount: shops.length,
                     itemBuilder: (context, index) {
                       return LocationTile(
-                        city: shops[index].city,
-                        address: shops[index].address,
-                        coordinates: shops[index].coordinates,
-                        onPressed: myMapKey.currentState?.showRoute,
-                      );
+                            city: shops[index].city,
+                            address: shops[index].address,
+                            coordinates: shops[index].coordinates,
+                            onPressed: myMapKey.currentState?.showRoute,
+                          )
+                          .animate(delay: 400.ms)
+                          .fadeOut(begin: 0)
+                          .swap(
+                            builder: (context, child) => child!.animate(
+                              delay: Duration(milliseconds: index * 300),
+                              effects: slideIn,
+                            ),
+                          );
                     },
                   ),
                 ),

@@ -84,6 +84,3 @@ void showErrorMessage({required String message}) {
     backgroundColor: theme.colorScheme.errorContainer,
   );
 }
-
-//  TODO add smooth animation
-// /* snackBarAnimationStyle: AnimationStyle */
