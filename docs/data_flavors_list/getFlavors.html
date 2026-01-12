@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the getFlavors function from the flavors_list library, for the Dart programming language.">
+  <title>getFlavors function - flavors_list library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">aero_glace_app</a></li>
+    <li><a href="../data_flavors_list/">data&#47;flavors_list.dart</a></li>
+    <li class="self-crumb">getFlavors function</li>
+  </ol>
+  <div class="self-name">getFlavors</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="data_flavors_list&#47;data_flavors_list-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-function">getFlavors</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../models_flavor_model/Flavor-class.html">Flavor</a></span>&gt;</span></span>
+<span class="name ">getFlavors</span>(<wbr>)
+
+        
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Retourne la liste des parfums.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">List&lt;Flavor&gt; getFlavors() {
+  return [
+    Flavor(
+      id: 1,
+      title: LocaleKeys.chocolat_title,
+      description: LocaleKeys.chocolat_description,
+      tags: [&#39;bio&#39;],
+      imagePath: &#39;chocolate.jpg&#39;,
+      price: 4.50,
+      meshColors: [
+        const Color.fromARGB(255, 199, 248, 232),
+        const Color.fromARGB(255, 199, 248, 232),
+        const Color.fromARGB(255, 90, 50, 44),
+        const Color.fromARGB(255, 131, 177, 162),
+      ],
+    ),
+
+    Flavor(
+      id: 2,
+      title: LocaleKeys.fruit_passion_title,
+      description: LocaleKeys.fruit_passion_description,
+      tags: [&#39;vegan&#39;, &#39;sansGluten&#39;],
+      imagePath: &#39;passion-fruit.jpg&#39;,
+      price: 5.00,
+      meshColors: [
+        const Color.fromARGB(255, 255, 183, 50),
+        const Color.fromARGB(255, 253, 255, 237),
+        const Color.fromARGB(255, 253, 255, 237),
+        const Color.fromARGB(255, 177, 0, 118),
+      ],
+    ),
+
+    Flavor(
+      id: 3,
+      title: LocaleKeys.cafe_title,
+      description: LocaleKeys.cafe_description,
+      tags: [&#39;cafe&#39;, &#39;bio&#39;],
+      imagePath: &#39;coffee.jpg&#39;,
+      price: 4.50,
+      meshColors: [
+        const Color.fromARGB(255, 167, 132, 124),
+        const Color.fromARGB(255, 167, 132, 124),
+        const Color.fromARGB(255, 255, 235, 221),
+        const Color.fromARGB(255, 255, 235, 221),
+      ],
+    ),
+
+    Flavor(
+      id: 4,
+      title: LocaleKeys.pistache_title,
+      description: LocaleKeys.pistache_description,
+      tags: [&#39;cacahuetes&#39;, &#39;bio&#39;],
+      imagePath: &#39;pistache.jpg&#39;,
+      price: 5.50,
+      meshColors: [
+        const Color.fromARGB(255, 228, 255, 165),
+        const Color.fromARGB(255, 255, 234, 141),
+        const Color.fromARGB(255, 213, 255, 114),
+        const Color.fromARGB(255, 255, 173, 49),
+      ],
+    ),
+
+    Flavor(
+      id: 5,
+      title: LocaleKeys.citron_title,
+      description: LocaleKeys.citron_description,
+      tags: [&#39;vegan&#39;, &#39;sansLactose&#39;, &#39;sansGluten&#39;],
+      imagePath: &#39;lemon.jpg&#39;,
+      price: 4.00,
+      meshColors: [
+        const Color.fromARGB(255, 235, 185, 255),
+        const Color.fromARGB(255, 252, 255, 99),
+        const Color.fromARGB(255, 246, 255, 163),
+        const Color.fromARGB(255, 228, 255, 76),
+      ],
+    ),
+
+    Flavor(
+      id: 6,
+      title: LocaleKeys.tiramisu_title,
+      description: LocaleKeys.tiramisu_description,
+      tags: [&#39;alcoolise&#39;],
+      imagePath: &#39;strawberry.jpg&#39;,
+      price: 4.50,
+      meshColors: [
+        const Color.fromARGB(255, 247, 254, 255),
+        const Color.fromARGB(255, 247, 254, 255),
+        const Color.fromARGB(255, 255, 218, 177),
+        const Color.fromARGB(255, 255, 104, 99),
+      ],
+    ),
+
+    Flavor(
+      id: 7,
+      title: LocaleKeys.fruit_dragon_title,
+      description: LocaleKeys.fruit_dragon_description,
+      tags: [&#39;vegan&#39;, &#39;sansGluten&#39;],
+      imagePath: &#39;dragon-fruit.jpg&#39;,
+      price: 5.50,
+      meshColors: [
+        const Color.fromARGB(255, 252, 91, 179),
+        const Color.fromARGB(255, 255, 134, 225),
+        const Color.fromARGB(255, 254, 249, 255),
+        const Color.fromARGB(255, 180, 180, 180),
+      ],
+    ),
+
+    Flavor(
+      id: 8,
+      title: LocaleKeys.matcha_title,
+      description: LocaleKeys.matcha_description,
+      tags: [&#39;vegan&#39;, &#39;bio&#39;],
+      imagePath: &#39;matcha-mango.jpg&#39;,
+      price: 5.00,
+      meshColors: [
+        const Color.fromARGB(255, 252, 156, 60),
+        const Color.fromARGB(255, 252, 156, 60),
+        const Color.fromARGB(255, 173, 255, 187),
+        const Color.fromARGB(255, 131, 255, 151),
+      ],
+    ),
+
+    Flavor(
+      id: 9,
+      title: LocaleKeys.caramel_title,
+      description: LocaleKeys.caramel_description,
+      tags: [&#39;sansGluten&#39;],
+      imagePath: &#39;caramel.jpg&#39;,
+      price: 5.50,
+      meshColors: [
+        const Color.fromARGB(255, 219, 143, 0),
+        const Color.fromARGB(255, 252, 222, 218),
+        const Color.fromARGB(255, 252, 212, 160),
+        const Color.fromARGB(255, 252, 212, 160),
+      ],
+    ),
+  ];
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">aero_glace_app</a></li>
+    <li><a href="../data_flavors_list/">flavors_list</a></li>
+    <li class="self-crumb">getFlavors function</li>
+</ol>
+
+    <h5>flavors_list library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    aero_glace_app
+      1.0.0+1
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
