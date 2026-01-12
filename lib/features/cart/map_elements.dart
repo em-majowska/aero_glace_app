@@ -17,7 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 Widget mapView() {
   return TileLayer(
     urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-    userAgentPackageName: 'com.aero_glace_app_v2',
+    userAgentPackageName: 'com.aero_glace_v2.app',
   );
 }
 

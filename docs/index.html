@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="aero_glace_app API docs, for the Dart programming language.">
+  <title>aero_glace_app - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">aero_glace_app package</li>
+  </ol>
+  <div class="self-name">aero_glace_app</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="aero-glace">Aero Glace</h1>
+<p><strong>Aero Glace</strong> est une application mobile <strong>futuriste</strong> développée avec <strong>Flutter</strong>. Elle permet aux utilisateurs de :</p>
+<ul>
+<li><strong>Découvrir</strong> les parfums de glaces disponibles.</li>
+<li><strong>Gérer un panier</strong> pour commander leurs parfums préférés.</li>
+<li><strong>Jouer la roue de la fortune</strong> pour gagnez des récompenses.</li>
+<li><strong>Localiser</strong> les boutiques <strong>Aero Glace</strong> à proximité.</li>
+<li><strong>Calculer des itinéraires</strong> pour se rendre dans la boutique de leur choix.</li>
+</ul>
+<h2 id="objectifs-du-projet">Objectifs du projet</h2>
+<p>Cette application fait partie de mon portfolio. Elle illustre :</p>
+<ul>
+<li>Ma capacité à développer des applications complètes avec Flutter</li>
+<li>Mon attention particulière à l'expérience utilisateur et aux détails visuels</li>
+<li>Ma compréhension des bonnes pratiques en développement mobile</li>
+<li>Mon aptitude à travailler sur des projets techniques dans un cadre professionnel</li>
+</ul>
+<h2 id="design-futuriste">Design Futuriste</h2>
+<p>L'application suit un design futuriste avec :</p>
+<ul>
+<li>Une palette de couleurs pastels (bleus, violets, rouges) pour évoquer la fraîcheur des glaces</li>
+<li>Des animations fluides pour une expérience engageante</li>
+<li>Une hiérarchie visuelle claire pour guider l'utilisateur</li>
+<li>Des composants "glossy" : Cartes avec des effets de réflexion pour un rendu high-tech.</li>
+<li>Une typographie moderne : Polices futuristes pour les titres et les textes.</li>
+</ul>
+<h2 id="captures-dcran">Captures d'Écran</h2>
+<table>
+<thead>
+<tr>
+<th>Accueil</th>
+<th>Liste des Parfums</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="screenshots/homepage.png" alt="Accueil"></td>
+<td><img src="screenshots/flavors.png" alt="Liste des Parfums"></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Panier avec Articles</th>
+<th>Boîte de Dialogue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="screenshots/cart.png" alt="Panier avec Articles"></td>
+<td><img src="screenshots/alert-dialog.png" alt="Boîte de Dialogue"></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Roue de la Fortune</th>
+<th>Carte Interactive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="screenshots/fortune-wheel.png" alt="Roue de la Fortune"></td>
+<td><img src="screenshots/map.png" alt="Carte Interactive"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="fonctionnalits">Fonctionnalités</h2>
+<h3 id="liste-des-parfums"><strong>Liste des Parfums</strong></h3>
+<ul>
+<li>Affichage de tous les parfums de glaces disponibles.</li>
+<li>Fiches détaillées pour chaque parfum (description, image, prix).</li>
+<li>Possibilité d'ajouter un parfum au panier directement depuis la liste.</li>
+</ul>
+<h3 id="panier-dachat"><strong>Panier d'achat</strong></h3>
+<ul>
+<li>Visualisation des parfums sélectionnés.</li>
+<li>Modification des quantités pour chaque article.</li>
+<li>Calcul automatique du total avec et sans remise.</li>
+<li>Validation de la commande (simulée).</li>
+</ul>
+<h3 id="roue-de-la-fortune"><strong>Roue de la Fortune</strong></h3>
+<ul>
+<li>Système de réductions et de points avec gestion des récompenses</li>
+<li>Date du dernier spin (pour réactiver la roue après 24h)</li>
+<li>Résultat du dernier tirage (réduction ou points gagnés)</li>
+<li>Statut d'activation de la roue</li>
+</ul>
+<h3 id="carte-interactive"><strong>Carte Interactive</strong></h3>
+<ul>
+<li>Localisation en temps réel de l'utilisateur.</li>
+<li>Affichage des boutiques <strong>Aero Glace</strong> sous forme de marqueurs interactifs.</li>
+<li>Calcul d'itinéraire optimisé entre la position de l'utilisateur et la boutique sélectionnée.</li>
+<li>Affichage de la distance et de la durée estimée pour rejoindre la boutique.</li>
+</ul>
+<h3 id="paramtres-et-personnalisation"><strong>Paramètres et Personnalisation</strong></h3>
+<ul>
+<li>Activation/désactivation de la localisation.</li>
+<li>Choix de la langue (français, japonais).</li>
+</ul>
+<h3 id="persistance-des-donnes"><strong>Persistance des Données</strong></h3>
+<ul>
+<li>L'application utilise <strong>Hive</strong>, une solution de stockage local légère et rapide, pour sauvegarder et restaurer l'état entre les sessions.</li>
+</ul>
+<h2 id="technologies-utilises">Technologies utilisées</h2>
+<ul>
+<li><strong>UI/UX</strong> : Design fait via <a href="https://www.figma.com/design/4TXDaSbgnmlZWAzM5JrFnh/Aero-Glace?node-id=131-34&amp;t=Jz2tElGKpRM42F7x-1">Figma</a></li>
+<li><strong>Framework</strong> : <a href="https://flutter.dev/">Flutter</a> (Dart)</li>
+<li><strong>Cartographie</strong> : <a href="https://docs.fleaflet.dev/">Flutter Map</a> + <a href="https://www.openstreetmap.org/">OpenStreetMap</a></li>
+<li><strong>Routage</strong> : API <a href="http://project-osrm.org/">OSRM</a> pour le calcul d'itinéraires</li>
+<li><strong>Localisation</strong> : Package <a href="https://pub.dev/packages/location"><code>location</code></a> pour la géolocalisation</li>
+<li><strong>Permissions</strong> : Package <a href="https://pub.dev/packages/permission_handler"><code>permission_handler</code></a> pour la gestion des autorisations</li>
+<li><strong>Stockage local</strong> : Package <a href="https://pub.dev/packages/hive_flutter"><code>Hive</code></a></li>
+<li><strong>Internationalisation</strong> : Package <a href="https://pub.dev/packages/easy_localization"><code>easy_localization</code></a> pour la traduction</li>
+</ul>
+<h1 id="structure-du-projet">Structure du Projet</h1>
+<pre class="language-dart"><code>lib/
+|── data/ # Données statiques de l'application
+|── features/ # Fonctionnalités principales de l'application, organisées par domaine
+		|── bonus/
+		|── flavors/
+		|── map/
+		└── cart/
+├── generated/ # Fichiers d'internationalisation générés
+├── models/ # Modèles de données (FortuneOutcome, Cart, etc.)
+├── pages/ # Écrans principaux de l'application
+├── providers/ # Gestion d'état avec Provider
+├── widgets/ # Composants réutilisables
+├── theme/ # Thèmes et styles globaux (couleurs, polices, MaterialApp).
+├── utils/ # Fonctions utilitaires et helpers
+└── main.dart # Point d'entrée de l'application
+</code></pre>
+<h1 id="documentation">Documentation</h1>
+<p>La documentation complète du projet, incluant les détails techniques et les fonctionnalités est disponible aux emplacements suivants :</p>
+<p>Documentation technique (Dart/Flutter) : Consultez le dossier doc/api pour accéder à la documentation générée automatiquement des classes, widgets et méthodes.
+Documentation en ligne : La documentation est également hébergée en ligne sur <a href="https://em-majowska.github.io/aero_glace_app/">GitHub Pages</a>.</p>
+<h1 id="contact">Contact</h1>
+<p>Pour toute question ou opportunité professionnelle :</p>
+<ul>
+<li>Email : <a href="mailto:em.majowska@gmail.com">em.majowska@gmail.com</a></li>
+<li>Projet de portfolio : (<a href="https://em-majowska.github.io/my-portfolio/">https://em-majowska.github.io/my-portfolio/</a>)</li>
+</ul>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="flavors_list">
+  <span class="name"><a href="data_flavors_list/">data/flavors_list</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="shop_locations">
+  <span class="name"><a href="data_shop_locations/">data/shop_locations</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="hero_animated_layer">
+  <span class="name"><a href="features_about_hero_animated_layer/">features/about/hero_animated_layer</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="hero_elements">
+  <span class="name"><a href="features_about_hero_elements/">features/about/hero_elements</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="collected_points_tile">
+  <span class="name"><a href="features_bonus_collected_points_tile/">features/bonus/collected_points_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="fortune_wheel">
+  <span class="name"><a href="features_bonus_fortune_wheel/">features/bonus/fortune_wheel</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="fortune_wheel_tile">
+  <span class="name"><a href="features_bonus_fortune_wheel_tile/">features/bonus/fortune_wheel_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="gift">
+  <span class="name"><a href="features_bonus_gift/">features/bonus/gift</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="result">
+  <span class="name"><a href="features_bonus_result/">features/bonus/result</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="calculate.distance">
+  <span class="name"><a href="features_cart_calculate.distance/">features/cart/calculate.distance</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="decode_polyline">
+  <span class="name"><a href="features_cart_decode_polyline/">features/cart/decode_polyline</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="location_service">
+  <span class="name"><a href="features_cart_location_service/">features/cart/location_service</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="location_tile">
+  <span class="name"><a href="features_cart_location_tile/">features/cart/location_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="map_elements">
+  <span class="name"><a href="features_cart_map_elements/">features/cart/map_elements</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="my_map">
+  <span class="name"><a href="features_cart_my_map/">features/cart/my_map</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="permission_service">
+  <span class="name"><a href="features_cart_permission_service/">features/cart/permission_service</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="routing_service">
+  <span class="name"><a href="features_cart_routing_service/">features/cart/routing_service</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="shop_markers">
+  <span class="name"><a href="features_cart_shop_markers/">features/cart/shop_markers</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="flavor_details">
+  <span class="name"><a href="features_flavors_flavor_details/">features/flavors/flavor_details</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="flavor_tile">
+  <span class="name"><a href="features_flavors_flavor_tile/">features/flavors/flavor_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="tag">
+  <span class="name"><a href="features_flavors_tag/">features/flavors/tag</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="alert_dialogs">
+  <span class="name"><a href="features_panier_alert_dialogs/">features/panier/alert_dialogs</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cart_items_list">
+  <span class="name"><a href="features_panier_cart_items_list/">features/panier/cart_items_list</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="empty_cart_tile">
+  <span class="name"><a href="features_panier_empty_cart_tile/">features/panier/empty_cart_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="item_tile">
+  <span class="name"><a href="features_panier_item_tile/">features/panier/item_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="quantity_selector">
+  <span class="name"><a href="features_panier_quantity_selector/">features/panier/quantity_selector</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="total_tile">
+  <span class="name"><a href="features_panier_total_tile/">features/panier/total_tile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="codegen_loader.g">
+  <span class="name"><a href="generated_codegen_loader.g/">generated/codegen_loader.g</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="locale_keys.g">
+  <span class="name"><a href="generated_locale_keys.g/">generated/locale_keys.g</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="main">
+  <span class="name"><a href="main/">main</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="flavor_model">
+  <span class="name"><a href="models_flavor_model/">models/flavor_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="hive_fidelity_level">
+  <span class="name"><a href="models_hive_fidelity_level/">models/hive_fidelity_level</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="hive_fortune_result">
+  <span class="name"><a href="models_hive_fortune_result/">models/hive_fortune_result</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="hive_item_model">
+  <span class="name"><a href="models_hive_item_model/">models/hive_item_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="item_model">
+  <span class="name"><a href="models_item_model/">models/item_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="shop_location_model">
+  <span class="name"><a href="models_shop_location_model/">models/shop_location_model</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="about_page">
+  <span class="name"><a href="pages_about_page/">pages/about_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="bonus_page">
+  <span class="name"><a href="pages_bonus_page/">pages/bonus_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cart_page">
+  <span class="name"><a href="pages_cart_page/">pages/cart_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="flavors_page">
+  <span class="name"><a href="pages_flavors_page/">pages/flavors_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="home_page">
+  <span class="name"><a href="pages_home_page/">pages/home_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="map_page">
+  <span class="name"><a href="pages_map_page/">pages/map_page</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="cart_controller">
+  <span class="name"><a href="providers_cart_controller/">providers/cart_controller</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="fortune_wheel_controller">
+  <span class="name"><a href="providers_fortune_wheel_controller/">providers/fortune_wheel_controller</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="theme">
+  <span class="name"><a href="theme_theme/">theme/theme</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="util">
+  <span class="name"><a href="theme_util/">theme/util</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="animations">
+  <span class="name"><a href="utils_animations/">utils/animations</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="context_extensions">
+  <span class="name"><a href="utils_context_extensions/">utils/context_extensions</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="next_day">
+  <span class="name"><a href="utils_next_day/">utils/next_day</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="scaffold_messenger">
+  <span class="name"><a href="utils_scaffold_messenger/">utils/scaffold_messenger</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="animate_visible">
+  <span class="name"><a href="widgets_animate_visible/">widgets/animate_visible</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="app_bar">
+  <span class="name"><a href="widgets_app_bar/">widgets/app_bar</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="background">
+  <span class="name"><a href="widgets_background/">widgets/background</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="btn_style">
+  <span class="name"><a href="widgets_btn_style/">widgets/btn_style</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="glossy_box">
+  <span class="name"><a href="widgets_glossy_box/">widgets/glossy_box</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="language_menu_btn">
+  <span class="name"><a href="widgets_language_menu_btn/">widgets/language_menu_btn</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="my_mesh">
+  <span class="name"><a href="widgets_my_mesh/">widgets/my_mesh</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="snackbars">
+  <span class="name"><a href="widgets_snackbars/">widgets/snackbars</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li class="self-crumb">aero_glace_app package</li>
+</ol>
+
+    <h5 class="hidden-xs"><span class="package-name">aero_glace_app</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="data_flavors_list/">data/flavors_list</a></li>
+      <li><a href="data_shop_locations/">data/shop_locations</a></li>
+      <li><a href="features_about_hero_animated_layer/">features/about/hero_animated_layer</a></li>
+      <li><a href="features_about_hero_elements/">features/about/hero_elements</a></li>
+      <li><a href="features_bonus_collected_points_tile/">features/bonus/collected_points_tile</a></li>
+      <li><a href="features_bonus_fortune_wheel/">features/bonus/fortune_wheel</a></li>
+      <li><a href="features_bonus_fortune_wheel_tile/">features/bonus/fortune_wheel_tile</a></li>
+      <li><a href="features_bonus_gift/">features/bonus/gift</a></li>
+      <li><a href="features_bonus_result/">features/bonus/result</a></li>
+      <li><a href="features_cart_calculate.distance/">features/cart/calculate.distance</a></li>
+      <li><a href="features_cart_decode_polyline/">features/cart/decode_polyline</a></li>
+      <li><a href="features_cart_location_service/">features/cart/location_service</a></li>
+      <li><a href="features_cart_location_tile/">features/cart/location_tile</a></li>
+      <li><a href="features_cart_map_elements/">features/cart/map_elements</a></li>
+      <li><a href="features_cart_my_map/">features/cart/my_map</a></li>
+      <li><a href="features_cart_permission_service/">features/cart/permission_service</a></li>
+      <li><a href="features_cart_routing_service/">features/cart/routing_service</a></li>
+      <li><a href="features_cart_shop_markers/">features/cart/shop_markers</a></li>
+      <li><a href="features_flavors_flavor_details/">features/flavors/flavor_details</a></li>
+      <li><a href="features_flavors_flavor_tile/">features/flavors/flavor_tile</a></li>
+      <li><a href="features_flavors_tag/">features/flavors/tag</a></li>
+      <li><a href="features_panier_alert_dialogs/">features/panier/alert_dialogs</a></li>
+      <li><a href="features_panier_cart_items_list/">features/panier/cart_items_list</a></li>
+      <li><a href="features_panier_empty_cart_tile/">features/panier/empty_cart_tile</a></li>
+      <li><a href="features_panier_item_tile/">features/panier/item_tile</a></li>
+      <li><a href="features_panier_quantity_selector/">features/panier/quantity_selector</a></li>
+      <li><a href="features_panier_total_tile/">features/panier/total_tile</a></li>
+      <li><a href="generated_codegen_loader.g/">generated/codegen_loader.g</a></li>
+      <li><a href="generated_locale_keys.g/">generated/locale_keys.g</a></li>
+      <li><a href="main/">main</a></li>
+      <li><a href="models_flavor_model/">models/flavor_model</a></li>
+      <li><a href="models_hive_fidelity_level/">models/hive_fidelity_level</a></li>
+      <li><a href="models_hive_fortune_result/">models/hive_fortune_result</a></li>
+      <li><a href="models_hive_item_model/">models/hive_item_model</a></li>
+      <li><a href="models_item_model/">models/item_model</a></li>
+      <li><a href="models_shop_location_model/">models/shop_location_model</a></li>
+      <li><a href="pages_about_page/">pages/about_page</a></li>
+      <li><a href="pages_bonus_page/">pages/bonus_page</a></li>
+      <li><a href="pages_cart_page/">pages/cart_page</a></li>
+      <li><a href="pages_flavors_page/">pages/flavors_page</a></li>
+      <li><a href="pages_home_page/">pages/home_page</a></li>
+      <li><a href="pages_map_page/">pages/map_page</a></li>
+      <li><a href="providers_cart_controller/">providers/cart_controller</a></li>
+      <li><a href="providers_fortune_wheel_controller/">providers/fortune_wheel_controller</a></li>
+      <li><a href="theme_theme/">theme/theme</a></li>
+      <li><a href="theme_util/">theme/util</a></li>
+      <li><a href="utils_animations/">utils/animations</a></li>
+      <li><a href="utils_context_extensions/">utils/context_extensions</a></li>
+      <li><a href="utils_next_day/">utils/next_day</a></li>
+      <li><a href="utils_scaffold_messenger/">utils/scaffold_messenger</a></li>
+      <li><a href="widgets_animate_visible/">widgets/animate_visible</a></li>
+      <li><a href="widgets_app_bar/">widgets/app_bar</a></li>
+      <li><a href="widgets_background/">widgets/background</a></li>
+      <li><a href="widgets_btn_style/">widgets/btn_style</a></li>
+      <li><a href="widgets_glossy_box/">widgets/glossy_box</a></li>
+      <li><a href="widgets_language_menu_btn/">widgets/language_menu_btn</a></li>
+      <li><a href="widgets_my_mesh/">widgets/my_mesh</a></li>
+      <li><a href="widgets_snackbars/">widgets/snackbars</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+</main>
+<footer>
+  <span class="no-break">
+    aero_glace_app
+      1.0.0+1
+  </span>
+  
+</footer>
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

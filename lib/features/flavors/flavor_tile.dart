@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 /// Widget affichant une tuile de parfum.
 ///
 /// Affiche l’image du parfum, ses détails (titre, description, prix, tags)
-/// et un bouton pour l’ajouter au panier [onAddToCart] avec une animation de dégradé maillé.
+/// et un bouton pour l’ajouter au panier avec une animation de dégradé maillé.
 ///
 /// Argument :
 /// - [flavor] : le modèle de données du parfum à utiliser.
