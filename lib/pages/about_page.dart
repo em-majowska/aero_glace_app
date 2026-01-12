@@ -1,14 +1,18 @@
-import 'package:aero_glace_app/utils/animations.dart';
-import 'package:aero_glace_app/widgets/language_menu_btn.dart';
+import 'package:aero_glace_app/features/about/hero_animated_layer.dart';
+import 'package:aero_glace_app/features/about/hero_elements.dart';
+import 'package:aero_glace_app/utils/context_extensions.dart';
+import 'package:aero_glace_app/widgets/animate_visible.dart';
+import 'package:aero_glace_app/widgets/app_bar.dart';
+import 'package:blobs/blobs.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:aero_glace_app/widgets/background.dart';
-import 'package:blobs/blobs.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:glassmorphism_ui/glassmorphism_ui.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:text_gradiate/text_gradiate.dart';
 
 /// Page “À propos” de l’application.
+///
+/// Affiche les informations sur l’entreprise les
+/// éléments graphiques animés.
 class AboutPage extends StatefulWidget {
   /// Crée la page "À propos"
   const AboutPage({super.key});
@@ -20,248 +24,200 @@ class AboutPage extends StatefulWidget {
 class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
-    final mediaWidth = MediaQuery.of(context).size.width;
-    final mediaHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          context.tr('aero_glace'),
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        actions: [const LanguageMenuButton()],
-      ),
+      extendBodyBehindAppBar: true,
+      appBar: MyAppBar().appBar(context, context.tr('aero_glace')),
       body: Stack(
         children: [
           // Arrière-plan principal
           const MyBackground(assetPath: 'background.jpg'),
 
           // Blobs décoratifs
-          // Blob haut-droite (contour)
-          Positioned(
-            top: mediaHeight * -0.13,
-            right: mediaWidth * -0.2,
-            child: Blob.random(
-              // size: 400,
-              size: mediaWidth * 0.8,
-              edgesCount: 15,
-              styles: BlobStyles(
-                fillType: BlobFillType.stroke,
-                gradient: LinearGradient(
-                  colors: [
-                    const Color(0xFFffffff).withValues(alpha: 0.95),
-                    const Color(0xFFFFFFFF).withValues(alpha: 0.70),
-                  ],
-                ).createShader(const Rect.fromLTRB(0, 0, 100, 100)),
-                strokeWidth: 2,
+          HeroElement().blob_1(context),
+          HeroElement().blob_2(context),
+          HeroElement().blob_3(context),
+          HeroElement().blob_4(context),
+
+          CustomScrollView(
+            slivers: [
+              SliverFillViewport(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: 1,
+                  (context, index) => const HeroElements(),
+                ),
               ),
-            ),
-          ),
 
-          // Blob haut-gauche (plein)
-          Positioned(
-            top: mediaHeight * -0.2,
-            left: mediaWidth * -0.4,
-            child: Blob.random(
-              size: mediaHeight * 0.65,
-              edgesCount: 10,
-              styles: BlobStyles(
-                gradient: LinearGradient(
-                  colors: [
-                    const Color(0xFFffffff).withValues(alpha: 0.35),
-                    const Color(0xFFFFFFFF).withValues(alpha: 0.50),
-                  ],
-                ).createShader(const Rect.fromLTRB(0, 0, 100, 100)),
-              ),
-            ),
-          ),
-
-          // Blob bas-droite (plein)
-          Positioned(
-            bottom: mediaHeight * -0.15,
-            right: mediaWidth * -0.4,
-            child: Blob.random(
-              size: mediaHeight * 0.45,
-              edgesCount: 20,
-              styles: BlobStyles(
-                gradient: LinearGradient(
-                  colors: [
-                    const Color(0xFFffffff).withValues(alpha: 0.35),
-                    const Color(0xFFFFFFFF).withValues(alpha: 0.50),
-                  ],
-                ).createShader(const Rect.fromLTRB(0, 0, 100, 100)),
-              ),
-            ),
-          ),
-
-          // Blob bas-gauche (contour)
-          Positioned(
-            bottom: mediaHeight * -0.17,
-            left: mediaWidth * -0.45,
-            child: Blob.random(
-              size: mediaHeight * 0.45,
-              edgesCount: 15,
-              styles: BlobStyles(
-                fillType: BlobFillType.stroke,
-                gradient: LinearGradient(
-                  colors: [
-                    const Color(0xFFffffff).withValues(alpha: 0.95),
-                    const Color(0xFFFFFFFF).withValues(alpha: 0.70),
-                  ],
-                ).createShader(const Rect.fromLTRB(0, 0, 100, 100)),
-                strokeWidth: 2,
-              ),
-            ),
-          ),
-
-          // Icônes décoratives
-          // Bas-gauche
-          Positioned(
-            left: mediaWidth * 0.1,
-            bottom: mediaHeight * 0.07,
-            child: Animate(
-              child: Icon(LucideIcons.sparkles100, size: mediaHeight * 0.1)
-                  .animate(
-                    delay: 600.ms,
-                    effects: scaleElastic,
-                  )
-                  .swap(
-                    builder: (_, child) => child!
-                        .animate(
-                          onComplete: (controller) => controller.repeat(),
-                        )
-                        .shimmer(delay: 4.seconds),
-                  ),
-            ),
-          ),
-
-          // Haut-droite
-          Positioned(
-            right: mediaWidth * 0.1,
-            top: mediaHeight * 0.17,
-            child:
-                Animate(
-                      child: Icon(
-                        LucideIcons.sparkle100,
-                        size: mediaHeight * 0.08,
-                      ),
-                    )
-                    .animate(
-                      delay: 300.ms,
-                      effects: scaleElastic,
-                    )
-                    .swap(
-                      builder: (_, child) => child!
-                          .animate(
-                            onComplete: (controller) => controller.repeat(),
-                          )
-                          .shimmer(delay: 6.seconds),
-                    ),
-          ),
-
-          // Étoiles décoratives
-          // Étoile haute-gauche
-          Positioned(
-            top: mediaHeight * 0.05,
-            left: 0,
-            child: Animate(
-              child:
-                  Blur(
-                        blur: 2,
-                        child: RotatedBox(
-                          quarterTurns: -1,
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints.loose(
-                              const Size(400, 400),
-                            ),
-                            child: Image.asset(
-                              'assets/images/star.png',
-                              width: mediaWidth * 0.4,
-                            ),
-                          ),
+              // Section de texte et images illustratives
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  childCount: 1,
+                  (context, index) {
+                    final content = [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 16,
+                          right: 16,
+                          left: 16,
+                          bottom: 0,
                         ),
-                      )
-                      .animate(
-                        onInit: (controller) =>
-                            controller..repeat(max: 1, count: 1),
-                        effects: starBstart,
-                      )
-                      .swap(
-                        builder: (_, child) =>
-                            child!.animate(effects: starBend),
+                        child: Column(
+                          spacing: 48,
+                          children: [
+                            // Texte 1
+                            AnimateOnVisible(
+                              child: Text.rich(
+                                TextSpan(
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.bodyLarge,
+                                  text: context.tr('about_first.start'),
+                                  children: [
+                                    TextSpan(
+                                      text: context.tr('aero_glace'),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.deepPurple,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: context.tr('about_first.end'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            // Image décorative côté droit (blob)
+                            AnimateOnVisible(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: SizedBox(
+                                  width: 200,
+                                  height: 200,
+                                  child: ClipPath(
+                                    clipper: BlobClipper(
+                                      edgesCount: 20,
+                                      minGrowth: 7,
+                                    ),
+                                    child: Image.asset(
+                                      'assets/images/flavors/dragon-fruit.jpg',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            // Texte 2
+                            AnimateOnVisible(
+                              child: Text(
+                                context.tr('about_second'),
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                            ),
+
+                            // Image décorative côté gauche (blob)
+                            AnimateOnVisible(
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: SizedBox(
+                                  width: 200,
+                                  height: 200,
+                                  child: ClipPath(
+                                    clipper: BlobClipper(
+                                      edgesCount: 20,
+                                      minGrowth: 7,
+                                    ),
+                                    child: Image.asset(
+                                      'assets/images/flavors/matcha-mango.jpg',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            // Texte 3
+                            AnimateOnVisible(
+                              child: Text(
+                                context.tr('about_third'),
+                                style: context.textTheme.bodyLarge,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+
+                            // Titres en gradient
+                            Column(
+                              spacing: 16,
+                              children: [
+                                AnimateOnVisible(
+                                  child: TextGradiate(
+                                    text: Text(
+                                      context.tr('headline_1'),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                    colors: [
+                                      Colors.purpleAccent.shade100,
+                                      Colors.indigoAccent.shade200,
+                                    ],
+                                    gradientType: GradientType.linear,
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  ),
+                                ),
+                                AnimateOnVisible(
+                                  child: Text(
+                                    context.tr('and'),
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.headlineMedium,
+                                  ),
+                                ),
+                                AnimateOnVisible(
+                                  child: TextGradiate(
+                                    text: Text(
+                                      context.tr('headline_2'),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                    colors: [
+                                      Colors.indigoAccent.shade100,
+                                      Colors.purpleAccent.shade200,
+                                    ],
+                                    gradientType: GradientType.linear,
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            // Image décorative finale
+                            SizedBox(
+                              width: 200,
+                              child: Image.asset(
+                                'assets/images/ice-cream-hand.png',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-            ),
-          ),
-
-          // Étoile bas-droite
-          Positioned(
-            bottom: mediaHeight * 0.1,
-            right: mediaWidth * 0.2,
-            child: Animate(
-              child: ConstrainedBox(
-                constraints: BoxConstraints.loose(const Size(150, 150)),
-                child: Image.asset(
-                  'assets/images/star.png',
-                  width: mediaWidth * 0.15,
-                ),
-              ).animate(delay: 500.ms, effects: starA),
-            ),
-          ),
-
-          // Éléments centraux
-          Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints.loose(const Size(400, 400)),
-              child: Container(
-                width: mediaWidth * 0.6,
-                height: mediaWidth * 0.6,
-                decoration: BoxDecoration(
-                  color: const Color(0x00000000).withValues(alpha: 0.10),
-                  border: Border.all(
-                    color: const Color(
-                      0x00000000,
-                    ).withValues(alpha: 0.70),
-                  ),
-                  shape: BoxShape.circle,
+                    ];
+                    return content[index];
+                  },
                 ),
               ),
-            ).animate(delay: 200.ms, effects: scaleElastic),
-          ),
-          Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints.loose(const Size(350, 350)),
-              child: Container(
-                width: mediaWidth * 0.5,
-                height: mediaWidth * 0.5,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFFFFFF).withValues(alpha: 0.40),
-                  border: Border.all(
-                    color: Colors.white,
-                  ),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ).animate(delay: 800.ms, effects: scaleElastic),
-          ),
-          Center(
-            child:
-                ConstrainedBox(
-                      constraints: BoxConstraints.loose(
-                        const Size(450, 450),
-                      ),
-                      child: Image.asset(
-                        'assets/images/ice-cream.png',
-                        width: mediaWidth * 0.35,
-                      ),
-                    )
-                    .animate(delay: 1.seconds, effects: iceCreamA)
-                    .swap(
-                      builder: (_, child) => child!.animate(
-                        onPlay: (controller) =>
-                            controller.repeat(reverse: true),
-                        effects: iceCreamB,
-                      ),
-                    ),
+            ],
           ),
         ],
       ),

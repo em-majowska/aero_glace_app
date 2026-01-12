@@ -1,6 +1,6 @@
 import 'package:aero_glace_app/features/flavors/tag.dart';
 import 'package:aero_glace_app/models/flavor_model.dart';
-import 'package:aero_glace_app/utils/theme.dart';
+import 'package:aero_glace_app/utils/context_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +48,14 @@ class FlavorDetails extends StatelessWidget {
 
           Text(
             '${flavor.price.toStringAsFixed(2)} €',
-            style: context.textTheme.titleLarge,
+            style: context.textTheme.titleLarge?.copyWith(
+              shadows: [
+                Shadow(
+                  blurRadius: 12,
+                  color: context.colorSchema.surface.withValues(alpha: 0.35),
+                ),
+              ],
+            ),
           ),
         ],
       ),

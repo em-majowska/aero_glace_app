@@ -1,6 +1,6 @@
 import 'package:aero_glace_app/providers/cart_controller.dart';
 import 'package:aero_glace_app/models/flavor_model.dart';
-import 'package:aero_glace_app/utils/theme.dart';
+import 'package:aero_glace_app/utils/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';

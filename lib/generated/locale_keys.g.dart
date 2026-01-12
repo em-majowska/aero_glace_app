@@ -11,6 +11,14 @@ abstract class  LocaleKeys {
   static const panier = 'panier';
   static const bonus = 'bonus';
   static const carte = 'carte';
+  static const about_first_start = 'about_first.start';
+  static const about_first_end = 'about_first.end';
+  static const about_first = 'about_first';
+  static const about_second = 'about_second';
+  static const about_third = 'about_third';
+  static const headline_1 = 'headline_1';
+  static const and = 'and';
+  static const headline_2 = 'headline_2';
   static const nos_parfums = 'nos_parfums';
   static const added_to_cart = 'added_to_cart';
   static const chocolat_title = 'chocolat_title';
@@ -58,6 +66,7 @@ abstract class  LocaleKeys {
   static const localization_refused = 'localization_refused';
   static const distance_loading = 'distance_loading';
   static const km = 'km';
+  static const mins = 'mins';
   static const tag_vegan = 'tag.vegan';
   static const tag_sansLactose = 'tag.sansLactose';
   static const tag_sansGluten = 'tag.sansGluten';
@@ -71,6 +80,5 @@ abstract class  LocaleKeys {
   static const btn_empty_cart = 'btn_empty_cart';
   static const btn_settings = 'btn_settings';
   static const btn_order = 'btn_order';
-  static const mins = 'mins';
 
 }

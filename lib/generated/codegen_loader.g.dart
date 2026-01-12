@@ -23,6 +23,15 @@ class CodegenLoader extends AssetLoader{
   "panier": "カート",
   "bonus": "ボーナス",
   "carte": "地図",
+  "about_first": {
+    "start": "",
+    "end": " では、味覚と想像力の限界を押し広げます。"
+  },
+  "about_second": "宇宙と宇宙の謎にインスピレーションを得て、私たちはアイスクリームをユニークな感覚体験として再発明し、それぞれのフレーバーが探求と発見を誘います。",
+  "about_third": "思いがけない冒険へ、ひとつひとつのひとすくいが味の宇宙を広げる",
+  "headline_1": "予想外の",
+  "and": "",
+  "headline_2": "卓越した",
   "nos_parfums": "フレーバー",
   "added_to_cart": "{flavorTitle}がカートに追加されました",
   "chocolat_title": "スーパーノヴァ・チョコレート",
@@ -70,6 +79,7 @@ class CodegenLoader extends AssetLoader{
   "localization_refused": "位置情報が拒否されました",
   "distance_loading": "計算中です...",
   "km": "km",
+  "mins": "分",
   "tag": {
     "vegan": "ビーガン",
     "sansLactose": "ラクトースフリー",
@@ -83,8 +93,7 @@ class CodegenLoader extends AssetLoader{
   "btn_empty": "空にする",
   "btn_empty_cart": "カートを空にする",
   "btn_settings": "設定を開く",
-  "btn_order": "確認",
-  "mins": "分"
+  "btn_order": "確認"
 };
 static const Map<String,dynamic> _fr = {
   "aero_glace": "Aero Glace",
@@ -95,6 +104,15 @@ static const Map<String,dynamic> _fr = {
   "panier": "Panier",
   "bonus": "Bonus",
   "carte": "Carte",
+  "about_first": {
+    "start": "Chez ",
+    "end": ", nous repoussons les frontières du goût et de l'imagination."
+  },
+  "about_second": "Inspirés par l'univers et les mystères du cosmos, nous réinventons la crème glacée comme une expérience sensorielle inédite, où chaque saveur invite à l'exploration et à la découverte.",
+  "about_third": "Préparez-vous à embarquer pour une odyssée glacée, où chaque boule révèle un univers de saveurs",
+  "and": "et",
+  "headline_1": "inattendues",
+  "headline_2": "extraordinaires",
   "nos_parfums": "Nos Parfums",
   "added_to_cart": "{flavorTitle} ajouté au panier",
   "chocolat_title": "Chocolat Supernova",

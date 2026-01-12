@@ -5,7 +5,7 @@ import 'package:aero_glace_app/pages/bonus_page.dart';
 import 'package:aero_glace_app/pages/map_page.dart';
 import 'package:aero_glace_app/pages/cart_page.dart';
 import 'package:aero_glace_app/pages/flavors_page.dart';
-import 'package:aero_glace_app/utils/theme.dart';
+import 'package:aero_glace_app/utils/context_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';

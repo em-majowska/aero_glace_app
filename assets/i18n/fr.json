@@ -7,6 +7,15 @@
   "panier": "Panier",
   "bonus": "Bonus",
   "carte": "Carte",
+  "about_first": {
+    "start": "Chez ",
+    "end": ", nous repoussons les frontières du goût et de l'imagination."
+  },
+  "about_second": "Inspirés par l'univers et les mystères du cosmos, nous réinventons la crème glacée comme une expérience sensorielle inédite, où chaque saveur invite à l'exploration et à la découverte.",
+  "about_third": "Préparez-vous à embarquer pour une odyssée glacée, où chaque boule révèle un univers de saveurs",
+  "and": "et",
+  "headline_1": "inattendues",
+  "headline_2": "extraordinaires",
   "nos_parfums": "Nos Parfums",
   "added_to_cart": "{flavorTitle} ajouté au panier",
   "chocolat_title": "Chocolat Supernova",

@@ -86,3 +86,18 @@ final List<Effect> starBend = <Effect>[
     curve: Curves.easeOut,
   ),
 ];
+
+final List<Effect> elmentsCartA = <Effect>[
+  SlideEffect(
+    begin: const Offset(-0.2, 0.8),
+    end: const Offset(0, 0.15),
+    duration: 5.seconds,
+    curve: Curves.easeInOutBack,
+  ),
+  RotateEffect(
+    begin: -0.08,
+    end: 0,
+    duration: 5.seconds,
+    curve: Curves.easeInOutBack,
+  ),
+];

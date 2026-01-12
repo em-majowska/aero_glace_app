@@ -16,7 +16,7 @@ TextTheme createTextTheme(
     baseTextTheme,
   );
   TextTheme textTheme = displayTextTheme.copyWith(
-    bodyLarge: bodyTextTheme.bodyLarge,
+    bodyLarge: bodyTextTheme.bodyLarge?.copyWith(fontSize: 18),
     bodyMedium: bodyTextTheme.bodyMedium,
     bodySmall: bodyTextTheme.bodySmall,
     labelLarge: bodyTextTheme.labelLarge,

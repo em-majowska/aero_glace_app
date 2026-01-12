@@ -2,8 +2,8 @@
 import 'package:aero_glace_app/data/flavors_list.dart';
 import 'package:aero_glace_app/features/flavors/flavor_tile.dart';
 import 'package:aero_glace_app/utils/animations.dart';
-import 'package:aero_glace_app/utils/theme.dart';
-import 'package:aero_glace_app/widgets/language_menu_btn.dart';
+import 'package:aero_glace_app/utils/context_extensions.dart';
+import 'package:aero_glace_app/widgets/app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -22,29 +22,23 @@ class FlavorsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          context.tr('nos_parfums'),
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        actions: [const LanguageMenuButton()],
-        backgroundColor: context.colorSchema.surface,
-        scrolledUnderElevation: 0.0,
-        shadowColor: Colors.transparent,
-      ),
+      extendBodyBehindAppBar: true,
+      appBar: MyAppBar().appBar(context, context.tr('nos_parfums')),
       backgroundColor: context.colorSchema.secondaryContainer,
-      body: ListView.separated(
-        padding: const EdgeInsets.all(16),
-        separatorBuilder: (context, index) => const SizedBox(height: 16),
-        itemCount: flavors.length,
-        itemBuilder: (context, index) {
-          // Récupère la liste des parfums en fonction de la localisation
-          final flavor = flavors[index];
-          return FlavorTile(flavor: flavor).animate(
-            delay: Duration(milliseconds: index * 300),
-            effects: slideIn,
-          );
-        },
+      body: SafeArea(
+        child: ListView.separated(
+          padding: const EdgeInsets.all(16),
+          separatorBuilder: (context, index) => const SizedBox(height: 16),
+          itemCount: flavors.length,
+          itemBuilder: (context, index) {
+            // Récupère la liste des parfums en fonction de la localisation
+            final flavor = flavors[index];
+            return FlavorTile(flavor: flavor).animate(
+              delay: Duration(milliseconds: index * 300),
+              effects: slideIn,
+            );
+          },
+        ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:aero_glace_app/data/shop_locations.dart';
 import 'package:aero_glace_app/utils/animations.dart';
-import 'package:aero_glace_app/utils/theme.dart';
+import 'package:aero_glace_app/utils/context_extensions.dart';
 import 'package:aero_glace_app/widgets/language_menu_btn.dart';
 import 'package:aero_glace_app/widgets/background.dart';
 import 'package:aero_glace_app/features/cart/location_tile.dart';
