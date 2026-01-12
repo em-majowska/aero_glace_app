@@ -58,31 +58,31 @@ final List<Effect> starA = <Effect>[
 ];
 
 final List<Effect> starBstart = <Effect>[
-  SlideEffect(
-    begin: const Offset(-1.5, 0),
-    end: const Offset(3, 0),
-    duration: 25.seconds,
-    curve: Curves.easeOut,
-  ),
   RotateEffect(
     begin: 0,
     end: 0.5,
     duration: 25.seconds,
     curve: Curves.linear,
   ),
+  SlideEffect(
+    begin: const Offset(-1.5, 0),
+    end: const Offset(3, 0),
+    duration: 25.seconds,
+    curve: Curves.easeOut,
+  ),
 ];
 
 final List<Effect> starBend = <Effect>[
-  SlideEffect(
-    begin: const Offset(-1.5, 0),
-    end: const Offset(0, 0),
-    duration: 5.seconds,
-    curve: Curves.easeOut,
-  ),
   RotateEffect(
     begin: 0,
     end: 0.2,
     duration: 5.seconds,
     curve: Curves.linear,
+  ),
+  SlideEffect(
+    begin: const Offset(-1.5, 0),
+    end: const Offset(0, 0),
+    duration: 5.seconds,
+    curve: Curves.easeOut,
   ),
 ];

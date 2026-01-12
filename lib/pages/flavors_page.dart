@@ -23,7 +23,10 @@ class FlavorsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.tr('nos_parfums')),
+        title: Text(
+          context.tr('nos_parfums'),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         actions: [const LanguageMenuButton()],
         backgroundColor: context.colorSchema.surface,
         scrolledUnderElevation: 0.0,

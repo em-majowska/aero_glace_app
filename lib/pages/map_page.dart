@@ -36,7 +36,10 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.tr('nos_glaciers')),
+        title: Text(
+          context.tr('nos_glaciers'),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         actions: [const LanguageMenuButton()],
         backgroundColor: context.colorSchema.surface,
         scrolledUnderElevation: 0.0,

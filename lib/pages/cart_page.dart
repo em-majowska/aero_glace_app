@@ -30,7 +30,10 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.tr('votre_commande')),
+        title: Text(
+          context.tr('votre_commande'),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         actions: [const LanguageMenuButton()],
         backgroundColor: context.colorSchema.surface,
         scrolledUnderElevation: 0.0,

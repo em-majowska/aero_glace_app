@@ -25,7 +25,10 @@ class _AboutPageState extends State<AboutPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.tr('aero_glace')),
+        title: Text(
+          context.tr('aero_glace'),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         actions: [const LanguageMenuButton()],
       ),
       body: Stack(

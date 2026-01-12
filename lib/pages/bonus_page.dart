@@ -23,7 +23,10 @@ class BonusPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.tr('bonus')),
+        title: Text(
+          context.tr('bonus'),
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         actions: [const LanguageMenuButton()],
         backgroundColor: context.colorSchema.surface,
         scrolledUnderElevation: 0.0,
