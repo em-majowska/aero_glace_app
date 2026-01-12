@@ -80,5 +80,6 @@ abstract class  LocaleKeys {
   static const btn_empty_cart = 'btn_empty_cart';
   static const btn_settings = 'btn_settings';
   static const btn_order = 'btn_order';
+  static const hero_text = 'hero_text';
 
 }

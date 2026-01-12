@@ -93,7 +93,8 @@ class CodegenLoader extends AssetLoader{
   "btn_empty": "空にする",
   "btn_empty_cart": "カートを空にする",
   "btn_settings": "設定を開く",
-  "btn_order": "確認"
+  "btn_order": "確認",
+  "hero_text": "凍てついた冒険"
 };
 static const Map<String,dynamic> _fr = {
   "aero_glace": "Aero Glace",
@@ -104,6 +105,7 @@ static const Map<String,dynamic> _fr = {
   "panier": "Panier",
   "bonus": "Bonus",
   "carte": "Carte",
+  "hero_text": "Une odyssée glacée",
   "about_first": {
     "start": "Chez ",
     "end": ", nous repoussons les frontières du goût et de l'imagination."

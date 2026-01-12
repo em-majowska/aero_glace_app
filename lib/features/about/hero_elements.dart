@@ -1,6 +1,7 @@
 import 'package:aero_glace_app/utils/animations.dart';
 import 'package:aero_glace_app/utils/context_extensions.dart';
 import 'package:blobs/blobs.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:glassmorphism_ui/glassmorphism_ui.dart';
@@ -183,7 +184,7 @@ class HeroElement {
       bottom: context.mediaHeight / 4.5,
       child: TextGradiate(
         text: Text(
-          "Une odyssée glacée",
+          context.tr('hero_text'),
           style: context.textTheme.bodyLarge?.copyWith(
             fontSize: context.mediaWidth * 0.07,
           ),
