@@ -155,7 +155,7 @@ Widget distancePreview(
     bottom: 5,
     left: 5,
     child: GlossyBox(
-      width: 240,
+      width: 260,
       height: 75,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -186,7 +186,7 @@ Widget distancePreview(
                           distance != null
                               ? '${distance.toStringAsFixed(2)} ${context.tr('km')}'
                               : context.tr('distance_loading'),
-                          style: Theme.of(context).textTheme.titleLarge,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                     )
@@ -199,7 +199,7 @@ Widget distancePreview(
                           duration != null
                               ? '${duration.toStringAsFixed(0)} ${context.tr('mins')}'
                               : '',
-                          style: Theme.of(context).textTheme.titleLarge,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                     )

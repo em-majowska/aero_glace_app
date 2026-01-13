@@ -46,6 +46,7 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
   final PermissionService _permissionService = PermissionService();
   final RouteService _routeService = RouteService();
   final LocationService _locationService = LocationService();
+  bool _isProcessingPermission = false;
 
   // Localisation actuelle de l’utilisateur, boutique sélectionnée et
   //dernière localisation connue.
@@ -91,24 +92,23 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
   /// Vérifie à nouveau la localisation lorsque l'application reprend.
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
+    if (state == AppLifecycleState.resumed && _currentLocation == null) {
       _handlePermission();
     }
   }
 
   /// Vérifie et demande la permission de localisation si nécessaire.
   Future<void> _handlePermission() async {
-    if (!mounted) return;
-
+    if (_isProcessingPermission || !mounted) return;
+    _isProcessingPermission = true;
     // Vérifie le statut actuel de la permission
     permission = await _permissionService.checkLocationPermission();
 
     if (permission.isDenied) {
       permission = await _permissionService.requestLocationPermission();
     } else if (permission.isPermanentlyDenied && mounted) {
-      showErrorMessage(
-        message: context.tr('localization_permission_refused'),
-      );
+      showErrorMessage(message: context.tr('localization_permission_refused'));
+      _isProcessingPermission = false;
       return;
     } else if (permission.isGranted) {
       await _initializeLocation();
@@ -136,7 +136,8 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
       }
 
       // Écoute les changements de localisation
-      _locationSubscription = _locationService.onLocationChanged.listen((
+
+      _locationSubscription ??= _locationService.onLocationChanged.listen((
         LatLng newLocation,
       ) {
         if (_throttleTimer?.isActive ?? false) return;
@@ -239,6 +240,11 @@ class MyMapState extends State<MyMap> with WidgetsBindingObserver {
     } else if (permission.isDenied && mounted ||
         permission.isPermanentlyDenied && mounted) {
       grantLocationDialog(context);
+      if (permission.isDenied && mounted) {
+        showErrorMessage(
+          message: context.tr('localization_off'),
+        );
+      }
     }
   }
 
