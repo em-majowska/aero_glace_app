@@ -107,7 +107,7 @@ Widget popupWindowChild(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               shop.address,
-              style: context.textTheme.labelLarge,
+              style: context.textTheme.labelSmall,
             ),
           ),
         ),

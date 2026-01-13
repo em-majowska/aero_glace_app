@@ -20,50 +20,50 @@ class HeroElement {
   // Icônes décoratives
   // Bas-gauche
   Widget icon_1(BuildContext context, bool animated) {
-    final content = Positioned(
+    final icon = Icon(LucideIcons.sparkles100, size: context.mediaHeight * 0.1);
+
+    final Widget content = animated
+        ? icon
+              .animate(onPlay: (controller) => controller.repeat())
+              .shimmer(delay: 4.seconds)
+        : icon
+              .animate(delay: 600.ms, effects: scaleElastic)
+              .swap(
+                builder: (_, child) => child!
+                    .animate(onPlay: (controller) => controller.repeat())
+                    .shimmer(delay: 4.seconds),
+              );
+
+    return Positioned(
       left: context.mediaWidth * 0.1,
       bottom: context.mediaHeight * 0.07,
-      child: Icon(LucideIcons.sparkles100, size: context.mediaHeight * 0.1),
+      child: content,
     );
-
-    if (animated) {
-      return content
-          .animate(onPlay: (controller) => controller.repeat())
-          .shimmer(delay: 4.seconds);
-    } else {
-      return content
-          .animate(delay: 600.ms, effects: scaleElastic)
-          .swap(
-            builder: (_, child) => child!
-                .animate(onPlay: (controller) => controller.repeat())
-                .shimmer(delay: 4.seconds),
-          );
-    }
   }
 
   // Haut-droite
   Widget icon_2(BuildContext context, bool animated) {
-    final content = Positioned(
+    final icon = Icon(
+      LucideIcons.sparkle100,
+      size: context.mediaHeight * 0.08,
+    );
+    final content = animated
+        ? icon
+              .animate(onComplete: (controller) => controller.repeat())
+              .shimmer(delay: 6.seconds)
+        : icon
+              .animate(delay: 300.ms, effects: scaleElastic)
+              .swap(
+                builder: (_, child) => child!
+                    .animate(onComplete: (controller) => controller.repeat())
+                    .shimmer(delay: 6.seconds),
+              );
+
+    return Positioned(
       right: context.mediaWidth * 0.1,
       top: context.mediaHeight * 0.17,
-      child: Icon(
-        LucideIcons.sparkle100,
-        size: context.mediaHeight * 0.08,
-      ),
+      child: content,
     );
-    if (animated) {
-      return content
-          .animate(onComplete: (controller) => controller.repeat())
-          .shimmer(delay: 6.seconds);
-    } else {
-      return content
-          .animate(delay: 300.ms, effects: scaleElastic)
-          .swap(
-            builder: (_, child) => child!
-                .animate(onComplete: (controller) => controller.repeat())
-                .shimmer(delay: 6.seconds),
-          );
-    }
   }
 
   // Étoiles décoratives
